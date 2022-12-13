@@ -1,5 +1,5 @@
 import "reflect-metadata"
-import { DataSource } from "typeorm"
+import { ConnectionOptions, DataSource } from "typeorm"
 import { Niveles } from "./entities/Niveles"
 import { Rifas } from "./entities/Rifas"
 import { TiposRifa } from "./entities/TiposRifa"
@@ -8,10 +8,10 @@ import { TransaccionStates } from "./entities/TransaccionStates"
 import { Usuarios } from "./entities/Usuarios"
 import { UsuariosGanadores } from "./entities/UsuariosGanadores"
 
-export const AppDataSource = new DataSource({
+export const AppDataSource:ConnectionOptions ={
     type: "mysql",
     host: "localhost",
-    port: 3307,
+    port: 3306,
     username: "root",
     password: "root",
     database: "rif",
@@ -28,4 +28,4 @@ export const AppDataSource = new DataSource({
     ],
     migrations: [],
     subscribers: [],
-})
+}
