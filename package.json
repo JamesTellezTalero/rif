@@ -7,7 +7,7 @@
     "dev": "nodemon src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "migrations:reverse": "npx typeorm-model-generator -h localhost -p 3306 -d rif -u root -x 'root' -e mysql -o ./src",
+    "migrations:reverse": "npx typeorm-model-generator -h localhost -p 33060 -d rif -u root -x 'root' -e mysql -o ./src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

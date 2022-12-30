@@ -11,7 +11,7 @@ import { UsuariosGanadores } from "./entities/UsuariosGanadores"
 export const AppDataSource:ConnectionOptions ={
     type: "mysql",
     host: "localhost",
-    port: 3306,
+    port: 33060,
     username: "root",
     password: "root",
     database: "rif",
