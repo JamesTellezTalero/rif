@@ -1,12 +1,12 @@
 version: '3'
 services:
   db:
-    image:  mysql:5.7
+    image: postgres:15
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: database
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: rif
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
       - ./dbData:/var/lib/mysql

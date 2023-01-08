@@ -9,9 +9,9 @@ import { Usuarios } from "./entities/Usuarios"
 import { UsuariosGanadores } from "./entities/UsuariosGanadores"
 
 export const AppDataSource:ConnectionOptions ={
-    type: "mysql",
+    type: "postgres",
     host: "localhost",
-    port: 33060,
+    port: 5432,
     username: "root",
     password: "root",
     database: "rif",

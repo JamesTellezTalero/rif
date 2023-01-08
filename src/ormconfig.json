@@ -1,9 +1,9 @@
 {
-    "type": "mysql",
+    "type": "postgres",
     "host": "localhost",
-    "port": 33060,
+    "port": 5432,
     "username": "root",
-    "password": "roor",
+    "password": "root",
     "database": "rif",
     "synchronize": false,
     "logging": false,
