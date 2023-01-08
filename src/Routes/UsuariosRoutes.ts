@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/Create', usuarios_controller.Create);
+router.post('/Login', usuarios_controller.Login);
 // router.post('/Update', bancos_controller.Update);
 
 // router.get('/GetAll', bancos_controller.GetAll);

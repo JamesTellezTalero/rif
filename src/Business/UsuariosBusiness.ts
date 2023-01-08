@@ -18,6 +18,26 @@ export class UsuariosBusiness{
             throw apiR;
         }
     }
+
+    async Login(email:string, password:string):Promise<apiResponse>{
+        let apiR = new apiResponse();
+        apiR.data = {}
+        try {
+            let usuario = await getManager().getRepository(Usuarios).findOne({where:{email, password}});
+            if(!usuario){
+                throw "No Registra";
+            }else{
+                apiR.code = 200;
+                apiR.message = "Usuario Logueado";
+                apiR.data = usuario;
+                return apiR;
+            }
+        } catch (error) {
+            apiR.code = 400;
+            apiR.message = error
+            throw apiR;
+        }
+    }
     
     async ValidateExistence(user:Usuarios):Promise<apiResponse>{
         let apiR = new apiResponse();
@@ -27,14 +47,10 @@ export class UsuariosBusiness{
             let Email = await getManager().getRepository(Usuarios).findOne({where:{email: user?.email}})
             if(Email){
                 console.log(Email);
-                apiR.code = 400;
-                apiR.message = Email.email
-                throw apiR;
+                throw Email.email;
             }else if(UserName){
                 console.log(UserName);
-                apiR.code = 400;
-                apiR.message = UserName.userName
-                throw apiR;
+                throw UserName.userName;
             }else{
                 apiR.code = 200;
                 apiR.message = "No se registra existencia"

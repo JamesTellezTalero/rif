@@ -63,3 +63,32 @@ exports.Create = async (req, res) => {
         }
     }
 };
+exports.Login = async (req, res) => {
+    let apiR = new apiResponse();
+    apiR.data = {}
+    try {
+        let email:string = req.body.email;
+        let password:string = req.body.password;
+        let loged = await UsuariosB.Login(email, password);
+        if(loged.code == 200){
+            return res.status(loged.code).json({
+                response: loged
+            })
+        }else{
+            throw loged;
+        }
+    } catch (error) {
+        console.log(error);
+        if(error?.code === 400){
+            return res.status(error.code).json({
+                response: error
+            });
+        }else{
+            apiR.code = 500;
+            apiR.message = "Se presentó una excepcion no controlada.";
+            return res.status(apiR.code).json({
+                response:apiR
+            });
+        }   
+    }
+}
