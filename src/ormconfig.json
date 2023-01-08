@@ -1,0 +1,19 @@
+{
+    "type": "mysql",
+    "host": "localhost",
+    "port": 33060,
+    "username": "root",
+    "password": "roor",
+    "database": "rif",
+    "synchronize": false,
+    "logging": false,
+    "entities": [
+        "./src/Entities/**"
+    ],
+    "migrations": [
+        "./src/Migrations/**"
+    ],
+    "subscribers": [
+        "./src/Subscribers/**"
+    ]
+}
