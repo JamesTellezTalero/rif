@@ -28,9 +28,9 @@ app.use(bodyParser.json());
 app.use("/", webRoutes);
 app.use("/api", apiRoutes);
 
-// createConnection(AppDataSource).then(async () => {
-//     console.log("Database Conected")
-// }).catch(err => console.error(err));
+createConnection(AppDataSource).then(async () => {
+    console.log("Database Conected")
+}).catch(err => console.error(err));
 
 app.listen(port, ()=>{
     return console.log(`listen ${port}`);

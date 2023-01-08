@@ -19,30 +19,31 @@ export class Usuarios {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;
 
-  @Column("text", { name: "UserName", nullable: true })
-  userName: string | null;
+  @Column("text", { name: "UserName" })
+  userName: string;
 
-  @Column("text", { name: "Email", nullable: true })
-  email: string | null;
+  @Column("text", { name: "Email" })
+  email: string;
 
-  @Column("text", { name: "Password", nullable: true })
-  password: string | null;
+  @Column("text", { name: "Password" })
+  password: string;
 
-  @Column("text", { name: "Avatar", nullable: true })
-  avatar: string | null;
+  @Column("text", { name: "Avatar" })
+  avatar: string;
 
-  @Column("int", { name: "Nivel", default: () => "'1'" })
-  nivel: number;
+  @Column("int", { name: "Nivel", nullable: true, default: () => "'1'" })
+  nivel: number | null;
 
-  @Column("int", { name: "Exp", default: () => "'0'" })
-  exp: number;
+  @Column("int", { name: "Exp", nullable: true, default: () => "'0'" })
+  exp: number | null;
 
   @Column("enum", {
     name: "State",
+    nullable: true,
     enum: ["false", "true"],
     default: () => "'true'",
   })
-  state: "false" | "true";
+  state: "false" | "true" | null;
 
   @OneToMany(() => Rifas, (rifas) => rifas.usuario2)
   rifas: Rifas[];
