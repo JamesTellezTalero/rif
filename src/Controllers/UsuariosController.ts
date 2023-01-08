@@ -62,7 +62,8 @@ exports.Create = async (req, res) => {
             });
         }
     }
-};
+}
+
 exports.Login = async (req, res) => {
     let apiR = new apiResponse();
     apiR.data = {}
@@ -76,6 +77,35 @@ exports.Login = async (req, res) => {
             })
         }else{
             throw loged;
+        }
+    } catch (error) {
+        console.log(error);
+        if(error?.code === 400){
+            return res.status(error.code).json({
+                response: error
+            });
+        }else{
+            apiR.code = 500;
+            apiR.message = "Se presentó una excepcion no controlada.";
+            return res.status(apiR.code).json({
+                response:apiR
+            });
+        }   
+    }
+}
+
+exports.GetById = async (req, res) => {
+    let apiR = new apiResponse();
+    apiR.data = {}
+    try {
+        let id:number = req.query.id;
+        let exist = await UsuariosB.GetById(id);
+        if(exist.code == 200){
+            return res.status(exist.code).json({
+                response: exist
+            })
+        }else{
+            throw exist;
         }
     } catch (error) {
         console.log(error);

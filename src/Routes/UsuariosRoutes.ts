@@ -13,7 +13,7 @@ router.post('/Login', usuarios_controller.Login);
 // router.post('/Update', bancos_controller.Update);
 
 // router.get('/GetAll', bancos_controller.GetAll);
-// router.get('/GetById', bancos_controller.GetById);
+router.get('/GetById', usuarios_controller.GetById);
 
 
 

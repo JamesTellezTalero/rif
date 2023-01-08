@@ -19,26 +19,26 @@ export class Usuarios {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;
 
-  @Column("text", { name: "UserName" })
+  @Column("text", { name: "userName" })
   userName: string;
 
-  @Column("text", { name: "Email" })
+  @Column("text", { name: "email" })
   email: string;
 
-  @Column("text", { name: "Password" })
+  @Column("text", { name: "password" })
   password: string;
 
-  @Column("text", { name: "Avatar" })
+  @Column("text", { name: "avatar" })
   avatar: string;
 
-  @Column("int", { name: "Nivel", nullable: true, default: () => "'1'" })
+  @Column("int", { name: "nivel", nullable: true, default: () => "'1'" })
   nivel: number | null;
 
-  @Column("int", { name: "Exp", nullable: true, default: () => "'0'" })
+  @Column("int", { name: "exp", nullable: true, default: () => "'0'" })
   exp: number | null;
 
   @Column("enum", {
-    name: "State",
+    name: "state",
     nullable: true,
     enum: ["false", "true"],
     default: () => "'true'",
@@ -55,7 +55,7 @@ export class Usuarios {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
-  @JoinColumn([{ name: "Nivel", referencedColumnName: "id" }])
+  @JoinColumn([{ name: "nivel", referencedColumnName: "id" }])
   nivel2: Niveles;
 
   @OneToMany(
