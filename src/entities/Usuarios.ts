@@ -19,30 +19,31 @@ export class Usuarios {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;
 
-  @Column("text", { name: "UserName", nullable: true })
-  userName: string | null;
+  @Column("text", { name: "userName" })
+  userName: string;
 
-  @Column("text", { name: "Email", nullable: true })
-  email: string | null;
+  @Column("text", { name: "email" })
+  email: string;
 
-  @Column("text", { name: "Password", nullable: true })
-  password: string | null;
+  @Column("text", { name: "password" })
+  password: string;
 
-  @Column("text", { name: "Avatar", nullable: true })
-  avatar: string | null;
+  @Column("text", { name: "avatar" })
+  avatar: string;
 
-  @Column("int", { name: "Nivel", default: () => "'1'" })
-  nivel: number;
+  @Column("int", { name: "nivel", nullable: true, default: () => "'1'" })
+  nivel: number | null;
 
-  @Column("int", { name: "Exp", default: () => "'0'" })
-  exp: number;
+  @Column("int", { name: "exp", nullable: true, default: () => "'0'" })
+  exp: number | null;
 
   @Column("enum", {
-    name: "State",
+    name: "state",
+    nullable: true,
     enum: ["false", "true"],
     default: () => "'true'",
   })
-  state: "false" | "true";
+  state: "false" | "true" | null;
 
   @OneToMany(() => Rifas, (rifas) => rifas.usuario2)
   rifas: Rifas[];
@@ -54,7 +55,7 @@ export class Usuarios {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
-  @JoinColumn([{ name: "Nivel", referencedColumnName: "id" }])
+  @JoinColumn([{ name: "nivel", referencedColumnName: "id" }])
   nivel2: Niveles;
 
   @OneToMany(
