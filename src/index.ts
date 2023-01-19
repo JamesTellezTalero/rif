@@ -1,6 +1,7 @@
 import { createConnection } from "typeorm";
 import { AppDataSource } from "./data-source"
 import * as dotenv from 'dotenv';
+import { UsuariosBusiness } from "./Business/UsuariosBusiness";
 
 var cors = require("cors");
 var express = require('express');
@@ -36,8 +37,9 @@ createConnection(AppDataSource).then(async (connection) => {
     //     transaction: 'all'
     // });
     console.log("Database Conected")
+    app.listen(port, ()=>{
+        let users = new UsuariosBusiness()
+        console.log(users.init());
+        return console.log(`listen ${port}`);
+    });
 }).catch(err => console.error(err));
-
-app.listen(port, ()=>{
-    return console.log(`listen ${port}`);
-});

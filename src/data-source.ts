@@ -17,15 +17,15 @@ export const AppDataSource:ConnectionOptions ={
     database: "rif",
     synchronize: false,
     logging: false,
-    entities: [
-        Niveles,
-        Rifas,
-        TiposRifa,
-        Transacciones,
-        TransaccionStates,
-        Usuarios,
-        UsuariosGanadores
-    ],
+    // entities: [
+    //     Niveles,
+    //     Rifas,
+    //     TiposRifa,
+    //     Transacciones,
+    //     TransaccionStates,
+    //     Usuarios,
+    //     UsuariosGanadores
+    // ],
     migrations: [],
     subscribers: [],
 }

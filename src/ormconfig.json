@@ -2,9 +2,9 @@
     "type": "postgres",
     "host": "localhost",
     "port": 5432,
-    "username": "admin",
-    "password": "password",
-    "database": "database",
+    "username": "postgres",
+    "password": "postgres",
+    "database": "rif",
     "synchronize": false,
     "logging": false,
     "cli": {
