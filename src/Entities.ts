@@ -113,7 +113,7 @@ app.listen(3000, () => {
             referencedColumnNames: ['id'],
             referencedTableName: 'Niveles',
             name: 'usuarios_Niveles_id',
-            onDelete: 'CASCADE'
+            onDelete: 'SET NULL'
         });
         await connection.createQueryRunner().createForeignKey("Usuarios", foreignKey);
         console.log("Foreign key agregada");
