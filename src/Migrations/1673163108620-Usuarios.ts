@@ -5,13 +5,13 @@ export class Usuarios1673163108620 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
         CREATE TABLE Usuarios (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            userName NOT NULL TEXT,
-            email NOT NULL TEXT UNIQUE,
-            password NOT NULL TEXT,
-            avatar NOT NULL TEXT,
-            exp INTEGER DEFAULT 0,
-            status BOOLEAN NOT NULL DEFAULT TRUE,
+            id SERIAL PRIMARY KEY,
+            userName text NOT NULL,
+            email text NOT NULL UNIQUE,
+            password text NOT NULL,
+            avatar text NOT NULL,
+            exp integer DEFAULT 0,
+            status integer NOT NULL DEFAULT 1,
         );
         `);
     }

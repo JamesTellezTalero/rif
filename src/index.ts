@@ -30,12 +30,7 @@ app.use("/", webRoutes);
 app.use("/api", apiRoutes);
 
 createConnection(AppDataSource).then(async (connection) => {
-    // const migrationsRunner = new MigrationsRunner();
-    // await migrationsRunner.runMigrations({
-    //     connectionName: connection.name,
-    //     migrations: [__dirname + '/migrations/*.ts'],
-    //     transaction: 'all'
-    // });
+    // await queryRunner.createDatabase("rif", true);
     console.log("Database Conected")
     app.listen(port, ()=>{
         let users = new UsuariosBusiness()
