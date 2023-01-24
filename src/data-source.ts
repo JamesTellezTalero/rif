@@ -7,7 +7,6 @@ import { Transacciones } from "./entities/Transacciones"
 import { TransaccionStates } from "./entities/TransaccionStates"
 import { Usuarios } from "./entities/Usuarios"
 import { UsuariosGanadores } from "./entities/UsuariosGanadores"
-import { Usuarios1673163108620 } from "./Migrations/1673163108620-Usuarios"
 
 export const AppDataSource:ConnectionOptions ={
     type: "postgres",

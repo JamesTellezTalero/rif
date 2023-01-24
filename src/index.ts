@@ -33,8 +33,6 @@ createConnection(AppDataSource).then(async (connection) => {
     // await queryRunner.createDatabase("rif", true);
     console.log("Database Conected")
     app.listen(port, ()=>{
-        let users = new UsuariosBusiness()
-        console.log(users.init());
         return console.log(`listen ${port}`);
     });
 }).catch(err => console.error(err));
