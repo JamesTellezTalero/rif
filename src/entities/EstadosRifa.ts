@@ -1,16 +1,13 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Rifas } from "./Rifas";
 
-@Entity("TiposRifa", { schema: "public" })
-export class TiposRifa {
+@Entity("EstadosRifa", { schema: "public" })
+export class EstadosRifa {
   @PrimaryGeneratedColumn({ type: "integer", name: "id" })
   id: number;
 
   @Column("character varying", { name: "name" })
   name: string;
-
-  @Column("character varying", { name: "recompenza" })
-  recompenza: string;
 
   @Column("boolean", { name: "status", default: () => "true" })
   status: boolean;
@@ -24,6 +21,6 @@ export class TiposRifa {
   @Column("timestamp without time zone", { name: "deleteAt" })
   deleteAt: Date;
 
-  @OneToMany(() => Rifas, (rifas) => rifas.tipoRifa)
+  @OneToMany(() => Rifas, (rifas) => rifas.estadoRifa)
   rifas: Rifas[];
 }

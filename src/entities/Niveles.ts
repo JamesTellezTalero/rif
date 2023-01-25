@@ -1,30 +1,35 @@
-import {
-  Column,
-  Entity,
-  Index,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Usuarios } from "./Usuarios";
 
-@Index("id", ["id"], { unique: true })
-@Entity("Niveles", { schema: "rif" })
+@Entity("Niveles", { schema: "public" })
 export class Niveles {
-  @PrimaryGeneratedColumn({ type: "int", name: "id" })
+  @PrimaryGeneratedColumn({ type: "integer", name: "id" })
   id: number;
 
-  @Column("int", { name: "Monto", nullable: true })
-  monto: number | null;
+  @Column("integer", { name: "monto" })
+  monto: number;
 
-  @Column("text", { name: "Color", nullable: true })
-  color: string | null;
+  @Column("character varying", { name: "color" })
+  color: string;
 
-  @Column("text", { name: "Borde", nullable: true })
-  borde: string | null;
+  @Column("character varying", { name: "borde" })
+  borde: string;
 
-  @Column("int", { name: "Miltiplicador EXP", nullable: true })
-  miltiplicadorExp: number | null;
+  @Column("integer", { name: "multiplicadorEXP" })
+  multiplicadorExp: number;
 
-  @OneToMany(() => Usuarios, (usuarios) => usuarios.nivel2)
+  @Column("boolean", { name: "status", default: () => "true" })
+  status: boolean;
+
+  @Column("timestamp without time zone", { name: "createAt" })
+  createAt: Date;
+
+  @Column("timestamp without time zone", { name: "updateAt" })
+  updateAt: Date;
+
+  @Column("timestamp without time zone", { name: "deleteAt" })
+  deleteAt: Date;
+
+  @OneToMany(() => Usuarios, (usuarios) => usuarios.nivel)
   usuarios: Usuarios[];
 }

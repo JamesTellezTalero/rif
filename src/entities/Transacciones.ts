@@ -1,58 +1,54 @@
 import {
   Column,
   Entity,
-  Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { TransaccionStates } from "./TransaccionStates";
-import { Usuarios } from "./Usuarios";
 import { Rifas } from "./Rifas";
+import { TransactionStates } from "./TransactionStates";
+import { Usuarios } from "./Usuarios";
 
-@Index("id", ["id"], { unique: true })
-@Index("State", ["state"], {})
-@Index("Usuario", ["usuario"], {})
-@Index("Rifa", ["rifa"], {})
-@Entity("Transacciones", { schema: "rif" })
+@Entity("Transacciones", { schema: "public" })
 export class Transacciones {
-  @PrimaryGeneratedColumn({ type: "int", name: "id" })
+  @PrimaryGeneratedColumn({ type: "integer", name: "id" })
   id: number;
 
-  @Column("text", { name: "Orden" })
+  @Column("character varying", { name: "orden" })
   orden: string;
 
-  @Column("int", { name: "State" })
-  state: number;
-
-  @Column("int", { name: "Rifa" })
-  rifa: number;
-
-  @Column("int", { name: "Usuario" })
-  usuario: number;
-
-  @Column("int", { name: "Amount" })
+  @Column("integer", { name: "amount" })
   amount: number;
 
-  @ManyToOne(
-    () => TransaccionStates,
-    (transaccionStates) => transaccionStates.transacciones,
-    { onDelete: "NO ACTION", onUpdate: "NO ACTION" }
-  )
-  @JoinColumn([{ name: "State", referencedColumnName: "id" }])
-  state2: TransaccionStates;
+  @Column("boolean", { name: "status", default: () => "true" })
+  status: boolean;
 
-  @ManyToOne(() => Usuarios, (usuarios) => usuarios.transacciones, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "Usuario", referencedColumnName: "id" }])
-  usuario2: Usuarios;
+  @Column("timestamp without time zone", { name: "createAt" })
+  createAt: Date;
+
+  @Column("timestamp without time zone", { name: "updateAt" })
+  updateAt: Date;
+
+  @Column("timestamp without time zone", { name: "deleteAt" })
+  deleteAt: Date;
 
   @ManyToOne(() => Rifas, (rifas) => rifas.transacciones, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
+    onDelete: "SET NULL",
   })
-  @JoinColumn([{ name: "Rifa", referencedColumnName: "id" }])
-  rifa2: Rifas;
+  @JoinColumn([{ name: "rifa", referencedColumnName: "id" }])
+  rifa: Rifas;
+
+  @ManyToOne(
+    () => TransactionStates,
+    (transactionStates) => transactionStates.transacciones,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn([{ name: "transactionState", referencedColumnName: "id" }])
+  transactionState: TransactionStates;
+
+  @ManyToOne(() => Usuarios, (usuarios) => usuarios.transacciones, {
+    onDelete: "SET NULL",
+  })
+  @JoinColumn([{ name: "usuario", referencedColumnName: "id" }])
+  usuario: Usuarios;
 }

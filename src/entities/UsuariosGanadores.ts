@@ -1,39 +1,57 @@
 import {
   Column,
   Entity,
-  Index,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Rifas } from "./Rifas";
-import { Usuarios } from "./Usuarios";
 
-@Index("id", ["id"], { unique: true })
-@Index("Rifa", ["rifa"], {})
-@Index("Usuario", ["usuario"], {})
-@Entity("Usuarios_Ganadores", { schema: "rif" })
+@Entity("UsuariosGanadores", { schema: "public" })
 export class UsuariosGanadores {
-  @PrimaryGeneratedColumn({ type: "int", name: "id" })
+  @PrimaryGeneratedColumn({ type: "integer", name: "id" })
   id: number;
 
-  @Column("int", { name: "Rifa" })
-  rifa: number;
+  @Column("boolean", { name: "entregado" })
+  entregado: boolean;
 
-  @Column("int", { name: "Usuario" })
-  usuario: number;
+  @Column("boolean", { name: "status", default: () => "true" })
+  status: boolean;
 
-  @ManyToOne(() => Rifas, (rifas) => rifas.usuariosGanadores, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "Rifa", referencedColumnName: "id" }])
-  rifa2: Rifas;
+  @Column("timestamp without time zone", { name: "createAt" })
+  createAt: Date;
 
-  @ManyToOne(() => Usuarios, (usuarios) => usuarios.usuariosGanadores, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
-  })
-  @JoinColumn([{ name: "Usuario", referencedColumnName: "id" }])
-  usuario2: Usuarios;
+  @Column("timestamp without time zone", { name: "updateAt" })
+  updateAt: Date;
+
+  @Column("timestamp without time zone", { name: "deleteAt" })
+  deleteAt: Date;
+
+  @ManyToOne(
+    () => UsuariosGanadores,
+    (usuariosGanadores) => usuariosGanadores.usuariosGanadores,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn([{ name: "rifa", referencedColumnName: "id" }])
+  rifa: UsuariosGanadores;
+
+  @OneToMany(
+    () => UsuariosGanadores,
+    (usuariosGanadores) => usuariosGanadores.rifa
+  )
+  usuariosGanadores: UsuariosGanadores[];
+
+  @ManyToOne(
+    () => UsuariosGanadores,
+    (usuariosGanadores) => usuariosGanadores.usuariosGanadores2,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn([{ name: "usuario", referencedColumnName: "id" }])
+  usuario: UsuariosGanadores;
+
+  @OneToMany(
+    () => UsuariosGanadores,
+    (usuariosGanadores) => usuariosGanadores.usuario
+  )
+  usuariosGanadores2: UsuariosGanadores[];
 }

@@ -1,7 +1,6 @@
 import {
   Column,
   Entity,
-  Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
@@ -10,57 +9,48 @@ import {
 import { Rifas } from "./Rifas";
 import { Transacciones } from "./Transacciones";
 import { Niveles } from "./Niveles";
-import { UsuariosGanadores } from "./UsuariosGanadores";
 
-@Index("id", ["id"], { unique: true })
-@Index("Nivel", ["nivel"], {})
-@Entity("Usuarios", { schema: "rif" })
+@Entity("Usuarios", { schema: "public" })
 export class Usuarios {
-  @PrimaryGeneratedColumn({ type: "int", name: "id" })
+  @PrimaryGeneratedColumn({ type: "integer", name: "id" })
   id: number;
 
-  @Column("text", { name: "userName" })
+  @Column("character varying", { name: "userName" })
   userName: string;
 
-  @Column("text", { name: "email" })
+  @Column("character varying", { name: "email" })
   email: string;
 
-  @Column("text", { name: "password" })
+  @Column("character varying", { name: "password" })
   password: string;
 
-  @Column("text", { name: "avatar" })
+  @Column("character varying", { name: "avatar" })
   avatar: string;
 
-  @Column("int", { name: "nivel", nullable: true, default: () => "'1'" })
-  nivel: number | null;
+  @Column("integer", { name: "exp", default: () => "0" })
+  exp: number;
 
-  @Column("int", { name: "exp", nullable: true, default: () => "'0'" })
-  exp: number | null;
+  @Column("boolean", { name: "status", default: () => "true" })
+  status: boolean;
 
-  @Column("enum", {
-    name: "state",
-    nullable: true,
-    enum: ["false", "true"],
-    default: () => "'true'",
-  })
-  state: "false" | "true" | null;
+  @Column("timestamp without time zone", { name: "createAt" })
+  createAt: Date;
 
-  @OneToMany(() => Rifas, (rifas) => rifas.usuario2)
+  @Column("timestamp without time zone", { name: "updateAt" })
+  updateAt: Date;
+
+  @Column("timestamp without time zone", { name: "deleteAt" })
+  deleteAt: Date;
+
+  @OneToMany(() => Rifas, (rifas) => rifas.usuario)
   rifas: Rifas[];
 
-  @OneToMany(() => Transacciones, (transacciones) => transacciones.usuario2)
+  @OneToMany(() => Transacciones, (transacciones) => transacciones.usuario)
   transacciones: Transacciones[];
 
   @ManyToOne(() => Niveles, (niveles) => niveles.usuarios, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
+    onDelete: "SET NULL",
   })
   @JoinColumn([{ name: "nivel", referencedColumnName: "id" }])
-  nivel2: Niveles;
-
-  @OneToMany(
-    () => UsuariosGanadores,
-    (usuariosGanadores) => usuariosGanadores.usuario2
-  )
-  usuariosGanadores: UsuariosGanadores[];
+  nivel: Niveles;
 }

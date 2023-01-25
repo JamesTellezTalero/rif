@@ -4,9 +4,10 @@ import { Niveles } from "./entities/Niveles"
 import { Rifas } from "./entities/Rifas"
 import { TiposRifa } from "./entities/TiposRifa"
 import { Transacciones } from "./entities/Transacciones"
-import { TransaccionStates } from "./entities/TransaccionStates"
+import { TransactionStates } from "./entities/TransactionStates"
 import { Usuarios } from "./entities/Usuarios"
 import { UsuariosGanadores } from "./entities/UsuariosGanadores"
+import { EstadosRifa } from "./entities/EstadosRifa"
 
 export const AppDataSource:ConnectionOptions ={
     type: "postgres",
@@ -17,15 +18,16 @@ export const AppDataSource:ConnectionOptions ={
     database: "rif",
     synchronize: true,
     logging: false,
-    // entities: [
-    //     Niveles,
-    //     Rifas,
-    //     TiposRifa,
-    //     Transacciones,
-    //     TransaccionStates,
-    //     Usuarios,
-    //     UsuariosGanadores
-    // ],
+    entities: [
+        EstadosRifa,
+        Niveles,
+        Rifas,
+        TiposRifa,
+        Transacciones,
+        TransactionStates,
+        Usuarios,
+        UsuariosGanadores
+    ],
     migrations: [],
     subscribers: [],
 }

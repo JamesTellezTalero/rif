@@ -1,79 +1,72 @@
 import {
   Column,
   Entity,
-  Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Usuarios } from "./Usuarios";
+import { EstadosRifa } from "./EstadosRifa";
 import { TiposRifa } from "./TiposRifa";
+import { Usuarios } from "./Usuarios";
 import { Transacciones } from "./Transacciones";
-import { UsuariosGanadores } from "./UsuariosGanadores";
 
-@Index("id", ["id"], { unique: true })
-@Index("Usuario", ["usuario"], {})
-@Index("Tipo_rifa", ["tipoRifa"], {})
-@Entity("Rifas", { schema: "rif" })
+@Entity("Rifas", { schema: "public" })
 export class Rifas {
-  @PrimaryGeneratedColumn({ type: "int", name: "id" })
+  @PrimaryGeneratedColumn({ type: "integer", name: "id" })
   id: number;
 
-  @Column("int", { name: "Usuario" })
-  usuario: number;
-
-  @Column("text", { name: "Name" })
+  @Column("character varying", { name: "name" })
   name: string;
 
-  @Column("text", { name: "Desc" })
-  desc: string;
+  @Column("character varying", { name: "description" })
+  description: string;
 
-  @Column("int", { name: "Posibles_ganadores" })
+  @Column("integer", { name: "posiblesGanadores" })
   posiblesGanadores: number;
 
-  @Column("int", { name: "Costo_oportunidad" })
+  @Column("integer", { name: "costoOportunidad", default: () => "0" })
   costoOportunidad: number;
 
-  @Column("text", { name: "Image" })
-  image: string;
-
-  @Column("int", { name: "Monto_recaudado" })
-  montoRecaudado: number;
-
-  @Column("int", { name: "Participantes_totales" })
+  @Column("integer", { name: "participantesTotales", default: () => "0" })
   participantesTotales: number;
 
-  @Column("int", { name: "Tipo_rifa" })
-  tipoRifa: number;
+  @Column("integer", { name: "montoRecaudado", default: () => "0" })
+  montoRecaudado: number;
 
-  @Column("enum", {
-    name: "State",
-    enum: ["false", "true"],
-    default: () => "'true'",
-  })
-  state: "false" | "true";
+  @Column("character varying", { name: "image" })
+  image: string;
 
-  @ManyToOne(() => Usuarios, (usuarios) => usuarios.rifas, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
+  @Column("boolean", { name: "status", default: () => "true" })
+  status: boolean;
+
+  @Column("timestamp without time zone", { name: "createAt" })
+  createAt: Date;
+
+  @Column("timestamp without time zone", { name: "updateAt" })
+  updateAt: Date;
+
+  @Column("timestamp without time zone", { name: "deleteAt" })
+  deleteAt: Date;
+
+  @ManyToOne(() => EstadosRifa, (estadosRifa) => estadosRifa.rifas, {
+    onDelete: "SET NULL",
   })
-  @JoinColumn([{ name: "Usuario", referencedColumnName: "id" }])
-  usuario2: Usuarios;
+  @JoinColumn([{ name: "estadoRifa", referencedColumnName: "id" }])
+  estadoRifa: EstadosRifa;
 
   @ManyToOne(() => TiposRifa, (tiposRifa) => tiposRifa.rifas, {
-    onDelete: "NO ACTION",
-    onUpdate: "NO ACTION",
+    onDelete: "SET NULL",
   })
-  @JoinColumn([{ name: "Tipo_rifa", referencedColumnName: "id" }])
-  tipoRifa2: TiposRifa;
+  @JoinColumn([{ name: "tipoRifa", referencedColumnName: "id" }])
+  tipoRifa: TiposRifa;
 
-  @OneToMany(() => Transacciones, (transacciones) => transacciones.rifa2)
+  @ManyToOne(() => Usuarios, (usuarios) => usuarios.rifas, {
+    onDelete: "SET NULL",
+  })
+  @JoinColumn([{ name: "usuario", referencedColumnName: "id" }])
+  usuario: Usuarios;
+
+  @OneToMany(() => Transacciones, (transacciones) => transacciones.rifa)
   transacciones: Transacciones[];
-
-  @OneToMany(
-    () => UsuariosGanadores,
-    (usuariosGanadores) => usuariosGanadores.rifa2
-  )
-  usuariosGanadores: UsuariosGanadores[];
 }
