@@ -15,11 +15,11 @@ export class TransactionStates {
   @Column("timestamp without time zone", { name: "createAt" })
   createAt: Date;
 
-  @Column("timestamp without time zone", { name: "updateAt" })
-  updateAt: Date;
+  @Column("timestamp without time zone", { name: "updateAt", nullable: true })
+  updateAt: Date | null;
 
-  @Column("timestamp without time zone", { name: "deleteAt" })
-  deleteAt: Date;
+  @Column("timestamp without time zone", { name: "deleteAt", nullable: true })
+  deleteAt: Date | null;
 
   @OneToMany(
     () => Transacciones,

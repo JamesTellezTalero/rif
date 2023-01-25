@@ -30,17 +30,20 @@ export class Usuarios {
   @Column("integer", { name: "exp", default: () => "0" })
   exp: number;
 
+  @Column("boolean", { name: "isAdmin", default: () => "false" })
+  isAdmin: boolean;
+
   @Column("boolean", { name: "status", default: () => "true" })
   status: boolean;
 
   @Column("timestamp without time zone", { name: "createAt" })
   createAt: Date;
 
-  @Column("timestamp without time zone", { name: "updateAt" })
-  updateAt: Date;
+  @Column("timestamp without time zone", { name: "updateAt", nullable: true })
+  updateAt: Date | null;
 
-  @Column("timestamp without time zone", { name: "deleteAt" })
-  deleteAt: Date;
+  @Column("timestamp without time zone", { name: "deleteAt", nullable: true })
+  deleteAt: Date | null;
 
   @OneToMany(() => Rifas, (rifas) => rifas.usuario)
   rifas: Rifas[];

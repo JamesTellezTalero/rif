@@ -5,15 +5,6 @@ const fs = require('fs');
 
 export class UsuariosBusiness{  
 
-    async init(){
-        let ls = await getManager().query(`
-        create table usuarios (
-            nombre varchar(30),
-            clave varchar(10)
-          );
-        `)
-    }
-
     async Create(user:Usuarios):Promise<apiResponse>{
         let apiR = new apiResponse();
         apiR.data = {}

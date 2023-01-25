@@ -40,19 +40,17 @@ app.listen(3000, () => {
                 {
                     name: 'updateAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true ,
                 },
                 {
                     name: 'deleteAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true,
                 },
             ]
         });
         await connection.createQueryRunner().createTable(EstadosRifa);
-        console.log("");
         console.log("Creacion de la tabla EstadosRifa");
-        console.log("");
         const TiposRifa = new Table({
             name: 'TiposRifa',
             columns: [
@@ -86,19 +84,17 @@ app.listen(3000, () => {
                 {
                     name: 'updateAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true ,
                 },
                 {
                     name: 'deleteAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true,
                 },
             ]
         });
         await connection.createQueryRunner().createTable(TiposRifa);
-        console.log("");
         console.log("Creacion de la tabla TiposRifa");
-        console.log("");
         const TransactionStates = new Table({
             name: 'TransactionStates',
             columns: [
@@ -127,19 +123,17 @@ app.listen(3000, () => {
                 {
                     name: 'updateAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true ,
                 },
                 {
                     name: 'deleteAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true,
                 },
             ]
         });
         await connection.createQueryRunner().createTable(TransactionStates);
-        console.log("");
         console.log("Creacion de la tabla TransactionStates");
-        console.log("");
         const Niveles = new Table({
             name: 'Niveles',
             columns: [
@@ -150,7 +144,17 @@ app.listen(3000, () => {
                     isGenerated: true
                 },
                 {
-                    name: 'monto',
+                    name: 'nombre',
+                    type: 'varchar',
+                    isNullable: false
+                },
+                {
+                    name: 'ganancias',
+                    type: 'int',
+                    isNullable: false
+                },
+                {
+                    name: 'totalExp',
                     type: 'int',
                     isNullable: false
                 },
@@ -183,19 +187,17 @@ app.listen(3000, () => {
                 {
                     name: 'updateAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true ,
                 },
                 {
                     name: 'deleteAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true,
                 },
             ]
         });
         await connection.createQueryRunner().createTable(Niveles);
-        console.log("");
         console.log("Creacion de la tabla Niveles");
-        console.log("");
         const Usuarios = new Table({
             name: 'Usuarios',
             columns: [
@@ -235,7 +237,13 @@ app.listen(3000, () => {
                     name: 'nivel',
                     type: 'int',
                     isNullable: false,
-                    default: 0,
+                    default: 1,
+                },
+                {
+                    name: 'isAdmin',
+                    type: 'boolean',
+                    isNullable: false,
+                    default: false
                 },
                 {
                     name: 'status',
@@ -251,19 +259,17 @@ app.listen(3000, () => {
                 {
                     name: 'updateAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true ,
                 },
                 {
                     name: 'deleteAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true,
                 },
             ]
         });
         await connection.createQueryRunner().createTable(Usuarios);
-        console.log("");
         console.log("Creacion de la tabla Usuarios");
-        console.log("");
         const Rifas = new Table({
             name: 'Rifas',
             columns: [
@@ -342,19 +348,17 @@ app.listen(3000, () => {
                 {
                     name: 'updateAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true ,
                 },
                 {
                     name: 'deleteAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true,
                 },
             ]
         });
         await connection.createQueryRunner().createTable(Rifas);
-        console.log("");
         console.log("Creacion de la tabla Rifas");
-        console.log("");
         const Transacciones = new Table({
             name: 'Transacciones',
             columns: [
@@ -403,19 +407,17 @@ app.listen(3000, () => {
                 {
                     name: 'updateAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true ,
                 },
                 {
                     name: 'deleteAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true,
                 },
             ]
         });
         await connection.createQueryRunner().createTable(Transacciones);
-        console.log("");
         console.log("Creacion de la tabla Transacciones");
-        console.log("");
         const UsuariosGanadores = new Table({
             name: 'UsuariosGanadores',
             columns: [
@@ -454,19 +456,17 @@ app.listen(3000, () => {
                 {
                     name: 'updateAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true ,
                 },
                 {
                     name: 'deleteAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true,
                 },
             ]
         });
         await connection.createQueryRunner().createTable(UsuariosGanadores);
-        console.log("");
         console.log("Creacion de la tabla UsuariosGanadores");
-        console.log("");
         console.log('Server stopped');
         process.exit(0);
     }).catch(err => console.error(err));
