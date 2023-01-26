@@ -1,6 +1,7 @@
 import { getManager } from "typeorm";
 import { Usuarios } from "../entities/Usuarios";
 import { apiResponse } from "../Models/apiResponse";
+import { Niveles } from "../entities/Niveles";
 const fs = require('fs');
 
 export class UsuariosBusiness{  
@@ -17,8 +18,9 @@ export class UsuariosBusiness{
                 }
             });
             user.avatar = bufferPath;
+            user.nivel = await getManager().getRepository(Niveles).findOne({where:{nombre: "NivelBajo"}})
             let Usuario = await getManager().getRepository(Usuarios).save(user)
-            return await this.GetById(Usuario.id);;
+            return await this.GetById(Usuario.id);
         } catch (error) {
             apiR.code = 400;
             apiR.message = error
@@ -53,11 +55,9 @@ export class UsuariosBusiness{
             let UserName = await getManager().getRepository(Usuarios).findOne({where:{userName: user?.userName}})
             let Email = await getManager().getRepository(Usuarios).findOne({where:{email: user?.email}})
             if(Email){
-                console.log(Email);
-                throw Email.email;
+                throw `El Email: ${Email.email} ya se encuentra en uso`;
             }else if(UserName){
-                console.log(UserName);
-                throw UserName.userName;
+                throw `El UserName: ${UserName.userName} ya se encuentra en uso`;
             }else{
                 apiR.code = 200;
                 apiR.message = "No se registra existencia"
@@ -74,7 +74,7 @@ export class UsuariosBusiness{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
-            let User = await getManager().getRepository(Usuarios).findOne({where:{id: id}, relations:['nivel2']})
+            let User = await getManager().getRepository(Usuarios).findOne({where:{id: id}, relations:['nivel']})
             if(User){
                 apiR.code = 200;
                 apiR.message = "Usuario encontrado"

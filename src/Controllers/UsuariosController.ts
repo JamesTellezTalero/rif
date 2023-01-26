@@ -37,12 +37,13 @@ exports.Create = async (req, res) => {
             UsuarioExist.message = "El nombre de usuario ingresado ya se encuentra registrado."
             throw UsuarioExist;
         }
-        usuario.password.toUpperCase()
-        console.log(usuario);
+        usuario.password.toUpperCase();
+        usuario.createAt = new Date();
         let newUsuario = await UsuariosB.Create(usuario);
         if(newUsuario.code == 200){
+            newUsuario.message = "Usuario Creado"
             return res.status(newUsuario.code).json({
-                response: newUsuario
+                ... newUsuario
             })
         }else{
             throw newUsuario;
@@ -52,13 +53,13 @@ exports.Create = async (req, res) => {
         console.log(error);
         if(error?.code === 400){
             return res.status(error.code).json({
-                response: error
+                ... error
             });
         }else{
             apiR.code = 500;
             apiR.message = "Se presentó una excepcion no controlada.";
             return res.status(apiR.code).json({
-                response:apiR
+                ... apiR
             });
         }
     }
@@ -73,7 +74,7 @@ exports.Login = async (req, res) => {
         let loged = await UsuariosB.Login(email, password);
         if(loged.code == 200){
             return res.status(loged.code).json({
-                response: loged
+                ... loged
             })
         }else{
             throw loged;
@@ -82,13 +83,13 @@ exports.Login = async (req, res) => {
         console.log(error);
         if(error?.code === 400){
             return res.status(error.code).json({
-                response: error
+                ... error
             });
         }else{
             apiR.code = 500;
             apiR.message = "Se presentó una excepcion no controlada.";
             return res.status(apiR.code).json({
-                response:apiR
+                ... apiR
             });
         }   
     }
@@ -102,7 +103,7 @@ exports.GetById = async (req, res) => {
         let exist = await UsuariosB.GetById(id);
         if(exist.code == 200){
             return res.status(exist.code).json({
-                response: exist
+                ... exist
             })
         }else{
             throw exist;
@@ -111,13 +112,13 @@ exports.GetById = async (req, res) => {
         console.log(error);
         if(error?.code === 400){
             return res.status(error.code).json({
-                response: error
+                ... error
             });
         }else{
             apiR.code = 500;
             apiR.message = "Se presentó una excepcion no controlada.";
             return res.status(apiR.code).json({
-                response:apiR
+                ... apiR
             });
         }   
     }
