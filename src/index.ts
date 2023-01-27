@@ -2,6 +2,7 @@ import { createConnection } from "typeorm";
 import { AppDataSource } from "./data-source"
 import * as dotenv from 'dotenv';
 import { UsuariosBusiness } from "./Business/UsuariosBusiness";
+import passport = require("passport");
 
 var cors = require("cors");
 var express = require('express');
@@ -26,6 +27,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 app.use(bodyParser.json());
 
+app.use(passport.initialize());
 app.use("/", webRoutes);
 app.use("/api", apiRoutes);
 

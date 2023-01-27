@@ -467,6 +467,50 @@ app.listen(3000, () => {
         });
         await connection.createQueryRunner().createTable(UsuariosGanadores);
         console.log("Creacion de la tabla UsuariosGanadores");
+        const UsuariosParticipantes = new Table({
+            name: 'UsuariosParticipantes',
+            columns: [
+                {
+                    name: 'id',
+                    type: 'int',
+                    isPrimary: true,
+                    isGenerated: true
+                },
+                {
+                    name: 'rifa',
+                    type: 'int',
+                    isNullable: false
+                },
+                {
+                    name: 'usuario',
+                    type: 'int',
+                    isNullable: false
+                },
+                {
+                    name: 'status',
+                    type: 'boolean',
+                    isNullable: false,
+                    default: true
+                },
+                {
+                    name: 'createAt',
+                    type: 'timestamp',
+                    isNullable: false,
+                },
+                {
+                    name: 'updateAt',
+                    type: 'timestamp',
+                    isNullable: true ,
+                },
+                {
+                    name: 'deleteAt',
+                    type: 'timestamp',
+                    isNullable: true,
+                },
+            ]
+        });
+        await connection.createQueryRunner().createTable(UsuariosParticipantes);
+        console.log("Creacion de la tabla UsuariosParticipantes");
         console.log('Server stopped');
         process.exit(0);
     }).catch(err => console.error(err));

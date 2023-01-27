@@ -136,6 +136,7 @@ app.listen(3000, () => {
             UsuariosAdmin.email = "jtalero91@gmail.com";
             UsuariosAdmin.password = "123456";
             UsuariosAdmin.avatar = "./init";
+            UsuariosAdmin.nivel = await getManager().getRepository(Niveles).findOne({where:{nombre: "NivelAlto"}});
             UsuariosAdmin.isAdmin = true;
             UsuariosAdmin.createAt = new Date();
             await getManager().getRepository(Usuarios).save(UsuariosAdmin)
@@ -146,6 +147,7 @@ app.listen(3000, () => {
             UsuariosNormal.email = "jtalero10@outlook.es";
             UsuariosNormal.password = "123456";
             UsuariosNormal.avatar = "./init";
+            UsuariosNormal.nivel = await getManager().getRepository(Niveles).findOne({where:{nombre: "NivelBajo"}});
             UsuariosNormal.createAt = new Date();
             await getManager().getRepository(Usuarios).save(UsuariosNormal)
             console.log("Seeder UsuariosNormal");

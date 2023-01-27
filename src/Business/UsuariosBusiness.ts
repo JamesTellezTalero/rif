@@ -2,7 +2,13 @@ import { getManager } from "typeorm";
 import { Usuarios } from "../entities/Usuarios";
 import { apiResponse } from "../Models/apiResponse";
 import { Niveles } from "../entities/Niveles";
+const jwt = require("jsonwebtoken");
+const passport = require("passport");
+const crypto = require("crypto");
+
 const fs = require('fs');
+
+let secretOrKey =  process.env.AUTH_KEY;
 
 export class UsuariosBusiness{  
 
@@ -19,6 +25,7 @@ export class UsuariosBusiness{
             });
             user.avatar = bufferPath;
             user.nivel = await getManager().getRepository(Niveles).findOne({where:{nombre: "NivelBajo"}})
+            user.password = crypto.createHash("md5").update(user.password).digest("hex");
             let Usuario = await getManager().getRepository(Usuarios).save(user)
             return await this.GetById(Usuario.id);
         } catch (error) {
@@ -36,9 +43,12 @@ export class UsuariosBusiness{
             if(!usuario){
                 throw "No Registra";
             }else{
+                const token = jwt.sign({email, password, lastSession: new Date().getTime()}, secretOrKey);
                 apiR.code = 200;
                 apiR.message = "Usuario Logueado";
-                apiR.data = usuario;
+                apiR.data = {
+                    email, token
+                };
                 return apiR;
             }
         } catch (error) {

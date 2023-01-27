@@ -71,6 +71,15 @@ exports.Login = async (req, res) => {
     try {
         let email:string = req.body.email;
         let password:string = req.body.password;
+        if(email == null || email == ""){
+            apiR.code = 400;
+            apiR.message = "Email invalido";
+            throw apiR;
+        }else if(password == null || password == ""){
+            apiR.code = 400;
+            apiR.message = "Contraseña invalida";
+            throw apiR;
+        }
         let loged = await UsuariosB.Login(email, password);
         if(loged.code == 200){
             return res.status(loged.code).json({

@@ -91,7 +91,25 @@ app.listen(3000, () => {
             onDelete: 'SET NULL'
         });
         await connection.createQueryRunner().createForeignKey("UsuariosGanadores", UsuariosGanadores_Usuario_ForeignKey);
-        console.log("UsuariosGanadores usuario Foreign key agregada");
+        console.log("Rifas usuario Foreign key agregada");
+        const UsuariosParticipantes_Rifa_ForeignKey = new TableForeignKey({
+            columnNames: ['rifa'],
+            referencedColumnNames: ['id'],
+            referencedTableName: 'UsuariosParticipantes',
+            name: 'rifa_id',
+            onDelete: 'SET NULL'
+        });
+        await connection.createQueryRunner().createForeignKey("UsuariosParticipantes", UsuariosParticipantes_Rifa_ForeignKey);
+        console.log("UsuariosParticipantes rifa Foreign key agregada");
+        const UsuariosParticipantes_Usuario_ForeignKey = new TableForeignKey({
+            columnNames: ['usuario'],
+            referencedColumnNames: ['id'],
+            referencedTableName: 'UsuariosParticipantes',
+            name: 'usuario_id',
+            onDelete: 'SET NULL'
+        });
+        await connection.createQueryRunner().createForeignKey("UsuariosParticipantes", UsuariosParticipantes_Usuario_ForeignKey);
+        console.log("UsuariosParticipantes usuario Foreign key agregada");
         console.log('Server stopped after 5 minutes');
         process.exit(0);
     }).catch(err => console.error(err));

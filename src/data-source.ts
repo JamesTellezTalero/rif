@@ -10,12 +10,13 @@ import { UsuariosGanadores } from "./entities/UsuariosGanadores"
 import { EstadosRifa } from "./entities/EstadosRifa"
 import { EstadosRifaSubscriber } from "./Subscribers/EstadosRifaSubscriber"
 import { UsuariosSubscriber } from "./Subscribers/UsuariosSubscriber"
-import { NivelesSubscriber } from "./Subscribers/nivelesSubscriber"
+import { NivelesSubscriber } from "./Subscribers/NivelesSubscriber"
 import { RifasSubscriber } from "./Subscribers/RifasSubscriber"
 import { TiposRifaSubscriber } from "./Subscribers/TiposRifaSubscriber"
 import { TransaccionesSubscriber } from "./Subscribers/TransaccionesSubscriber"
 import { TransactionStatesSubscriber } from "./Subscribers/TransactionStatesSubscriber"
 import { UsuariosGanadoresSubscriber } from "./Subscribers/UsuariosGanadoresSubscriber"
+import { UsuariosParticipantes } from "./entities/UsuariosParticipantes"
 
 export const AppDataSource:ConnectionOptions ={
     type: "postgres",
@@ -34,7 +35,8 @@ export const AppDataSource:ConnectionOptions ={
         Transacciones,
         TransactionStates,
         Usuarios,
-        UsuariosGanadores
+        UsuariosGanadores,
+        UsuariosParticipantes
     ],
     migrations: [],
     subscribers: [
