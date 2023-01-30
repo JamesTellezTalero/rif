@@ -11,7 +11,62 @@ app.listen(3000, () => {
     console.log('Server is running on port 3000');
     // Establecer un temporizador para detener el servidor después de 5 minutos
     createConnection(AppDataSource).then(async (connection) => {
+        let queryRunner = await connection.createQueryRunner();
         console.log("Database Conected")
+        const Participantes = new Table({
+            name: 'Participantes',
+            columns: [
+                {
+                    name: 'id',
+                    type: 'int',
+                    isPrimary: true,
+                    isGenerated: true
+                },
+                {
+                    name: 'nombre',
+                    type: 'varchar',
+                    isNullable: false
+                },
+                {
+                    name: 'tipoDocumento',
+                    type: 'int',
+                    isNullable: false
+                },
+                {
+                    name: 'documento',
+                    type: 'varchar',
+                    isNullable: false
+                },
+                {
+                    name: 'telefono',
+                    type: 'varchar',
+                    isNullable: false
+                },
+                {
+                    name: 'status',
+                    type: 'boolean',
+                    isNullable: false,
+                    default: true
+                },
+                {
+                    name: 'createAt',
+                    type: 'timestamp',
+                    isNullable: false,
+                },
+                {
+                    name: 'updateAt',
+                    type: 'timestamp',
+                    isNullable: true ,
+                },
+                {
+                    name: 'deleteAt',
+                    type: 'timestamp',
+                    isNullable: true,
+                },
+            ]
+        });
+        await queryRunner.createTable(Participantes);
+        console.log("Creacion de la tabla Participantes");
         const EstadosRifa = new Table({
             name: 'EstadosRifa',
             columns: [
@@ -49,7 +104,7 @@ app.listen(3000, () => {
                 },
             ]
         });
-        await connection.createQueryRunner().createTable(EstadosRifa);
+        await queryRunner.createTable(EstadosRifa);
         console.log("Creacion de la tabla EstadosRifa");
         const TiposRifa = new Table({
             name: 'TiposRifa',
@@ -93,7 +148,7 @@ app.listen(3000, () => {
                 },
             ]
         });
-        await connection.createQueryRunner().createTable(TiposRifa);
+        await queryRunner.createTable(TiposRifa);
         console.log("Creacion de la tabla TiposRifa");
         const TransactionStates = new Table({
             name: 'TransactionStates',
@@ -132,7 +187,7 @@ app.listen(3000, () => {
                 },
             ]
         });
-        await connection.createQueryRunner().createTable(TransactionStates);
+        await queryRunner.createTable(TransactionStates);
         console.log("Creacion de la tabla TransactionStates");
         const Niveles = new Table({
             name: 'Niveles',
@@ -196,7 +251,7 @@ app.listen(3000, () => {
                 },
             ]
         });
-        await connection.createQueryRunner().createTable(Niveles);
+        await queryRunner.createTable(Niveles);
         console.log("Creacion de la tabla Niveles");
         const Usuarios = new Table({
             name: 'Usuarios',
@@ -268,7 +323,7 @@ app.listen(3000, () => {
                 },
             ]
         });
-        await connection.createQueryRunner().createTable(Usuarios);
+        await queryRunner.createTable(Usuarios);
         console.log("Creacion de la tabla Usuarios");
         const Rifas = new Table({
             name: 'Rifas',
@@ -357,7 +412,7 @@ app.listen(3000, () => {
                 },
             ]
         });
-        await connection.createQueryRunner().createTable(Rifas);
+        await queryRunner.createTable(Rifas);
         console.log("Creacion de la tabla Rifas");
         const Transacciones = new Table({
             name: 'Transacciones',
@@ -416,7 +471,7 @@ app.listen(3000, () => {
                 },
             ]
         });
-        await connection.createQueryRunner().createTable(Transacciones);
+        await queryRunner.createTable(Transacciones);
         console.log("Creacion de la tabla Transacciones");
         const UsuariosGanadores = new Table({
             name: 'UsuariosGanadores',
@@ -433,7 +488,7 @@ app.listen(3000, () => {
                     isNullable: false
                 },
                 {
-                    name: 'usuario',
+                    name: 'participante',
                     type: 'int',
                     isNullable: false
                 },
@@ -465,7 +520,7 @@ app.listen(3000, () => {
                 },
             ]
         });
-        await connection.createQueryRunner().createTable(UsuariosGanadores);
+        await queryRunner.createTable(UsuariosGanadores);
         console.log("Creacion de la tabla UsuariosGanadores");
         const UsuariosParticipantes = new Table({
             name: 'UsuariosParticipantes',
@@ -482,7 +537,7 @@ app.listen(3000, () => {
                     isNullable: false
                 },
                 {
-                    name: 'usuario',
+                    name: 'participante',
                     type: 'int',
                     isNullable: false
                 },
@@ -509,9 +564,53 @@ app.listen(3000, () => {
                 },
             ]
         });
-        await connection.createQueryRunner().createTable(UsuariosParticipantes);
+        await queryRunner.createTable(UsuariosParticipantes);
         console.log("Creacion de la tabla UsuariosParticipantes");
-        console.log('Server stopped');
+        const TipoDocumento = new Table({
+            name: 'TipoDocumento',
+            columns: [
+                {
+                    name: 'id',
+                    type: 'int',
+                    isPrimary: true,
+                    isGenerated: true
+                },
+                {
+                    name: 'name',
+                    type: 'varchar',
+                    isNullable: false
+                },
+                {
+                    name: 'code',
+                    type: 'varchar',
+                    isNullable: false
+                },
+                {
+                    name: 'status',
+                    type: 'boolean',
+                    isNullable: false,
+                    default: true
+                },
+                {
+                    name: 'createAt',
+                    type: 'timestamp',
+                    isNullable: false,
+                },
+                {
+                    name: 'updateAt',
+                    type: 'timestamp',
+                    isNullable: true ,
+                },
+                {
+                    name: 'deleteAt',
+                    type: 'timestamp',
+                    isNullable: true,
+                },
+            ]
+        });
+        await queryRunner.createTable(TipoDocumento);
+        console.log("Creacion de la tabla TipoDocumento");
+        console.log('Server stopped after 5 minutes');
         process.exit(0);
     }).catch(err => console.error(err));
 }); 

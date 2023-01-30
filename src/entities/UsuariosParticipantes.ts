@@ -3,17 +3,15 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { Participantes } from "./Participantes";
+import { Rifas } from "./Rifas";
 
 @Entity("UsuariosParticipantes", { schema: "public" })
 export class UsuariosParticipantes {
   @PrimaryGeneratedColumn({ type: "integer", name: "id" })
   id: number;
-
-  @Column("integer", { name: "usuario" })
-  usuario: number;
 
   @Column("boolean", { name: "status", default: () => "true" })
   status: boolean;
@@ -28,16 +26,16 @@ export class UsuariosParticipantes {
   deleteAt: Date | null;
 
   @ManyToOne(
-    () => UsuariosParticipantes,
-    (usuariosParticipantes) => usuariosParticipantes.usuariosParticipantes,
+    () => Participantes,
+    (participantes) => participantes.usuariosParticipantes,
     { onDelete: "SET NULL" }
   )
-  @JoinColumn([{ name: "rifa", referencedColumnName: "id" }])
-  rifa: UsuariosParticipantes;
+  @JoinColumn([{ name: "participante", referencedColumnName: "id" }])
+  participante: Participantes;
 
-  @OneToMany(
-    () => UsuariosParticipantes,
-    (usuariosParticipantes) => usuariosParticipantes.rifa
-  )
-  usuariosParticipantes: UsuariosParticipantes[];
+  @ManyToOne(() => Rifas, (rifas) => rifas.usuariosParticipantes, {
+    onDelete: "SET NULL",
+  })
+  @JoinColumn([{ name: "rifa", referencedColumnName: "id" }])
+  rifa: Rifas;
 }

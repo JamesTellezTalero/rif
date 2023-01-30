@@ -10,6 +10,8 @@ import { EstadosRifa } from "./EstadosRifa";
 import { TiposRifa } from "./TiposRifa";
 import { Usuarios } from "./Usuarios";
 import { Transacciones } from "./Transacciones";
+import { UsuariosGanadores } from "./UsuariosGanadores";
+import { UsuariosParticipantes } from "./UsuariosParticipantes";
 
 @Entity("Rifas", { schema: "public" })
 export class Rifas {
@@ -69,4 +71,16 @@ export class Rifas {
 
   @OneToMany(() => Transacciones, (transacciones) => transacciones.rifa)
   transacciones: Transacciones[];
+
+  @OneToMany(
+    () => UsuariosGanadores,
+    (usuariosGanadores) => usuariosGanadores.rifa
+  )
+  usuariosGanadores: UsuariosGanadores[];
+
+  @OneToMany(
+    () => UsuariosParticipantes,
+    (usuariosParticipantes) => usuariosParticipantes.rifa
+  )
+  usuariosParticipantes: UsuariosParticipantes[];
 }

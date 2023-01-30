@@ -3,9 +3,10 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { Participantes } from "./Participantes";
+import { Rifas } from "./Rifas";
 
 @Entity("UsuariosGanadores", { schema: "public" })
 export class UsuariosGanadores {
@@ -28,30 +29,16 @@ export class UsuariosGanadores {
   deleteAt: Date | null;
 
   @ManyToOne(
-    () => UsuariosGanadores,
-    (usuariosGanadores) => usuariosGanadores.usuariosGanadores,
+    () => Participantes,
+    (participantes) => participantes.usuariosGanadores,
     { onDelete: "SET NULL" }
   )
+  @JoinColumn([{ name: "participante", referencedColumnName: "id" }])
+  participante: Participantes;
+
+  @ManyToOne(() => Rifas, (rifas) => rifas.usuariosGanadores, {
+    onDelete: "SET NULL",
+  })
   @JoinColumn([{ name: "rifa", referencedColumnName: "id" }])
-  rifa: UsuariosGanadores;
-
-  @OneToMany(
-    () => UsuariosGanadores,
-    (usuariosGanadores) => usuariosGanadores.rifa
-  )
-  usuariosGanadores: UsuariosGanadores[];
-
-  @ManyToOne(
-    () => UsuariosGanadores,
-    (usuariosGanadores) => usuariosGanadores.usuariosGanadores2,
-    { onDelete: "SET NULL" }
-  )
-  @JoinColumn([{ name: "usuario", referencedColumnName: "id" }])
-  usuario: UsuariosGanadores;
-
-  @OneToMany(
-    () => UsuariosGanadores,
-    (usuariosGanadores) => usuariosGanadores.usuario
-  )
-  usuariosGanadores2: UsuariosGanadores[];
+  rifa: Rifas;
 }
