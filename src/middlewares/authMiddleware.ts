@@ -7,6 +7,9 @@ const DatesU = new DatesUtils();
 
 exports.auth = (req, res, next) => {
     let token:string = req.headers.authorization;
+    if (token == null) {
+        return res.status(401).json({ message: "No token provided" });
+    }
     token = token.split(" ")[1];
     if (!token) {
         return res.status(401).json({ message: "No token provided" });

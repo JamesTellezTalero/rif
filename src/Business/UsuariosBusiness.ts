@@ -40,7 +40,7 @@ export class UsuariosBusiness{
         apiR.data = {}
         try {
             let usuario = await getManager().getRepository(Usuarios).findOne({where:{email, password}});
-            if(!usuario){
+            if(usuario == null){
                 throw "No Registra";
             }else{
                 const token = jwt.sign({email, password, lastSession: new Date().getTime()}, secretOrKey);
@@ -64,9 +64,9 @@ export class UsuariosBusiness{
         try {
             let UserName = await getManager().getRepository(Usuarios).findOne({where:{userName: user?.userName}})
             let Email = await getManager().getRepository(Usuarios).findOne({where:{email: user?.email}})
-            if(Email){
+            if(Email != null){
                 throw `El Email: ${Email.email} ya se encuentra en uso`;
-            }else if(UserName){
+            }else if(UserName != null){
                 throw `El UserName: ${UserName.userName} ya se encuentra en uso`;
             }else{
                 apiR.code = 200;
@@ -85,7 +85,7 @@ export class UsuariosBusiness{
         apiR.data = {};
         try {
             let User = await getManager().getRepository(Usuarios).findOne({where:{id: id}, relations:['nivel']})
-            if(User){
+            if(User != null){
                 apiR.code = 200;
                 apiR.message = "Usuario encontrado"
                 apiR.data = User

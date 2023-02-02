@@ -12,6 +12,11 @@ var UsuariosRoutes = require('./UsuariosRoutes');
 router.use('/usuarios', UsuariosRoutes);
 //#endregion
 
+//#region EstadosRifas
+var EstadosRifaRoutes = require('./EstadosRifaRoutes');
+router.use('/estadosrifas', EstadosRifaRoutes);
+//#endregion
+
 //#region Rifas
 var RifasRoutes = require('./RifasRoutes');
 router.use('/rifas', RifasRoutes);
