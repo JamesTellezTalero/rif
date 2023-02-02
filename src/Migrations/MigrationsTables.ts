@@ -396,6 +396,16 @@ app.listen(3000, () => {
                     default: true
                 },
                 {
+                    name: 'startsAt',
+                    type: 'timestamp',
+                    isNullable: false,
+                },
+                {
+                    name: 'endsAt',
+                    type: 'timestamp',
+                    isNullable: true ,
+                },
+                {
                     name: 'createAt',
                     type: 'timestamp',
                     isNullable: false,

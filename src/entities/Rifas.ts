@@ -42,6 +42,12 @@ export class Rifas {
   @Column("boolean", { name: "status", default: () => "true" })
   status: boolean;
 
+  @Column("timestamp without time zone", { name: "startsAt" })
+  startsAt: Date;
+
+  @Column("timestamp without time zone", { name: "endsAt", nullable: true })
+  endsAt: Date | null;
+
   @Column("timestamp without time zone", { name: "createAt" })
   createAt: Date;
 
