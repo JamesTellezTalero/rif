@@ -7,9 +7,14 @@ router.get('/', (req, res) => {
     res.status(200).send('Bienvenido al BackEnd de Rif ||| <br> Este sitio se encuentra en desarrollo. ');
 });
 
-//#region Consumoswebhook
+//#region Usuarios
 var UsuariosRoutes = require('./UsuariosRoutes');
 router.use('/usuarios', UsuariosRoutes);
+//#endregion
+
+//#region Rifas
+var RifasRoutes = require('./RifasRoutes');
+router.use('/rifas', RifasRoutes);
 //#endregion
 
 module.exports = router;
