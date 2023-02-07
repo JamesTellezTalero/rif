@@ -22,5 +22,10 @@ var RifasRoutes = require('./RifasRoutes');
 router.use('/rifas', RifasRoutes);
 //#endregion
 
+//#region EstadosRifas
+var TiposRifaRoutes = require('./TiposRifaRoutes');
+router.use('/tiposrifa', TiposRifaRoutes);
+//#endregion
+
 module.exports = router;
 
