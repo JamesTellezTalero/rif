@@ -12,6 +12,7 @@ router.get('/GetAll', authMiddle.auth,  estadosRifas_controller.GetAll);
 router.get('/GetById', authMiddle.auth,  estadosRifas_controller.GetById);
 router.get('/GetByName', authMiddle.auth,  estadosRifas_controller.GetByName);
 
+router.post('/Create', authMiddle.auth,  estadosRifas_controller.Create);
 
 
 module.exports = router;

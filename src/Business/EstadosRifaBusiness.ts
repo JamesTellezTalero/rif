@@ -6,6 +6,34 @@ const fs = require('fs');
 
 export class EstadosRifaBusiness{  
 
+    async Create(item:EstadosRifa):Promise<apiResponse>{
+        let apiR = new apiResponse();
+        apiR.data = {};
+        try {
+            let estadoRifa = await getManager().getRepository(EstadosRifa).findOne({where:{name: item.name}})
+            if(estadoRifa != null){
+                apiR.code = 200;
+                apiR.message = "Estado Existente"
+                apiR.data = estadoRifa
+                return apiR;
+            }
+            await getManager().getRepository(EstadosRifa).save(item)
+            estadoRifa = await getManager().getRepository(EstadosRifa).findOne({where:{name: item.name}})
+            if(estadoRifa != null){
+                apiR.code = 200;
+                apiR.message = "Estado Creado"
+                apiR.data = estadoRifa
+                return apiR;
+            }else{
+                throw estadoRifa;
+            }
+        } catch (error) {
+            apiR.code = 400;
+            apiR.message = error
+            throw apiR;          
+        }
+    }
+
     async GetAll():Promise<apiResponse>{
         let apiR = new apiResponse();
         apiR.data = {};
