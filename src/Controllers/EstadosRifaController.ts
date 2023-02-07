@@ -11,12 +11,12 @@ exports.Create = async (req, res) => {
         let item = req.body.estadoRifa;
         if(item == null){
             apiR.code = 400;
-            apiR.message = "No se reguistra el <estadoRifa>"
+            apiR.message = "No se registra el <estadoRifa>"
             throw apiR;
         }
         if(item.name == null){
             apiR.code = 400;
-            apiR.message = "No se reguistra el <name>"
+            apiR.message = "No se registra el <name>"
             throw apiR;
         }
         let resp = await EstadosRifasB.Create(item);
@@ -68,7 +68,7 @@ exports.GetById = async (req, res) => {
         let id = req.query.id;
         if(id == null){
             apiR.code = 400;
-            apiR.message = "No se reguistra el <id>"
+            apiR.message = "No se registra el <id>"
             throw apiR;
         }
         let resp = await EstadosRifasB.GetById(id);
@@ -97,7 +97,7 @@ exports.GetByName = async (req, res) => {
         let name = req.body.name;
         if(name == null){
             apiR.code = 400;
-            apiR.message = "No se reguistra el <name>"
+            apiR.message = "No se registra el <name>"
             throw apiR;
         }
         let resp = await EstadosRifasB.GetByName(name);

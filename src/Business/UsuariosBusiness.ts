@@ -16,8 +16,10 @@ export class UsuariosBusiness{
         let apiR = new apiResponse();
         apiR.data = {}
         try {
+            let date = new Date();
+            let imagePathStructure = user.userName + "-" + date.getDay() + "-" + date.getMonth() + "-" + date.getFullYear();
             let buffer = Buffer.from(user.avatar, "base64");
-            let bufferPath:string = `/assets/${user.userName}.png`;
+            let bufferPath:string = `/assets/UsuariosAvatar/${imagePathStructure}.png`;
             fs.writeFile(`.${bufferPath}`, buffer, (error) => {
                 if (error) {
                     throw error;
