@@ -3,6 +3,10 @@ import { Usuarios } from "../entities/Usuarios";
 import { apiResponse } from "../Models/apiResponse";
 import { Niveles } from "../entities/Niveles";
 import { Rifas } from "../entities/Rifas";
+import { EstadosRifa } from "../entities/EstadosRifa";
+import { EstadosRifaBusiness } from "./EstadosRifaBusiness";
+
+const EstadosRifaB = new EstadosRifaBusiness();
 
 const fs = require('fs');
 
@@ -22,7 +26,7 @@ export class RifasBusiness{
                 }
             });
             rifa.image = bufferPath;
-            console.log(rifa.image);
+            rifa.estadoRifa = await getManager().getRepository(EstadosRifa).findOne({where:{name: "Creada"}});
             rifa = await getManager().getRepository(Rifas).save(rifa)
             if(rifa != null){
                 apiR.code = 200;
