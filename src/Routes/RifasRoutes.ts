@@ -8,8 +8,9 @@ router.get('/', (req, res) => {
     res.send('Bienvenido al BackEnd de Rif ||| <br>Sección de usuarios');
 });
 
-router.post('/Create', rifas_controller.Create);
-// router.get('/GetById', authMiddle.auth,  rifas_controller.GetById);
+router.post('/Create', authMiddle.auth, rifas_controller.Create);
+router.post('/UpdateById', authMiddle.auth, rifas_controller.UpdateById);
+router.get('/GetById', authMiddle.auth,  rifas_controller.GetById);
 
 
 
