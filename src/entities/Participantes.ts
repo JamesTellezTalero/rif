@@ -1,14 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from "typeorm";
-import { TipoDocumento } from "./TipoDocumento";
-import { UsuariosGanadores } from "./UsuariosGanadores";
-import { UsuariosParticipantes } from "./UsuariosParticipantes";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("Participantes", { schema: "public" })
 export class Participantes {
@@ -17,6 +7,9 @@ export class Participantes {
 
   @Column("character varying", { name: "nombre" })
   nombre: string;
+
+  @Column("integer", { name: "tipoDocumento" })
+  tipoDocumento: number;
 
   @Column("character varying", { name: "documento" })
   documento: string;
@@ -35,24 +28,4 @@ export class Participantes {
 
   @Column("timestamp without time zone", { name: "deleteAt", nullable: true })
   deleteAt: Date | null;
-
-  @ManyToOne(
-    () => TipoDocumento,
-    (tipoDocumento) => tipoDocumento.participantes,
-    { onDelete: "SET NULL" }
-  )
-  @JoinColumn([{ name: "tipoDocumento", referencedColumnName: "id" }])
-  tipoDocumento: TipoDocumento;
-
-  @OneToMany(
-    () => UsuariosGanadores,
-    (usuariosGanadores) => usuariosGanadores.participante
-  )
-  usuariosGanadores: UsuariosGanadores[];
-
-  @OneToMany(
-    () => UsuariosParticipantes,
-    (usuariosParticipantes) => usuariosParticipantes.participante
-  )
-  usuariosParticipantes: UsuariosParticipantes[];
 }

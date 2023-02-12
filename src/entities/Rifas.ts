@@ -1,22 +1,18 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from "typeorm";
-import { EstadosRifa } from "./EstadosRifa";
-import { TiposRifa } from "./TiposRifa";
-import { Usuarios } from "./Usuarios";
-import { Transacciones } from "./Transacciones";
-import { UsuariosGanadores } from "./UsuariosGanadores";
-import { UsuariosParticipantes } from "./UsuariosParticipantes";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("Rifas", { schema: "public" })
 export class Rifas {
   @PrimaryGeneratedColumn({ type: "integer", name: "id" })
   id: number;
+
+  @Column("integer", { name: "tipoRifa", default: () => "0" })
+  tipoRifa: number;
+
+  @Column("integer", { name: "estadoRifa", default: () => "0" })
+  estadoRifa: number;
+
+  @Column("integer", { name: "usuario" })
+  usuario: number;
 
   @Column("character varying", { name: "name" })
   name: string;
@@ -56,37 +52,4 @@ export class Rifas {
 
   @Column("timestamp without time zone", { name: "deleteAt", nullable: true })
   deleteAt: Date | null;
-
-  @ManyToOne(() => EstadosRifa, (estadosRifa) => estadosRifa.rifas, {
-    onDelete: "SET NULL",
-  })
-  @JoinColumn([{ name: "estadoRifa", referencedColumnName: "id" }])
-  estadoRifa: EstadosRifa;
-
-  @ManyToOne(() => TiposRifa, (tiposRifa) => tiposRifa.rifas, {
-    onDelete: "SET NULL",
-  })
-  @JoinColumn([{ name: "tipoRifa", referencedColumnName: "id" }])
-  tipoRifa: TiposRifa;
-
-  @ManyToOne(() => Usuarios, (usuarios) => usuarios.rifas, {
-    onDelete: "SET NULL",
-  })
-  @JoinColumn([{ name: "usuario", referencedColumnName: "id" }])
-  usuario: Usuarios;
-
-  @OneToMany(() => Transacciones, (transacciones) => transacciones.rifa)
-  transacciones: Transacciones[];
-
-  @OneToMany(
-    () => UsuariosGanadores,
-    (usuariosGanadores) => usuariosGanadores.rifa
-  )
-  usuariosGanadores: UsuariosGanadores[];
-
-  @OneToMany(
-    () => UsuariosParticipantes,
-    (usuariosParticipantes) => usuariosParticipantes.rifa
-  )
-  usuariosParticipantes: UsuariosParticipantes[];
 }

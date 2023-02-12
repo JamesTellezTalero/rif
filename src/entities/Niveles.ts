@@ -1,5 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Usuarios } from "./Usuarios";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("Niveles", { schema: "public" })
 export class Niveles {
@@ -35,7 +34,4 @@ export class Niveles {
 
   @Column("timestamp without time zone", { name: "deleteAt", nullable: true })
   deleteAt: Date | null;
-
-  @OneToMany(() => Usuarios, (usuarios) => usuarios.nivel)
-  usuarios: Usuarios[];
 }
