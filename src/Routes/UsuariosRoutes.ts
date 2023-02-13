@@ -4,16 +4,14 @@ var router = express.Router();
 var usuarios_controller = require('./../Controllers/UsuariosController');
 var authMiddle = require('./../Middlewares/authMiddleware');
 
-router.get('/', (req, res) => {
-    console.log("hola/usuario");
+router.get('/', (req, res) => { 
     res.send('Bienvenido al BackEnd de Rif ||| <br>Sección de usuarios');
 });
 
 router.post('/Create', usuarios_controller.Create);
 router.post('/Login', usuarios_controller.Login);
-// router.post('/Update', bancos_controller.Update);
 
-// router.get('/GetAll', bancos_controller.GetAll);
+router.get('/GetAll', authMiddle.auth,  usuarios_controller.GetAll);
 router.get('/GetById', authMiddle.auth,  usuarios_controller.GetById);
 
 

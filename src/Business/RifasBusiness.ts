@@ -91,6 +91,26 @@ export class RifasBusiness{
         }
     }
 
+    async GetAll():Promise<apiResponse>{
+        let apiR = new apiResponse();
+        apiR.data = {};
+        try {
+            let rifas = await getManager().getRepository(Rifas).find({relations:["estadoRifa", "tipoRifa", "usuario"]})
+            if(rifas){
+                apiR.code = 200;
+                apiR.message = "Rifas encontradas"
+                apiR.data = rifas
+                return apiR;
+            }else{
+                throw rifas;
+            }
+        } catch (error) {
+            apiR.code = 400;
+            apiR.message = error
+            throw apiR;          
+        }
+    }
+
     async GetById(id:number):Promise<apiResponse>{
         let apiR = new apiResponse();
         apiR.data = {};

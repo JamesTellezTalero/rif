@@ -192,3 +192,25 @@ exports.GetById = async (req, res) => {
         }
     }
 }
+
+exports.GetAll = async (req, res) => {
+    let apiR = new apiResponse();
+    apiR.data = {}
+    try {
+        return res.status(200).json(await RifasB.GetAll())
+    }
+    catch (error){
+        console.log(error);
+        if(error?.code === 400){
+            return res.status(error.code).json({
+                ... error
+            });
+        }else{
+            apiR.code = 500;
+            apiR.message = "Se presentó una excepcion no controlada.";
+            return res.status(apiR.code).json({
+                ... apiR
+            });
+        }
+    }
+}

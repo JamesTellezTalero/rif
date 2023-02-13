@@ -10,7 +10,9 @@ router.get('/', (req, res) => {
 
 router.post('/Create', authMiddle.auth, rifas_controller.Create);
 router.post('/UpdateById', authMiddle.auth, rifas_controller.UpdateById);
+
 router.get('/GetById', authMiddle.auth,  rifas_controller.GetById);
+router.get('/GetAll', authMiddle.auth,  rifas_controller.GetAll);
 
 
 

@@ -101,4 +101,24 @@ export class UsuariosBusiness{
             throw apiR;          
         }
     }
+    
+    async GetAll():Promise<apiResponse>{
+        let apiR = new apiResponse();
+        apiR.data = {};
+        try {
+            let Users = await getManager().getRepository(Usuarios).find({relations:['nivel']})
+            if(Users != null){
+                apiR.code = 200;
+                apiR.message = "Usuarios encontrados"
+                apiR.data = Users
+                return apiR;
+            }else{
+                throw Users;
+            }
+        } catch (error) {
+            apiR.code = 400;
+            apiR.message = error
+            throw apiR;          
+        }
+    }
 }

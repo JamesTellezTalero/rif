@@ -3,7 +3,6 @@ var router = express.Router();
 
 
 router.get('/', (req, res) => {
-    console.log("hola/api");
     res.status(200).send('Bienvenido al BackEnd de Rif ||| <br> Este sitio se encuentra en desarrollo. ');
 });
 

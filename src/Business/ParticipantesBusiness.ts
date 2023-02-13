@@ -16,7 +16,6 @@ export class ParticipantesBusiness{
         let apiR = new apiResponse();
         apiR.data = {}
         try {
-            console.log(participante);
             // let Participante = await getManager().getRepository(Participantes).save(participante)
             // return await this.GetById(Participante.id);
             apiR.code = 200;
