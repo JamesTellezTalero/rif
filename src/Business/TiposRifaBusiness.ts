@@ -39,7 +39,7 @@ export class TiposRifaBusiness{
             let tipoRifa = await getManager().getRepository(TiposRifa).find()
             if(tipoRifa != null){
                 apiR.code = 200;
-                apiR.message = "Tipos Rifa encontrado"
+                apiR.message = "Tipos encontrados"
                 apiR.data = tipoRifa
                 return apiR;
             }else{
@@ -59,7 +59,7 @@ export class TiposRifaBusiness{
             let tipoRifa = await getManager().getRepository(TiposRifa).findOne({where:{id: id}})
             if(tipoRifa != null){
                 apiR.code = 200;
-                apiR.message = "Tipo Rifa encontrado"
+                apiR.message = "Tipo encontrado"
                 apiR.data = tipoRifa
                 return apiR;
             }else{
@@ -79,7 +79,7 @@ export class TiposRifaBusiness{
             let tipoRifa = await getManager().getRepository(TiposRifa).findOne({where:{name: name}})
             if(tipoRifa != null){
                 apiR.code = 200;
-                apiR.message = "Tipo Rifa encontrado"
+                apiR.message = "Tipo encontrado"
                 apiR.data = tipoRifa
                 return apiR;
             }else{

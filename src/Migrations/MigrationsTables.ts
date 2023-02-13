@@ -28,6 +28,11 @@ app.listen(3000, () => {
                     isNullable: false
                 },
                 {
+                    name: 'email',
+                    type: 'varchar',
+                    isNullable: false
+                },
+                {
                     name: 'tipoDocumento',
                     type: 'int',
                     isNullable: false

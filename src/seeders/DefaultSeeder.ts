@@ -5,8 +5,10 @@ import { Niveles } from "../entities/Niveles";
 import { EstadosRifa } from "../entities/EstadosRifa";
 import { TransactionStates } from "../entities/TransactionStates";
 import { TiposRifa } from "../entities/TiposRifa";
+import { TipoDocumento } from "../entities/TipoDocumento";
 
 var express = require('express');
+const crypto = require("crypto");
 
 const app = express();
 
@@ -134,7 +136,7 @@ app.listen(3000, () => {
             const UsuariosAdmin = new Usuarios();
             UsuariosAdmin.userName = "admin";
             UsuariosAdmin.email = "jtalero91@gmail.com";
-            UsuariosAdmin.password = "123456";
+            UsuariosAdmin.password =  crypto.createHash("md5").update("123456").digest("hex");
             UsuariosAdmin.avatar = "./init";
             UsuariosAdmin.nivel = await getManager().getRepository(Niveles).findOne({where:{nombre: "NivelAlto"}});
             UsuariosAdmin.isAdmin = true;
@@ -145,12 +147,22 @@ app.listen(3000, () => {
             const UsuariosNormal = new Usuarios();
             UsuariosNormal.userName = "normal user";
             UsuariosNormal.email = "jtalero10@outlook.es";
-            UsuariosNormal.password = "123456";
+            UsuariosNormal.password = crypto.createHash("md5").update("123456").digest("hex");
             UsuariosNormal.avatar = "./init";
             UsuariosNormal.nivel = await getManager().getRepository(Niveles).findOne({where:{nombre: "NivelBajo"}});
             UsuariosNormal.createAt = new Date();
             await getManager().getRepository(Usuarios).save(UsuariosNormal)
             console.log("Seeder UsuariosNormal");
+        }
+        
+        let tipoDocumentoExt = await getManager().getRepository(TipoDocumento).find()
+        if(tipoDocumentoExt.length == 0){
+            const TipoDocumentoCedula = new TipoDocumento();
+            TipoDocumentoCedula.name = "cedula Ciudadania";
+            TipoDocumentoCedula.code = "CC";
+            TipoDocumentoCedula.createAt = new Date();
+            await getManager().getRepository(TipoDocumento).save(TipoDocumentoCedula)
+            console.log("Seeder TipoDocumentoCedula");
         }
 
         console.log('Server stopped after create seeders');

@@ -1,4 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { Rifas } from "./Rifas";
+import { TransactionStates } from "./TransactionStates";
+import { Usuarios } from "./Usuarios";
 
 @Entity("Transacciones", { schema: "public" })
 export class Transacciones {
@@ -8,17 +17,8 @@ export class Transacciones {
   @Column("character varying", { name: "orden" })
   orden: string;
 
-  @Column("integer", { name: "rifa" })
-  rifa: number;
-
-  @Column("integer", { name: "usuario" })
-  usuario: number;
-
   @Column("integer", { name: "amount" })
   amount: number;
-
-  @Column("integer", { name: "transactionState" })
-  transactionState: number;
 
   @Column("boolean", { name: "status", default: () => "true" })
   status: boolean;
@@ -31,4 +31,24 @@ export class Transacciones {
 
   @Column("timestamp without time zone", { name: "deleteAt", nullable: true })
   deleteAt: Date | null;
+
+  @ManyToOne(() => Rifas, (rifas) => rifas.transacciones, {
+    onDelete: "SET NULL",
+  })
+  @JoinColumn([{ name: "rifa", referencedColumnName: "id" }])
+  rifa: Rifas;
+
+  @ManyToOne(
+    () => TransactionStates,
+    (transactionStates) => transactionStates.transacciones,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn([{ name: "transactionState", referencedColumnName: "id" }])
+  transactionState: TransactionStates;
+
+  @ManyToOne(() => Usuarios, (usuarios) => usuarios.transacciones, {
+    onDelete: "SET NULL",
+  })
+  @JoinColumn([{ name: "usuario", referencedColumnName: "id" }])
+  usuario: Usuarios;
 }

@@ -5,7 +5,7 @@ let tiposRifas_controller = require('./../Controllers/TiposRifaController');
 var authMiddle = require('./../Middlewares/authMiddleware');
 
 router.get('/', (req, res) => {
-    res.send('Bienvenido al BackEnd de Rif ||| <br>Sección de usuarios');
+    res.send('Bienvenido al BackEnd de Rif ||| <br>Sección de tipos rifa');
 });
 
 router.get('/GetAll', authMiddle.auth,  tiposRifas_controller.GetAll);

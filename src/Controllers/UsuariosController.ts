@@ -1,9 +1,9 @@
 import { UsuariosBusiness } from "../Business/UsuariosBusiness";
 import { apiResponse } from "../Models/apiResponse";
-import { UsuariosUtils } from "../Utils/UsuariosUtils";
+import { StringUtils } from "../Utils/StringUtils";
 import { Usuarios } from "../entities/Usuarios";
 
-let UsuariosU = new UsuariosUtils()
+let StringU = new StringUtils()
 let UsuariosB = new UsuariosBusiness()
 
 exports.Create = async (req, res) => {
@@ -11,7 +11,7 @@ exports.Create = async (req, res) => {
     apiR.data = {}
     try {
         let usuario:Usuarios = req.body;
-        let emailExist = await UsuariosU.validateEmail(usuario?.email);
+        let emailExist = await StringU.validateEmail(usuario?.email);
         if(!emailExist){
             apiR.code = 400;
             apiR.message = "Email invalido";

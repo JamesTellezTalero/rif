@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Rifas } from "./Rifas";
 
 @Entity("EstadosRifa", { schema: "public" })
 export class EstadosRifa {
@@ -19,4 +20,7 @@ export class EstadosRifa {
 
   @Column("timestamp without time zone", { name: "deleteAt", nullable: true })
   deleteAt: Date | null;
+
+  @OneToMany(() => Rifas, (rifas) => rifas.estadoRifa)
+  rifas: Rifas[];
 }

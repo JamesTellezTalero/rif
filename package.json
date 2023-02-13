@@ -10,6 +10,7 @@
     "docker-cont": "docker run --name rif -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -p 5432:5432 -e POSTGRES_DB=rif -d postgres",
     "gen-tables": "nodemon src/Migrations/MigrationsTables.ts",
     "gen-keys": "nodemon src/Migrations/MigrationsForeginKeys.ts",
+    "gen-seeders": "nodemon src/seeders/DefaultSeeder.ts",
     "start": "node dist/index.js",
     "migrations:reverse": "npx typeorm-model-generator -h localhost -p 5432 -d rif -u root -x 'root' -e postgres -o ./src",
     "test": "echo \"Error: no test specified\" && exit 1"

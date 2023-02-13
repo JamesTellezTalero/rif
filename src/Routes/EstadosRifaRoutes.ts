@@ -5,7 +5,7 @@ let estadosRifas_controller = require('./../Controllers/EstadosRifaController');
 var authMiddle = require('./../Middlewares/authMiddleware');
 
 router.get('/', (req, res) => {
-    res.send('Bienvenido al BackEnd de Rif ||| <br>Sección de usuarios');
+    res.send('Bienvenido al BackEnd de Rif ||| <br>Sección de estados rifa');
 });
 
 router.get('/GetAll', authMiddle.auth,  estadosRifas_controller.GetAll);

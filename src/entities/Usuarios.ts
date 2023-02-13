@@ -1,4 +1,14 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { Rifas } from "./Rifas";
+import { Transacciones } from "./Transacciones";
+import { Niveles } from "./Niveles";
 
 @Entity("Usuarios", { schema: "public" })
 export class Usuarios {
@@ -20,9 +30,6 @@ export class Usuarios {
   @Column("integer", { name: "exp", default: () => "0" })
   exp: number;
 
-  @Column("integer", { name: "nivel", default: () => "1" })
-  nivel: number;
-
   @Column("boolean", { name: "isAdmin", default: () => "false" })
   isAdmin: boolean;
 
@@ -37,4 +44,16 @@ export class Usuarios {
 
   @Column("timestamp without time zone", { name: "deleteAt", nullable: true })
   deleteAt: Date | null;
+
+  @OneToMany(() => Rifas, (rifas) => rifas.usuario)
+  rifas: Rifas[];
+
+  @OneToMany(() => Transacciones, (transacciones) => transacciones.usuario)
+  transacciones: Transacciones[];
+
+  @ManyToOne(() => Niveles, (niveles) => niveles.usuarios, {
+    onDelete: "SET NULL",
+  })
+  @JoinColumn([{ name: "nivel", referencedColumnName: "id" }])
+  nivel: Niveles;
 }

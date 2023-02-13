@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Participantes } from "./Participantes";
 
 @Entity("TipoDocumento", { schema: "public" })
 export class TipoDocumento {
@@ -22,4 +23,10 @@ export class TipoDocumento {
 
   @Column("timestamp without time zone", { name: "deleteAt", nullable: true })
   deleteAt: Date | null;
+
+  @OneToMany(
+    () => Participantes,
+    (participantes) => participantes.tipoDocumento
+  )
+  participantes: Participantes[];
 }

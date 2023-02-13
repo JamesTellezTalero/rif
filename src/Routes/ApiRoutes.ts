@@ -7,6 +7,11 @@ router.get('/', (req, res) => {
     res.status(200).send('Bienvenido al BackEnd de Rif ||| <br> Este sitio se encuentra en desarrollo. ');
 });
 
+//#region ParticipantesRoutes
+var ParticipantesRoutes = require('./ParticipantesRoutes');
+router.use('/participantes', ParticipantesRoutes);
+//#endregion
+
 //#region Usuarios
 var UsuariosRoutes = require('./UsuariosRoutes');
 router.use('/usuarios', UsuariosRoutes);
@@ -22,9 +27,14 @@ var RifasRoutes = require('./RifasRoutes');
 router.use('/rifas', RifasRoutes);
 //#endregion
 
-//#region EstadosRifas
+//#region tiposrifa
 var TiposRifaRoutes = require('./TiposRifaRoutes');
 router.use('/tiposrifa', TiposRifaRoutes);
+//#endregion
+
+//#region tipodocumento
+var TipoDocumentoRoutes = require('./TipoDocumentoRoutes');
+router.use('/tipodocumento', TipoDocumentoRoutes);
 //#endregion
 
 module.exports = router;
