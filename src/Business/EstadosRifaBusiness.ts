@@ -12,10 +12,10 @@ export class EstadosRifaBusiness{
         try {
             let estadoRifa = await getManager().getRepository(EstadosRifa).findOne({where:{name: item.name}})
             if(estadoRifa != null){
-                apiR.code = 200;
+                apiR.code = 400;
                 apiR.message = "Estado Existente"
                 apiR.data = estadoRifa
-                return apiR;
+                throw apiR;
             }
             await getManager().getRepository(EstadosRifa).save(item)
             estadoRifa = await getManager().getRepository(EstadosRifa).findOne({where:{name: item.name}})
@@ -25,12 +25,20 @@ export class EstadosRifaBusiness{
                 apiR.data = estadoRifa
                 return apiR;
             }else{
-                throw estadoRifa;
+                throw apiR = {
+                    message: "Estados No Creado",
+                    code: 400,
+                    data: estadoRifa 
+                }
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;          
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }   
         }
     }
 
@@ -41,16 +49,24 @@ export class EstadosRifaBusiness{
             let estadosRifa = await getManager().getRepository(EstadosRifa).find()
             if(estadosRifa != null){
                 apiR.code = 200;
-                apiR.message = "Estados Rifa encontrado"
+                apiR.message = "Estados encontrados"
                 apiR.data = estadosRifa
                 return apiR;
             }else{
-                throw estadosRifa;
+                throw apiR = {
+                    message: "Estados No Encontrado",
+                    code: 400,
+                    data: estadosRifa 
+                }
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;          
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }          
         }
     }
 
@@ -61,16 +77,24 @@ export class EstadosRifaBusiness{
             let estadoRifa = await getManager().getRepository(EstadosRifa).findOne({where:{id: id}})
             if(estadoRifa != null){
                 apiR.code = 200;
-                apiR.message = "Estado Rifa encontrado"
+                apiR.message = "Estado encontrado"
                 apiR.data = estadoRifa
                 return apiR;
             }else{
-                throw estadoRifa;
+                throw apiR = {
+                    message: "Estado No Encontrado",
+                    code: 400,
+                    data: estadoRifa 
+                }
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;          
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }         
         }
     }
 
@@ -81,16 +105,24 @@ export class EstadosRifaBusiness{
             let estadoRifa = await getManager().getRepository(EstadosRifa).findOne({where:{name: name}})
             if(estadoRifa != null){
                 apiR.code = 200;
-                apiR.message = "Estado Rifa encontrado"
+                apiR.message = "Estado encontrado"
                 apiR.data = estadoRifa
                 return apiR;
             }else{
-                throw estadoRifa;
+                throw apiR = {
+                    message: "Estado No Encontrado",
+                    code: 400,
+                    data: estadoRifa 
+                }
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;          
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }            
         }
     }
 }

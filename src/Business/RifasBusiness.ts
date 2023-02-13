@@ -34,12 +34,20 @@ export class RifasBusiness{
                 apiR.data = rifa
                 return apiR;
             }else{
-                throw rifa;
+                throw apiR = {
+                    message: "Rifa No Creada",
+                    code: 400,
+                    data: rifa 
+                }
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            } 
         }
     }
 
@@ -78,16 +86,24 @@ export class RifasBusiness{
             oldRifa = await getManager().getRepository(Rifas).save(oldRifa)
             if(oldRifa != null){
                 apiR.code = 200;
-                apiR.message = "Rifa Creada"
+                apiR.message = "Rifa Actualizada"
                 apiR.data = oldRifa
                 return apiR;
             }else{
-                throw oldRifa;
+                throw apiR = {
+                    message: "Rifa No Actualizada",
+                    code: 400,
+                    data: oldRifa 
+                }
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            } 
         }
     }
 
@@ -102,12 +118,20 @@ export class RifasBusiness{
                 apiR.data = rifas
                 return apiR;
             }else{
-                throw rifas;
+                throw apiR = {
+                    message: "Rifa No Actualizada",
+                    code: 400,
+                    data: rifas 
+                }
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;          
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }       
         }
     }
 
@@ -122,12 +146,20 @@ export class RifasBusiness{
                 apiR.data = Rifa
                 return apiR;
             }else{
-                throw Rifa;
+                throw apiR = {
+                    message: "Rifa No Actualizada",
+                    code: 400,
+                    data: Rifa 
+                }
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;          
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }           
         }
     }
 }

@@ -35,18 +35,30 @@ export class ParticipantesBusiness{
             let documento = await getManager().getRepository(Participantes).findOne({where:{documento: participante?.documento}})
             let Email = await getManager().getRepository(Participantes).findOne({where:{email: participante?.email}})
             if(Email != null){
-                throw `El Email: ${Email.email} ya se encuentra en uso`;
+                throw apiR ={
+                    code: 400,
+                    message: `El Email: ${Email.email} ya se encuentra en uso`,
+                    data: {}
+                };
             }else if(documento != null){
-                throw `El documento: ${documento.documento} ya se encuentra en uso`;
+                throw apiR ={
+                    code: 400,
+                    message: `El documento: ${documento.documento} ya se encuentra en uso`,
+                    data: {}
+                }
             }else{
                 apiR.code = 200;
                 apiR.message = "No se registra existencia"
                 return apiR;
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;          
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }          
         }
     }
     
@@ -61,12 +73,20 @@ export class ParticipantesBusiness{
                 apiR.data = Participante
                 return apiR;
             }else{
-                throw Participante;
+                throw apiR ={
+                    code: 400,
+                    message: `Participante no encontrado`,
+                    data: Participante
+                };
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;          
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }            
         }
     }
 }

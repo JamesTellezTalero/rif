@@ -31,9 +31,13 @@ export class UsuariosBusiness{
             let Usuario = await getManager().getRepository(Usuarios).save(user)
             return await this.GetById(Usuario.id);
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }    
         }
     }
 
@@ -43,7 +47,11 @@ export class UsuariosBusiness{
         try {
             let usuario = await getManager().getRepository(Usuarios).findOne({where:{email, password}});
             if(usuario == null){
-                throw "No Registra";
+                throw apiR = {
+                    message: "No Registra",
+                    code: 400,
+                    data: usuario 
+                }
             }else{
                 const token = jwt.sign({email, password, lastSession: new Date().getTime()}, secretOrKey);
                 apiR.code = 200;
@@ -54,9 +62,13 @@ export class UsuariosBusiness{
                 return apiR;
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }    
         }
     }
     
@@ -67,18 +79,30 @@ export class UsuariosBusiness{
             let UserName = await getManager().getRepository(Usuarios).findOne({where:{userName: user?.userName}})
             let Email = await getManager().getRepository(Usuarios).findOne({where:{email: user?.email}})
             if(Email != null){
-                throw `El Email: ${Email.email} ya se encuentra en uso`;
+                throw apiR ={
+                    code: 400,
+                    message: `El Email: ${Email.email} ya se encuentra en uso`,
+                    data: {}
+                }
             }else if(UserName != null){
-                throw `El UserName: ${UserName.userName} ya se encuentra en uso`;
+                throw apiR ={
+                    code: 400,
+                    message: `El UserName: ${UserName.userName} ya se encuentra en uso`,
+                    data: {}
+                }
             }else{
                 apiR.code = 200;
                 apiR.message = "No se registra existencia"
                 return apiR;
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;          
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }           
         }
     }
     
@@ -93,12 +117,20 @@ export class UsuariosBusiness{
                 apiR.data = User
                 return apiR;
             }else{
-                throw User;
+                throw apiR ={
+                    code: 400,
+                    message: `Usuario No Encontrado`,
+                    data: User
+                }
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;          
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }         
         }
     }
     
@@ -113,12 +145,20 @@ export class UsuariosBusiness{
                 apiR.data = Users
                 return apiR;
             }else{
-                throw Users;
+                throw apiR ={
+                    code: 400,
+                    message: `Usuario No Encontrado`,
+                    data: Users
+                }
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;          
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }            
         }
     }
 }

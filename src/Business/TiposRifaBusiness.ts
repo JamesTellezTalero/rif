@@ -23,12 +23,20 @@ export class TiposRifaBusiness{
                 apiR.data = tipoRifa
                 return apiR;
             }else{
-                throw tipoRifa;
+                throw apiR = {
+                    message: "Tipo No Creado",
+                    code: 400,
+                    data: tipoRifa 
+                }
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;          
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }             
         }
     }
 
@@ -43,12 +51,20 @@ export class TiposRifaBusiness{
                 apiR.data = tipoRifa
                 return apiR;
             }else{
-                throw tipoRifa;
+                throw apiR = {
+                    message: "Tipos No Encontrados",
+                    code: 400,
+                    data: tipoRifa 
+                }
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;          
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }           
         }
     }
 
@@ -63,12 +79,20 @@ export class TiposRifaBusiness{
                 apiR.data = tipoRifa
                 return apiR;
             }else{
-                throw tipoRifa;
+                throw apiR = {
+                    message: "Tipos No Encontrados",
+                    code: 400,
+                    data: tipoRifa 
+                }
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;          
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }             
         }
     }
 
@@ -83,12 +107,20 @@ export class TiposRifaBusiness{
                 apiR.data = tipoRifa
                 return apiR;
             }else{
-                throw tipoRifa;
+                throw apiR = {
+                    message: "Tipos No Encontrados",
+                    code: 400,
+                    data: tipoRifa 
+                }
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;          
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }           
         }
     }
 }

@@ -23,12 +23,20 @@ export class TipoDocumentoBusiness{
                 apiR.data = tipoDocumento
                 return apiR;
             }else{
-                throw tipoDocumento;
+                throw apiR = {
+                    message: "Tipo No Creado",
+                    code: 400,
+                    data: tipoDocumento 
+                }
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;          
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }         
         }
     }
 
@@ -38,10 +46,11 @@ export class TipoDocumentoBusiness{
         try {
             let tipoDocumento = await getManager().getRepository(TipoDocumento).findOne({where:{id: item.id}})
             if(tipoDocumento == null){
-                apiR.code = 400;
-                apiR.message = "Tipo Inexistente"
-                apiR.data = tipoDocumento
-                return apiR;
+                throw apiR = {
+                    message: "Tipo Inexistente",
+                    code: 400,
+                    data: tipoDocumento 
+                }
             }
             tipoDocumento.name = item.name;
             tipoDocumento.code = item.code;
@@ -54,12 +63,20 @@ export class TipoDocumentoBusiness{
                 apiR.data = newTipoDocumento
                 return apiR;
             }else{
-                throw newTipoDocumento;
+                throw apiR = {
+                    message: "Tipo no Creado",
+                    code: 400,
+                    data: newTipoDocumento 
+                }
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;          
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }            
         }
     }
 
@@ -74,12 +91,20 @@ export class TipoDocumentoBusiness{
                 apiR.data = tipoDocumento
                 return apiR;
             }else{
-                throw tipoDocumento;
+                throw apiR = {
+                    message: "Tipos No Encontrados",
+                    code: 400,
+                    data: tipoDocumento 
+                }
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;          
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }             
         }
     }
 
@@ -94,12 +119,20 @@ export class TipoDocumentoBusiness{
                 apiR.data = tipoDocumento
                 return apiR;
             }else{
-                throw tipoDocumento;
+                throw apiR = {
+                    message: "Tipo No Encontrado",
+                    code: 400,
+                    data: tipoDocumento 
+                }
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;          
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }                      
         }
     }
 
@@ -114,12 +147,20 @@ export class TipoDocumentoBusiness{
                 apiR.data = tipoDocumento
                 return apiR;
             }else{
-                throw tipoDocumento;
+                throw apiR = {
+                    message: "Tipo No Encontrado",
+                    code: 400,
+                    data: tipoDocumento 
+                }
             }
         } catch (error) {
-            apiR.code = 400;
-            apiR.message = error
-            throw apiR;          
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }                      
         }
     }
 }
