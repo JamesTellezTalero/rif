@@ -42,6 +42,45 @@ export class EstadosRifaBusiness{
         }
     }
 
+    async Update(item:EstadosRifa):Promise<apiResponse>{
+        let apiR = new apiResponse();
+        apiR.data = {};
+        try {
+            let estadoRifa = await getManager().getRepository(EstadosRifa).findOne({where:{id: item.id}})
+            if(estadoRifa == null){
+                apiR.code = 400;
+                apiR.message = "Estado Inexistente"
+                apiR.data = estadoRifa
+                throw apiR;
+            }
+            estadoRifa.name = item.name
+            estadoRifa.status = item.status
+            console.log(estadoRifa);
+            await getManager().getRepository(EstadosRifa).save(estadoRifa)
+            estadoRifa = await getManager().getRepository(EstadosRifa).findOne({where:{name: estadoRifa.name}})
+            if(estadoRifa != null){
+                apiR.code = 200;
+                apiR.message = "Estado Actualizado"
+                apiR.data = estadoRifa
+                return apiR;
+            }else{
+                throw apiR = {
+                    message: "Estados No Actualizado",
+                    code: 400,
+                    data: estadoRifa 
+                }
+            }
+        } catch (error) {
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }   
+        }
+    }
+
     async GetAll():Promise<apiResponse>{
         let apiR = new apiResponse();
         apiR.data = {};

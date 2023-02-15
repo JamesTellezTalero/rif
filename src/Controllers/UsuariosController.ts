@@ -37,7 +37,6 @@ exports.Create = async (req, res) => {
             UsuarioExist.message = "El nombre de usuario ingresado ya se encuentra registrado."
             throw UsuarioExist;
         }
-        usuario.password.toUpperCase();
         usuario.createAt = new Date();
         let newUsuario = await UsuariosB.Create(usuario);
         if(newUsuario.code == 200){
@@ -47,6 +46,52 @@ exports.Create = async (req, res) => {
             })
         }else{
             throw newUsuario;
+        }
+    }
+    catch (error){
+        console.log(error);
+        if(error?.code === 400){
+            return res.status(error.code).json({
+                ... error
+            });
+        }else{
+            apiR.code = 500;
+            apiR.message = "Se presentó una excepcion no controlada.";
+            return res.status(apiR.code).json({
+                ... apiR
+            });
+        }
+    }
+}
+
+exports.UpdatePassword = async (req, res) => {
+    let apiR = new apiResponse();
+    apiR.data = {}
+    try {
+        let usuario = req.body;
+        if(!usuario?.email == null || usuario?.email == ""){
+            apiR.code = 400;
+            apiR.message = "No registra la propiedad <email>";
+            throw apiR;
+        }else if(usuario?.password == null || usuario?.password == ""){
+            apiR.code = 400;
+            apiR.message = "No registra la propiedad <password>";
+            throw apiR;
+        }else if(usuario?.newPassword == null || usuario?.newPassword == ""){
+            apiR.code = 400;
+            apiR.message = "Contraseña No registra la propiedad <newPassword>";
+            throw apiR;
+        }
+        usuario.password.toUpperCase();
+        usuario.createAt = new Date();
+        let newPassword = await UsuariosB.UpdatePassword(usuario.email, usuario.password, usuario.newPassword);
+        if(newPassword.code == 200){
+            newPassword.message = "Contraseña Actualizada"
+            return res.status(newPassword.code).json({
+                ... newPassword
+            })
+        }else{
+            throw newPassword;
         }
     }
     catch (error){

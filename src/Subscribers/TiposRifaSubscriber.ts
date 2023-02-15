@@ -12,6 +12,6 @@ export class TiposRifaSubscriber {
     }
 
     async beforeUpdate(event: UpdateEvent<TiposRifa>) {
-        event.entity.updatedAt = new Date();
+        event.entity.updateAt = new Date();
     }
 }

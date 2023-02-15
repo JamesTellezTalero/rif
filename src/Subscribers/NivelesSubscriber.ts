@@ -12,6 +12,6 @@ export class NivelesSubscriber {
     }
 
     async beforeUpdate(event: UpdateEvent<Niveles>) {
-        event.entity.updatedAt = new Date();
+        event.entity.updateAt = new Date();
     }
 }

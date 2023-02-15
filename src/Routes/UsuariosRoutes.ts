@@ -8,6 +8,8 @@ router.get('/', (req, res) => {
     res.send('Bienvenido al BackEnd de Rif ||| <br>Sección de usuarios');
 });
 
+router.put('/UpdatePassword', usuarios_controller.UpdatePassword);
+
 router.post('/Create', usuarios_controller.Create);
 router.post('/Login', usuarios_controller.Login);
 

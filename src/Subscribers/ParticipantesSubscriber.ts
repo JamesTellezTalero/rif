@@ -12,6 +12,6 @@ export class ParticipantesSubscriber  {
     }
 
     async beforeUpdate(event: UpdateEvent<Participantes>) {
-        event.entity.updatedAt = new Date();
+        event.entity.updateAt = new Date();
     }
 }

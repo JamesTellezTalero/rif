@@ -27,8 +27,34 @@ export class UsuariosBusiness{
             });
             user.avatar = bufferPath;
             user.nivel = await getManager().getRepository(Niveles).findOne({where:{nombre: "NivelBajo"}})
-            user.password = crypto.createHash("md5").update(user.password).digest("hex");
+            user.password = crypto.createHash("md5").update(user.password).digest("hex").toUpperCase();
             let Usuario = await getManager().getRepository(Usuarios).save(user)
+            return await this.GetById(Usuario.id);
+        } catch (error) {
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }    
+        }
+    }
+
+    async UpdatePassword(email:string, password:string, newPassword:string):Promise<apiResponse>{
+        let apiR = new apiResponse();
+        apiR.data = {}
+        try {
+            let usuario = await getManager().getRepository(Usuarios).findOne({where:{email, password}});
+            if(usuario == null){
+                throw apiR = {
+                    message: "No Registra",
+                    code: 400,
+                    data: usuario 
+                }
+            }
+            usuario.password = crypto.createHash("md5").update(newPassword).digest("hex").toUpperCase();
+            let Usuario = await getManager().getRepository(Usuarios).save(usuario)
             return await this.GetById(Usuario.id);
         } catch (error) {
             if(error?.code === 400){

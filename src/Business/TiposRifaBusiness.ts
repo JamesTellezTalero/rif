@@ -10,11 +10,50 @@ export class TiposRifaBusiness{
         try {
             let tipoRifa = await getManager().getRepository(TiposRifa).findOne({where:{name: item.name}})
             if(tipoRifa != null){
-                apiR.code = 200;
+                apiR.code = 400;
                 apiR.message = "Tipo Existente"
                 apiR.data = tipoRifa
                 return apiR;
             }
+            await getManager().getRepository(TiposRifa).save(item)
+            tipoRifa = await getManager().getRepository(TiposRifa).findOne({where:{name: item.name}})
+            if(tipoRifa != null){
+                apiR.code = 200;
+                apiR.message = "Tipo Creado"
+                apiR.data = tipoRifa
+                return apiR;
+            }else{
+                throw apiR = {
+                    message: "Tipo No Creado",
+                    code: 400,
+                    data: tipoRifa 
+                }
+            }
+        } catch (error) {
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }             
+        }
+    }
+
+    async Update(item:TiposRifa):Promise<apiResponse>{
+        let apiR = new apiResponse();
+        apiR.data = {};
+        try {
+            let tipoRifa = await getManager().getRepository(TiposRifa).findOne({where:{id: item.id}})
+            if(tipoRifa == null){
+                apiR.code = 400;
+                apiR.message = "Tipo Inexistente"
+                apiR.data = tipoRifa
+                return apiR;
+            }
+            tipoRifa.name = item.name
+            tipoRifa.recompenza = item.recompenza
+            tipoRifa.status = item.status
             await getManager().getRepository(TiposRifa).save(item)
             tipoRifa = await getManager().getRepository(TiposRifa).findOne({where:{name: item.name}})
             if(tipoRifa != null){

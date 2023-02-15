@@ -12,6 +12,6 @@ export class RifasSubscriber {
     }
 
     async beforeUpdate(event: UpdateEvent<Rifas>) {
-        event.entity.updatedAt = new Date();
+        event.entity.updateAt = new Date();
     }
 }

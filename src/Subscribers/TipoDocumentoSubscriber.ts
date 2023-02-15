@@ -12,6 +12,6 @@ export class TipoDocumentoSubscriber  {
     }
 
     async beforeUpdate(event: UpdateEvent<TipoDocumento>) {
-        event.entity.updatedAt = new Date();
+        event.entity.updateAt = new Date();
     }
 }

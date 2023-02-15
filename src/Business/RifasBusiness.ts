@@ -58,7 +58,11 @@ export class RifasBusiness{
             let date = new Date();
             let oldRifa = await getManager().getRepository(Rifas).findOne({where:{id: rifa.id}})
             if(oldRifa == null){
-                throw "Rifa no encontrada";
+                throw apiR = {
+                    message: "Rifa no encontrada",
+                    code: 400,
+                    data: oldRifa 
+                }
             }
             let imagePathStructure = (rifa.name.replace(/ /g, "-")) + "-" + date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
             let buffer = Buffer.from(rifa.image, "base64");

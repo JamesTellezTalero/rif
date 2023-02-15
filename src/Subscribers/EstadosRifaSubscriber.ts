@@ -12,6 +12,6 @@ export class EstadosRifaSubscriber {
     }
 
     async beforeUpdate(event: UpdateEvent<EstadosRifa>) {
-        event.entity.updatedAt = new Date();
+        event.entity.updateAt = new Date();
     }
 }
