@@ -16,10 +16,9 @@ export class ParticipantesBusiness{
         let apiR = new apiResponse();
         apiR.data = {}
         try {
-            // let Participante = await getManager().getRepository(Participantes).save(participante)
-            // return await this.GetById(Participante.id);
+            let Participante = await getManager().getRepository(Participantes).save(participante)
             apiR.code = 200;
-            apiR.data = {status: true};
+            apiR.data = {participante: await this.GetById(Participante.id)};
             return apiR;
         } catch (error) {
             apiR.code = 400;
@@ -66,7 +65,7 @@ export class ParticipantesBusiness{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
-            let Participante = await getManager().getRepository(Participantes).findOne({where:{id: id}, relations:['tipoDocumento']})
+            let Participante = await getManager().getRepository(Participantes).findOne({where:{id: id, status: true}, relations:['tipoDocumento']})
             if(Participante != null){
                 apiR.code = 200;
                 apiR.message = "Participante encontrado"

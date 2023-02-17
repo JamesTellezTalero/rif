@@ -2,9 +2,11 @@ import { ParticipantesBusiness } from "../Business/ParticipantesBusiness";
 import {  StringUtils} from "../Utils/StringUtils";
 import { apiResponse } from "../Models/apiResponse";
 import { Participantes } from "../entities/Participantes";
+import { TipoDocumentoBusiness } from "../Business/TipoDocumentoBusiness";
 
 let StringU = new StringUtils()
 let ParticipantesB = new ParticipantesBusiness()
+let TipoDocumentoB = new TipoDocumentoBusiness()
 
 exports.Create = async (req, res) => {
     let apiR = new apiResponse();
@@ -32,7 +34,18 @@ exports.Create = async (req, res) => {
             apiR.code = 400;
             apiR.message = "tipoDocumento Vacio";
             throw apiR;
+        }else if(participante?.tipoDocumento?.code == null){
+            apiR.code = 400;
+            apiR.message = "tipoDocumento <code> Vacio";
+            throw apiR;
         }
+        let tipodocumento:any = (await TipoDocumentoB.GetByCode(participante?.tipoDocumento?.code)).data; 
+        if(tipodocumento == null){
+            apiR.code = 400;
+            apiR.message = "tipoDocumento invalido";
+            throw apiR;
+        }
+        participante.tipoDocumento = tipodocumento;
         let ParticipanteExist = await ParticipantesB.ValidateExistence(participante)
         if( ParticipanteExist.code == 400 && ParticipanteExist.message == participante?.email){
             ParticipanteExist.message = "El email ingresado ya se encuentra registrado."
