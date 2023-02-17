@@ -1,14 +1,6 @@
 import { getManager } from "typeorm";
 import { Participantes } from "../entities/Participantes";
 import { apiResponse } from "../Models/apiResponse";
-import { Niveles } from "../entities/Niveles";
-const jwt = require("jsonwebtoken");
-const passport = require("passport");
-const crypto = require("crypto");
-
-const fs = require('fs');
-
-let secretOrKey =  process.env.AUTH_KEY;
 
 export class ParticipantesBusiness{  
 
@@ -66,6 +58,62 @@ export class ParticipantesBusiness{
         apiR.data = {};
         try {
             let Participante = await getManager().getRepository(Participantes).findOne({where:{id: id, status: true}, relations:['tipoDocumento']})
+            if(Participante != null){
+                apiR.code = 200;
+                apiR.message = "Participante encontrado"
+                apiR.data = Participante
+                return apiR;
+            }else{
+                throw apiR ={
+                    code: 400,
+                    message: `Participante no encontrado`,
+                    data: Participante
+                };
+            }
+        } catch (error) {
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }            
+        }
+    }
+    
+    async GetByEmail(email:string):Promise<apiResponse>{
+        let apiR = new apiResponse();
+        apiR.data = {};
+        try {
+            let Participante = await getManager().getRepository(Participantes).findOne({where:{email}, relations:['tipoDocumento']})
+            if(Participante != null){
+                apiR.code = 200;
+                apiR.message = "Participante encontrado"
+                apiR.data = Participante
+                return apiR;
+            }else{
+                throw apiR ={
+                    code: 400,
+                    message: `Participante no encontrado`,
+                    data: Participante
+                };
+            }
+        } catch (error) {
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }            
+        }
+    }
+
+    async GetByDocumento(documento:string):Promise<apiResponse>{
+        let apiR = new apiResponse();
+        apiR.data = {};
+        try {
+            let Participante = await getManager().getRepository(Participantes).findOne({where:{documento}, relations:['tipoDocumento']})
             if(Participante != null){
                 apiR.code = 200;
                 apiR.message = "Participante encontrado"

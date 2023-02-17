@@ -109,3 +109,61 @@ exports.GetById = async (req, res) => {
         }   
     }
 }
+
+exports.GetByEmail = async (req, res) => {
+    let apiR = new apiResponse();
+    apiR.data = {}
+    try {
+        let email:string = req.body.email;
+        let exist = await ParticipantesB.GetByEmail(email);
+        if(exist.code == 200){
+            return res.status(exist.code).json({
+                ... exist
+            })
+        }else{
+            throw exist;
+        }
+    } catch (error) {
+        console.log(error);
+        if(error?.code === 400){
+            return res.status(error.code).json({
+                ... error
+            });
+        }else{
+            apiR.code = 500;
+            apiR.message = "Se presentó una excepcion no controlada.";
+            return res.status(apiR.code).json({
+                ... apiR
+            });
+        }   
+    }
+}
+
+exports.GetByDocumento = async (req, res) => {
+    let apiR = new apiResponse();
+    apiR.data = {}
+    try {
+        let documento:string = req.body.documento;
+        let exist = await ParticipantesB.GetByDocumento(documento);
+        if(exist.code == 200){
+            return res.status(exist.code).json({
+                ... exist
+            })
+        }else{
+            throw exist;
+        }
+    } catch (error) {
+        console.log(error);
+        if(error?.code === 400){
+            return res.status(error.code).json({
+                ... error
+            });
+        }else{
+            apiR.code = 500;
+            apiR.message = "Se presentó una excepcion no controlada.";
+            return res.status(apiR.code).json({
+                ... apiR
+            });
+        }   
+    }
+}
