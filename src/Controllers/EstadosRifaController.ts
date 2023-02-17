@@ -93,10 +93,18 @@ exports.GetAll = async (req, res) => {
     apiR.data = {}
     try {
         let resp = await EstadosRifasB.GetAll();
-        apiR.code = 200;
-        apiR.message = "Estados encontrados"
-        apiR.data = resp
-        return res.status(apiR.code).json({... apiR})
+        if(resp.length > 0){
+            apiR.code = 200;
+            apiR.message = "Estados encontrados"
+            apiR.data = resp
+            return res.status(apiR.code).json({... apiR})
+        }else{
+            throw apiR = {
+                message: "Estados No Encontrado",
+                code: 400,
+                data: resp 
+            }
+        }
     }
     catch (error){
         console.log(error);
@@ -125,10 +133,18 @@ exports.GetById = async (req, res) => {
             throw apiR;
         }
         let resp = await EstadosRifasB.GetById(id);
-        apiR.code = 200;
-        apiR.message = "Estado encontrado"
-        apiR.data = resp
-        return res.status(apiR.code).json({... apiR})
+        if(resp != null){
+            apiR.code = 200;
+            apiR.message = "Estado encontrado"
+            apiR.data = resp
+            return res.status(apiR.code).json({... apiR})
+        }else{
+            throw apiR = {
+                message: "Estado No Encontrado",
+                code: 400,
+                data: resp 
+            }
+        }
     }
     catch (error){
         console.log(error);
@@ -157,10 +173,19 @@ exports.GetByName = async (req, res) => {
             throw apiR;
         }
         let resp = await EstadosRifasB.GetByName(name);
-        apiR.code = 200;
-        apiR.message = "Estado encontrado"
-        apiR.data = resp
-        return res.status(apiR.code).json({... apiR})
+        if(resp != null){
+            apiR.code = 200;
+            apiR.message = "Estado encontrado"
+            apiR.data = resp
+            return res.status(apiR.code).json({... apiR});
+        }else{
+            throw apiR = {
+                message: "Estado No Encontrado",
+                code: 400,
+                data: resp 
+            }
+        }
+        
     }
     catch (error){
         console.log(error);

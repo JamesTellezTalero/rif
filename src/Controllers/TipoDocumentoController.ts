@@ -29,17 +29,13 @@ exports.Create = async (req, res) => {
             apiR.code = 200;
             apiR.message = "Tipo Existente"
             apiR.data = exist
-            return res.status(apiR.code).json({
-                ...apiR
-            })
+            return res.status(apiR.code).json({...apiR})
         }else{
             let resp = await TipoDocumentoB.Create(item);
             apiR.code = 200;
             apiR.message = "Tipo Creado"
             apiR.data = resp
-            return res.status(apiR.code).json({
-                ...apiR
-            })
+            return res.status(apiR.code).json({...apiR})
         }
     }
     catch (error){
@@ -93,9 +89,7 @@ exports.Update = async (req, res) => {
         apiR.code = 200;
         apiR.message = "Tipo Creado"
         apiR.data = resp
-        return res.status(apiR.code).json({
-            ...apiR
-        })
+        return res.status(apiR.code).json({...apiR})
     }
     catch (error){
         console.log(error);
@@ -118,12 +112,18 @@ exports.GetAll = async (req, res) => {
     apiR.data = {}
     try {
         let resp = await TipoDocumentoB.GetAll();
-        apiR.code = 200;
-        apiR.message = "Tipos encontrados"
-        apiR.data = resp
-        return res.status(apiR.code).json({
-            ...apiR
-        })
+        if(resp.length > 0){
+            apiR.code = 200;
+            apiR.message = "Tipos encontrados"
+            apiR.data = resp
+            return res.status(apiR.code).json({...apiR})
+        }else{
+            throw apiR = {
+                message: "Tipo No Encontrado",
+                code: 400,
+                data: resp 
+            }
+        }
     }
     catch (error){
         console.log(error);
@@ -152,12 +152,18 @@ exports.GetById = async (req, res) => {
             throw apiR;
         }
         let resp = await TipoDocumentoB.GetById(id);
-        apiR.code = 200;
-        apiR.message = "Tipo encontrado"
-        apiR.data = resp
-        return res.status(apiR.code).json({
-            ...apiR
-        })
+        if(resp != null){
+            apiR.code = 200;
+            apiR.message = "Tipo encontrado"
+            apiR.data = resp
+            return res.status(apiR.code).json({...apiR})
+        }else{
+            throw apiR = {
+                message: "Tipo No Encontrado",
+                code: 400,
+                data: resp 
+            }
+        }
     }
     catch (error){
         console.log(error);
@@ -186,13 +192,18 @@ exports.GetByCode = async (req, res) => {
             throw apiR;
         }
         let resp = await TipoDocumentoB.GetByCode(code);
-        
-        apiR.code = 200;
-        apiR.message = "Tipo encontrado"
-        apiR.data = resp
-        return res.status(apiR.code).json({
-            ...apiR
-        })
+        if(resp != null){
+            apiR.code = 200;
+            apiR.message = "Tipo encontrado"
+            apiR.data = resp
+            return res.status(apiR.code).json({...apiR})
+        }else{
+            throw apiR = {
+                message: "Tipo No Encontrado",
+                code: 400,
+                data: resp 
+            }
+        }
     }
     catch (error){
         console.log(error);

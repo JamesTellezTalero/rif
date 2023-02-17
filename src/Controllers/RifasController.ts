@@ -181,12 +181,20 @@ exports.GetAll = async (req, res) => {
     apiR.data = {}
     try {
         let rifas = await RifasB.GetAll();
-        apiR.code = 200;
-        apiR.message = "Rifas encontradas"
-        apiR.data = rifas
-        return res.status(200).json({
-            ... apiR
-        })
+        if(rifas.length > 0){
+            apiR.code = 200;
+            apiR.message = "Rifas encontradas"
+            apiR.data = rifas
+            return res.status(200).json({
+                ... apiR
+            })
+        }else{
+            throw apiR = {
+                message: "Rifas No Encontradas",
+                code: 400,
+                data: rifas 
+            }
+        }
     }
     catch (error){
         console.log(error);
@@ -216,12 +224,20 @@ exports.GetById = async (req, res) => {
             throw apiR;
         }
         let rifa = await RifasB.GetById(id)
-        apiR.code = 200;
-        apiR.message = "Rifa encontrada"
-        apiR.data = rifa
-        return res.status(200).json({
-            ... apiR
-        })
+        if(rifa){
+            apiR.code = 200;
+            apiR.message = "Rifa encontrada"
+            apiR.data = rifa
+            return res.status(200).json({
+                ... apiR
+            })
+        }else{
+            throw apiR = {
+                message: "Rifa No Encontrada",
+                code: 400,
+                data: rifa 
+            }
+        }
     }
     catch (error){
         console.log(error);

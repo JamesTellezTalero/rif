@@ -110,15 +110,7 @@ export class RifasBusiness{
         apiR.data = {};
         try {
             let rifas = await getManager().getRepository(Rifas).find({relations:["estadoRifa", "tipoRifa", "usuario"]})
-            if(rifas){
-                return rifas;
-            }else{
-                throw apiR = {
-                    message: "Rifas No Encontradas",
-                    code: 400,
-                    data: rifas 
-                }
-            }
+            return rifas;
         } catch (error) {
             if(error?.code === 400){
                 throw apiR;          
@@ -135,15 +127,7 @@ export class RifasBusiness{
         apiR.data = {};
         try {
             let Rifa = await getManager().getRepository(Rifas).findOne({where:{id: id}, relations:["estadoRifa", "tipoRifa", "usuario"]})
-            if(Rifa){
-                return Rifa;
-            }else{
-                throw apiR = {
-                    message: "Rifa No Encontrada",
-                    code: 400,
-                    data: Rifa 
-                }
-            }
+            return Rifa;
         } catch (error) {
             if(error?.code === 400){
                 throw apiR;          

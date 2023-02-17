@@ -70,15 +70,7 @@ export class TiposRifaBusiness{
         apiR.data = {};
         try {
             let tipoRifa = await getManager().getRepository(TiposRifa).find()
-            if(tipoRifa != null){
-                return tipoRifa;
-            }else{
-                throw apiR = {
-                    message: "Tipos No Encontrados",
-                    code: 400,
-                    data: tipoRifa 
-                }
-            }
+            return tipoRifa;
         } catch (error) {
             if(error?.code === 400){
                 throw apiR;          
@@ -95,15 +87,7 @@ export class TiposRifaBusiness{
         apiR.data = {};
         try {
             let tipoRifa = await getManager().getRepository(TiposRifa).findOne({where:{id: id}})
-            if(tipoRifa != null){
-                return tipoRifa;
-            }else{
-                throw apiR = {
-                    message: "Tipos No Encontrados",
-                    code: 400,
-                    data: tipoRifa 
-                }
-            }
+            return tipoRifa;
         } catch (error) {
             if(error?.code === 400){
                 throw apiR;          
@@ -120,15 +104,7 @@ export class TiposRifaBusiness{
         apiR.data = {};
         try {
             let tipoRifa = await getManager().getRepository(TiposRifa).findOne({where:{name: name}})
-            if(tipoRifa != null){
-                return tipoRifa;
-            }else{
-                throw apiR = {
-                    message: "Tipos No Encontrados",
-                    code: 400,
-                    data: tipoRifa 
-                }
-            }
+            return tipoRifa;
         } catch (error) {
             if(error?.code === 400){
                 throw apiR;          

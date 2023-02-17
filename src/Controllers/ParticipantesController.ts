@@ -77,12 +77,20 @@ exports.GetById = async (req, res) => {
     try {
         let id:number = req.query.id;
         let exist = await ParticipantesB.GetById(id);
-        apiR.code = 200;
-        apiR.message = "Participante encontrado"
-        apiR.data = exist
-        return res.status(apiR.code).json({
-            ... apiR
-        })
+        if(exist != null){
+            apiR.code = 200;
+            apiR.message = "Participante encontrado"
+            apiR.data = exist
+            return res.status(apiR.code).json({
+                ... apiR
+            })
+        }else{
+            throw apiR ={
+                code: 400,
+                message: `Participante no encontrado`,
+                data: exist
+            };
+        }
     } catch (error) {
         console.log(error);
         if(error?.code === 400){
@@ -105,12 +113,20 @@ exports.GetByEmail = async (req, res) => {
     try {
         let email:string = req.body.email;
         let exist = await ParticipantesB.GetByEmail(email);
-        apiR.code = 200;
-        apiR.message = "Participante encontrado"
-        apiR.data = exist
-        return res.status(apiR.code).json({
-            ... apiR
-        })
+        if(exist != null){
+            apiR.code = 200;
+            apiR.message = "Participante encontrado"
+            apiR.data = exist
+            return res.status(apiR.code).json({
+                ... apiR
+            })
+        }else{
+            throw apiR ={
+                code: 400,
+                message: `Participante no encontrado`,
+                data: exist
+            };
+        }
     } catch (error) {
         console.log(error);
         if(error?.code === 400){
@@ -133,12 +149,20 @@ exports.GetByDocumento = async (req, res) => {
     try {
         let documento:string = req.body.documento;
         let exist = await ParticipantesB.GetByDocumento(documento);
-        apiR.code = 200;
-        apiR.message = "Participante encontrado"
-        apiR.data = exist    
-        return res.status(apiR.code).json({
-            ... apiR
-        })
+        if(exist != null){
+            apiR.code = 200;
+            apiR.message = "Participante encontrado"
+            apiR.data = exist    
+            return res.status(apiR.code).json({
+                ... apiR
+            })
+        }else{
+            throw apiR ={
+                code: 400,
+                message: `Participante no encontrado`,
+                data: exist
+            };
+        }
     } catch (error) {
         console.log(error);
         if(error?.code === 400){

@@ -54,15 +54,7 @@ export class ParticipantesBusiness{
         apiR.data = {};
         try {
             let Participante = await getManager().getRepository(Participantes).findOne({where:{id: id, status: true}, relations:['tipoDocumento']})
-            if(Participante != null){
-                return Participante;
-            }else{
-                throw apiR ={
-                    code: 400,
-                    message: `Participante no encontrado`,
-                    data: Participante
-                };
-            }
+            return Participante;
         } catch (error) {
             if(error?.code === 400){
                 throw apiR;          
@@ -79,15 +71,7 @@ export class ParticipantesBusiness{
         apiR.data = {};
         try {
             let Participante = await getManager().getRepository(Participantes).findOne({where:{email}, relations:['tipoDocumento']})
-            if(Participante != null){
-                return Participante;
-            }else{
-                throw apiR ={
-                    code: 400,
-                    message: `Participante no encontrado`,
-                    data: Participante
-                };
-            }
+            return Participante;
         } catch (error) {
             if(error?.code === 400){
                 throw apiR;          
@@ -104,15 +88,7 @@ export class ParticipantesBusiness{
         apiR.data = {};
         try {
             let Participante = await getManager().getRepository(Participantes).findOne({where:{documento}, relations:['tipoDocumento']})
-            if(Participante != null){
-                return Participante;
-            }else{
-                throw apiR ={
-                    code: 400,
-                    message: `Participante no encontrado`,
-                    data: Participante
-                };
-            }
+            return Participante;
         } catch (error) {
             if(error?.code === 400){
                 throw apiR;          

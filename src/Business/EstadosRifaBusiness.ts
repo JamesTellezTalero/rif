@@ -80,15 +80,7 @@ export class EstadosRifaBusiness{
         apiR.data = {};
         try {
             let estadosRifa = await getManager().getRepository(EstadosRifa).find()
-            if(estadosRifa != null){
-                return estadosRifa;
-            }else{
-                throw apiR = {
-                    message: "Estados No Encontrado",
-                    code: 400,
-                    data: estadosRifa 
-                }
-            }
+            return estadosRifa;
         } catch (error) {
             if(error?.code === 400){
                 throw apiR;          
@@ -105,15 +97,7 @@ export class EstadosRifaBusiness{
         apiR.data = {};
         try {
             let estadoRifa = await getManager().getRepository(EstadosRifa).findOne({where:{id: id}})
-            if(estadoRifa != null){
-                return estadoRifa;
-            }else{
-                throw apiR = {
-                    message: "Estado No Encontrado",
-                    code: 400,
-                    data: estadoRifa 
-                }
-            }
+            return estadoRifa;
         } catch (error) {
             if(error?.code === 400){
                 throw apiR;          
@@ -130,15 +114,7 @@ export class EstadosRifaBusiness{
         apiR.data = {};
         try {
             let estadoRifa = await getManager().getRepository(EstadosRifa).findOne({where:{name: name}})
-            if(estadoRifa != null){
-                return estadoRifa;
-            }else{
-                throw apiR = {
-                    message: "Estado No Encontrado",
-                    code: 400,
-                    data: estadoRifa 
-                }
-            }
+            return estadoRifa;
         } catch (error) {
             if(error?.code === 400){
                 throw apiR;          

@@ -71,15 +71,7 @@ export class TipoDocumentoBusiness{
         apiR.data = {};
         try {
             let tipoDocumento = await getManager().getRepository(TipoDocumento).find()
-            if(tipoDocumento != null){
-                return tipoDocumento;
-            }else{
-                throw apiR = {
-                    message: "Tipos No Encontrados",
-                    code: 400,
-                    data: tipoDocumento 
-                }
-            }
+            return tipoDocumento;
         } catch (error) {
             if(error?.code === 400){
                 throw apiR;          
@@ -96,15 +88,7 @@ export class TipoDocumentoBusiness{
         apiR.data = {};
         try {
             let tipoDocumento = await getManager().getRepository(TipoDocumento).findOne({where:{id: id}})
-            if(tipoDocumento != null){
-                return tipoDocumento;
-            }else{
-                throw apiR = {
-                    message: "Tipo No Encontrado",
-                    code: 400,
-                    data: tipoDocumento 
-                }
-            }
+            return tipoDocumento;
         } catch (error) {
             if(error?.code === 400){
                 throw apiR;          
@@ -121,15 +105,7 @@ export class TipoDocumentoBusiness{
         apiR.data = {};
         try {
             let tipoDocumento = await getManager().getRepository(TipoDocumento).findOne({where:{code: code}})
-            if(tipoDocumento != null){
-                return tipoDocumento;
-            }else{
-                throw apiR = {
-                    message: "Tipo No Encontrado",
-                    code: 400,
-                    data: tipoDocumento 
-                }
-            }
+            return tipoDocumento;
         } catch (error) {
             if(error?.code === 400){
                 throw apiR;          
