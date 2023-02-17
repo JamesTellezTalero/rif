@@ -4,24 +4,13 @@ import { TipoDocumento } from "../entities/TipoDocumento";
 
 export class TipoDocumentoBusiness{  
 
-    async Create(item:TipoDocumento):Promise<apiResponse>{
+    async Create(item:TipoDocumento):Promise<TipoDocumento>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
-            let tipoDocumento = await getManager().getRepository(TipoDocumento).findOne({where:{name: item.code}})
+            let tipoDocumento = await getManager().getRepository(TipoDocumento).save(item)
             if(tipoDocumento != null){
-                apiR.code = 200;
-                apiR.message = "Tipo Existente"
-                apiR.data = tipoDocumento
-                return apiR;
-            }
-            await getManager().getRepository(TipoDocumento).save(item)
-            tipoDocumento = await getManager().getRepository(TipoDocumento).findOne({where:{code: item.code}})
-            if(tipoDocumento != null){
-                apiR.code = 200;
-                apiR.message = "Tipo Creado"
-                apiR.data = tipoDocumento
-                return apiR;
+                return tipoDocumento;
             }else{
                 throw apiR = {
                     message: "Tipo No Creado",
@@ -40,7 +29,7 @@ export class TipoDocumentoBusiness{
         }
     }
 
-    async Update(item:TipoDocumento):Promise<apiResponse>{
+    async Update(item:TipoDocumento):Promise<TipoDocumento>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
@@ -58,10 +47,7 @@ export class TipoDocumentoBusiness{
             await getManager().getRepository(TipoDocumento).save(tipoDocumento)
             let newTipoDocumento = await getManager().getRepository(TipoDocumento).findOne({where:{id: item.id}})
             if(newTipoDocumento != null){
-                apiR.code = 200;
-                apiR.message = "Tipo Creado"
-                apiR.data = newTipoDocumento
-                return apiR;
+                return newTipoDocumento;
             }else{
                 throw apiR = {
                     message: "Tipo no Creado",
@@ -80,16 +66,13 @@ export class TipoDocumentoBusiness{
         }
     }
 
-    async GetAll():Promise<apiResponse>{
+    async GetAll():Promise<TipoDocumento[]>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
             let tipoDocumento = await getManager().getRepository(TipoDocumento).find()
             if(tipoDocumento != null){
-                apiR.code = 200;
-                apiR.message = "Tipos encontrados"
-                apiR.data = tipoDocumento
-                return apiR;
+                return tipoDocumento;
             }else{
                 throw apiR = {
                     message: "Tipos No Encontrados",
@@ -108,16 +91,13 @@ export class TipoDocumentoBusiness{
         }
     }
 
-    async GetById(id:number):Promise<apiResponse>{
+    async GetById(id:number):Promise<TipoDocumento>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
             let tipoDocumento = await getManager().getRepository(TipoDocumento).findOne({where:{id: id}})
             if(tipoDocumento != null){
-                apiR.code = 200;
-                apiR.message = "Tipo encontrado"
-                apiR.data = tipoDocumento
-                return apiR;
+                return tipoDocumento;
             }else{
                 throw apiR = {
                     message: "Tipo No Encontrado",
@@ -136,16 +116,13 @@ export class TipoDocumentoBusiness{
         }
     }
 
-    async GetByCode(code:string):Promise<apiResponse>{
+    async GetByCode(code:string):Promise<TipoDocumento>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
             let tipoDocumento = await getManager().getRepository(TipoDocumento).findOne({where:{code: code}})
             if(tipoDocumento != null){
-                apiR.code = 200;
-                apiR.message = "Tipo encontrado"
-                apiR.data = tipoDocumento
-                return apiR;
+                return tipoDocumento;
             }else{
                 throw apiR = {
                     message: "Tipo No Encontrado",

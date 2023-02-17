@@ -29,24 +29,15 @@ exports.Create = async (req, res) => {
             apiR.message = "Avatar Vacio";
             throw apiR;
         }
-        let UsuarioExist = await UsuariosB.ValidateExistence(usuario)
-        if( UsuarioExist.code == 400 && UsuarioExist.message == usuario?.email){
-            UsuarioExist.message = "El email ingresado ya se encuentra registrado."
-            throw UsuarioExist;
-        }else if( UsuarioExist.code == 400 && UsuarioExist.message == usuario?.userName){
-            UsuarioExist.message = "El nombre de usuario ingresado ya se encuentra registrado."
-            throw UsuarioExist;
-        }
+        await UsuariosB.ValidateExistence(usuario)
         usuario.createAt = new Date();
         let newUsuario = await UsuariosB.Create(usuario);
-        if(newUsuario.code == 200){
-            newUsuario.message = "Usuario Creado"
-            return res.status(newUsuario.code).json({
-                ... newUsuario
-            })
-        }else{
-            throw newUsuario;
-        }
+        apiR.code = 200;
+        apiR.message = "Usuario Creado";
+        apiR.data = newUsuario;
+        return res.status(apiR.code).json({
+            ... apiR
+        })
     }
     catch (error){
         console.log(error);
@@ -85,14 +76,12 @@ exports.UpdatePassword = async (req, res) => {
         usuario.password.toUpperCase();
         usuario.createAt = new Date();
         let newPassword = await UsuariosB.UpdatePassword(usuario.email, usuario.password, usuario.newPassword);
-        if(newPassword.code == 200){
-            newPassword.message = "Contraseña Actualizada"
-            return res.status(newPassword.code).json({
-                ... newPassword
-            })
-        }else{
-            throw newPassword;
-        }
+        apiR.code = 200;
+        apiR.message = "Contraseña Actualizada";
+        apiR.data = newPassword;
+        return res.status(apiR.code).json({
+            ... apiR
+        })
     }
     catch (error){
         console.log(error);
@@ -126,12 +115,47 @@ exports.Login = async (req, res) => {
             throw apiR;
         }
         let loged = await UsuariosB.Login(email, password);
-        if(loged.code == 200){
-            return res.status(loged.code).json({
-                ... loged
+        apiR.code = 200;
+        apiR.message = "Usuario Logueado";
+        apiR.data = loged;
+        return res.status(apiR.code).json({
+            ... apiR
+        })
+    } catch (error) {
+        console.log(error);
+        if(error?.code === 400){
+            return res.status(error.code).json({
+                ... error
+            });
+        }else{
+            apiR.code = 500;
+            apiR.message = "Se presentó una excepcion no controlada.";
+            return res.status(apiR.code).json({
+                ... apiR
+            });
+        }   
+    }
+}
+
+exports.GetAll = async (req, res) => {
+    let apiR = new apiResponse();
+    apiR.data = {}
+    try {
+        let Users = await UsuariosB.GetAll();
+        
+        if(Users.length > 0){
+            apiR.code = 200;
+            apiR.message = "Usuarios encontrados"
+            apiR.data = Users
+            return res.status(apiR.code).json({
+                ... apiR
             })
         }else{
-            throw loged;
+            throw apiR ={
+                code: 400,
+                message: `Usuarios No Encontrados`,
+                data: Users
+            }
         }
     } catch (error) {
         console.log(error);
@@ -155,40 +179,19 @@ exports.GetById = async (req, res) => {
     try {
         let id:number = req.query.id;
         let exist = await UsuariosB.GetById(id);
-        if(exist.code == 200){
-            return res.status(exist.code).json({
-                ... exist
-            })
-        }else{
-            throw exist;
-        }
-    } catch (error) {
-        console.log(error);
-        if(error?.code === 400){
-            return res.status(error.code).json({
-                ... error
-            });
-        }else{
-            apiR.code = 500;
-            apiR.message = "Se presentó una excepcion no controlada.";
+        if(exist != null){
+            apiR.code = 200;
+            apiR.message = "Usuario encontrado"
+            apiR.data = exist
             return res.status(apiR.code).json({
                 ... apiR
-            });
-        }   
-    }
-}
-
-exports.GetAll = async (req, res) => {
-    let apiR = new apiResponse();
-    apiR.data = {}
-    try {
-        let exist = await UsuariosB.GetAll();
-        if(exist.code == 200){
-            return res.status(exist.code).json({
-                ... exist
             })
         }else{
-            throw exist;
+            throw apiR ={
+                code: 400,
+                message: `Usuario No Encontrado`,
+                data: exist
+            }
         }
     } catch (error) {
         console.log(error);

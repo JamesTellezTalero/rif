@@ -12,7 +12,7 @@ const fs = require('fs');
 
 export class RifasBusiness{  
 
-    async Create(rifa:Rifas):Promise<apiResponse>{
+    async Create(rifa:Rifas):Promise<Rifas>{
         let apiR = new apiResponse();
         apiR.data = {}
         try {
@@ -29,10 +29,7 @@ export class RifasBusiness{
             rifa.estadoRifa = await getManager().getRepository(EstadosRifa).findOne({where:{name: "Creada"}});
             rifa = await getManager().getRepository(Rifas).save(rifa)
             if(rifa != null){
-                apiR.code = 200;
-                apiR.message = "Rifa Creada"
-                apiR.data = rifa
-                return apiR;
+                return rifa;
             }else{
                 throw apiR = {
                     message: "Rifa No Creada",
@@ -51,7 +48,7 @@ export class RifasBusiness{
         }
     }
 
-    async UpdateById(rifa:Rifas):Promise<apiResponse>{
+    async UpdateById(rifa:Rifas):Promise<Rifas>{
         let apiR = new apiResponse();
         apiR.data = {}
         try {
@@ -89,10 +86,7 @@ export class RifasBusiness{
             oldRifa.status = rifa.status;
             oldRifa = await getManager().getRepository(Rifas).save(oldRifa)
             if(oldRifa != null){
-                apiR.code = 200;
-                apiR.message = "Rifa Actualizada"
-                apiR.data = oldRifa
-                return apiR;
+                return oldRifa;
             }else{
                 throw apiR = {
                     message: "Rifa No Actualizada",
@@ -111,19 +105,16 @@ export class RifasBusiness{
         }
     }
 
-    async GetAll():Promise<apiResponse>{
+    async GetAll():Promise<Rifas[]>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
             let rifas = await getManager().getRepository(Rifas).find({relations:["estadoRifa", "tipoRifa", "usuario"]})
             if(rifas){
-                apiR.code = 200;
-                apiR.message = "Rifas encontradas"
-                apiR.data = rifas
-                return apiR;
+                return rifas;
             }else{
                 throw apiR = {
-                    message: "Rifa No Actualizada",
+                    message: "Rifas No Encontradas",
                     code: 400,
                     data: rifas 
                 }
@@ -139,19 +130,16 @@ export class RifasBusiness{
         }
     }
 
-    async GetById(id:number):Promise<apiResponse>{
+    async GetById(id:number):Promise<Rifas>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
             let Rifa = await getManager().getRepository(Rifas).findOne({where:{id: id}, relations:["estadoRifa", "tipoRifa", "usuario"]})
             if(Rifa){
-                apiR.code = 200;
-                apiR.message = "Rifa encontrada"
-                apiR.data = Rifa
-                return apiR;
+                return Rifa;
             }else{
                 throw apiR = {
-                    message: "Rifa No Actualizada",
+                    message: "Rifa No Encontrada",
                     code: 400,
                     data: Rifa 
                 }

@@ -20,7 +20,10 @@ exports.Create = async (req, res) => {
             throw apiR;
         }
         let resp = await EstadosRifasB.Create(item);
-        return res.status(resp.code).json({resp})
+        apiR.code = 200;
+        apiR.message = "Estado Creado"
+        apiR.data = resp
+        return res.status(apiR.code).json({... apiR})
     }
     catch (error){
         console.log(error);
@@ -64,7 +67,10 @@ exports.Update = async (req, res) => {
             throw apiR;
         }
         let resp = await EstadosRifasB.Update(item);
-        return res.status(resp.code).json({resp})
+        apiR.code = 200;
+        apiR.message = "Estado Actualizado"
+        apiR.data = resp
+        return res.status(apiR.code).json({... apiR})
     }
     catch (error){
         console.log(error);
@@ -87,7 +93,10 @@ exports.GetAll = async (req, res) => {
     apiR.data = {}
     try {
         let resp = await EstadosRifasB.GetAll();
-        return res.status(resp.code).json({resp})
+        apiR.code = 200;
+        apiR.message = "Estados encontrados"
+        apiR.data = resp
+        return res.status(apiR.code).json({... apiR})
     }
     catch (error){
         console.log(error);
@@ -116,7 +125,10 @@ exports.GetById = async (req, res) => {
             throw apiR;
         }
         let resp = await EstadosRifasB.GetById(id);
-        return res.status(resp.code).json({resp})
+        apiR.code = 200;
+        apiR.message = "Estado encontrado"
+        apiR.data = resp
+        return res.status(apiR.code).json({... apiR})
     }
     catch (error){
         console.log(error);
@@ -145,7 +157,10 @@ exports.GetByName = async (req, res) => {
             throw apiR;
         }
         let resp = await EstadosRifasB.GetByName(name);
-        return res.status(resp.code).json({resp})
+        apiR.code = 200;
+        apiR.message = "Estado encontrado"
+        apiR.data = resp
+        return res.status(apiR.code).json({... apiR})
     }
     catch (error){
         console.log(error);

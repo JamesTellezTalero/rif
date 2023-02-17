@@ -67,7 +67,13 @@ exports.Create = async (req, res) => {
             apiR.message = "No se registra <endsAt>"
             throw apiR;
         }
-        return res.status(200).json(await RifasB.Create(rifa))
+        let newRifa = await RifasB.Create(rifa);
+        apiR.code = 200;
+        apiR.message = "Rifa Creada"
+        apiR.data = newRifa
+        return res.status(200).json({
+            ... apiR
+        })
     }
     catch (error){
         console.log(error);
@@ -146,7 +152,41 @@ exports.UpdateById = async (req, res) => {
             apiR.message = "No se registra <status>"
             throw apiR;
         }
-        return res.status(200).json(await RifasB.UpdateById(rifa))
+        let updatedRifa = await RifasB.UpdateById(rifa) 
+        apiR.code = 200;
+        apiR.message = "Rifa Actualizada"
+        apiR.data = updatedRifa
+        return res.status(200).json({
+            ... apiR
+        })
+    }
+    catch (error){
+        console.log(error);
+        if(error?.code === 400){
+            return res.status(error.code).json({
+                ... error
+            });
+        }else{
+            apiR.code = 500;
+            apiR.message = "Se presentó una excepcion no controlada.";
+            return res.status(apiR.code).json({
+                ... apiR
+            });
+        }
+    }
+}
+
+exports.GetAll = async (req, res) => {
+    let apiR = new apiResponse();
+    apiR.data = {}
+    try {
+        let rifas = await RifasB.GetAll();
+        apiR.code = 200;
+        apiR.message = "Rifas encontradas"
+        apiR.data = rifas
+        return res.status(200).json({
+            ... apiR
+        })
     }
     catch (error){
         console.log(error);
@@ -175,29 +215,13 @@ exports.GetById = async (req, res) => {
             apiR.message = "No se registra <id>"
             throw apiR;
         }
-        return res.status(200).json(await RifasB.GetById(id))
-    }
-    catch (error){
-        console.log(error);
-        if(error?.code === 400){
-            return res.status(error.code).json({
-                ... error
-            });
-        }else{
-            apiR.code = 500;
-            apiR.message = "Se presentó una excepcion no controlada.";
-            return res.status(apiR.code).json({
-                ... apiR
-            });
-        }
-    }
-}
-
-exports.GetAll = async (req, res) => {
-    let apiR = new apiResponse();
-    apiR.data = {}
-    try {
-        return res.status(200).json(await RifasB.GetAll())
+        let rifa = await RifasB.GetById(id)
+        apiR.code = 200;
+        apiR.message = "Rifa encontrada"
+        apiR.data = rifa
+        return res.status(200).json({
+            ... apiR
+        })
     }
     catch (error){
         console.log(error);

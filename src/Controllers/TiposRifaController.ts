@@ -24,8 +24,23 @@ exports.Create = async (req, res) => {
             apiR.message = "No se registra el <recompenza>"
             throw apiR;
         }
-        let resp = await TiposRifaB.Create(item);
-        return res.status(resp.code).json({resp})
+        let tipoRifa = await TiposRifaB.GetByName(item.name)
+        if(tipoRifa != null){
+            apiR.code = 400;
+            apiR.message = "Tipo Existente"
+            apiR.data = tipoRifa
+            return res.status(apiR.code).json({
+                ... apiR
+            })
+        } else {
+            let resp = await TiposRifaB.Create(item);
+            apiR.code = 200;
+            apiR.message = "Tipo Creado"
+            apiR.data = resp
+            return res.status(apiR.code).json({
+                ... apiR
+            })
+        }
     }
     catch (error){
         console.log(error);
@@ -69,7 +84,12 @@ exports.Update = async (req, res) => {
             throw apiR;
         }
         let resp = await TiposRifaB.Update(item);
-        return res.status(resp.code).json({resp})
+        apiR.code = 200;
+        apiR.message = "Tipo Creado"
+        apiR.data = resp
+        return res.status(apiR.code).json({
+            ... apiR
+        })
     }
     catch (error){
         console.log(error);
@@ -92,7 +112,12 @@ exports.GetAll = async (req, res) => {
     apiR.data = {}
     try {
         let resp = await TiposRifaB.GetAll();
-        return res.status(resp.code).json({resp})
+        apiR.code = 200;
+        apiR.message = "Tipos encontrados"
+        apiR.data = resp
+        return res.status(apiR.code).json({
+            ... apiR
+        })
     }
     catch (error){
         console.log(error);
@@ -121,7 +146,13 @@ exports.GetById = async (req, res) => {
             throw apiR;
         }
         let resp = await TiposRifaB.GetById(id);
-        return res.status(resp.code).json({resp})
+        
+        apiR.code = 200;
+        apiR.message = "Tipo encontrado"
+        apiR.data = resp
+        return res.status(apiR.code).json({
+            ... apiR
+        })
     }
     catch (error){
         console.log(error);
@@ -150,7 +181,12 @@ exports.GetByName = async (req, res) => {
             throw apiR;
         }
         let resp = await TiposRifaB.GetByName(name);
-        return res.status(resp.code).json({resp})
+        apiR.code = 200;
+        apiR.message = "Tipo encontrado"
+        apiR.data = resp
+        return res.status(apiR.code).json({
+            ... apiR
+        })
     }
     catch (error){
         console.log(error);

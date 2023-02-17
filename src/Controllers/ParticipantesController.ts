@@ -39,31 +39,21 @@ exports.Create = async (req, res) => {
             apiR.message = "tipoDocumento <code> Vacio";
             throw apiR;
         }
-        let tipodocumento:any = (await TipoDocumentoB.GetByCode(participante?.tipoDocumento?.code)).data; 
-        if(tipodocumento == null){
+        participante.tipoDocumento = await TipoDocumentoB.GetByCode(participante?.tipoDocumento?.code); 
+        if(participante.tipoDocumento == null){
             apiR.code = 400;
             apiR.message = "tipoDocumento invalido";
             throw apiR;
         }
-        participante.tipoDocumento = tipodocumento;
-        let ParticipanteExist = await ParticipantesB.ValidateExistence(participante)
-        if( ParticipanteExist.code == 400 && ParticipanteExist.message == participante?.email){
-            ParticipanteExist.message = "El email ingresado ya se encuentra registrado."
-            throw ParticipanteExist;
-        }else if( ParticipanteExist.code == 400 && ParticipanteExist.message == participante?.documento){
-            ParticipanteExist.message = "El documento de participante ingresado ya se encuentra registrado."
-            throw ParticipanteExist;
-        }
+        await ParticipantesB.ValidateExistence(participante)
         participante.createAt = new Date();
         let newParticipante = await ParticipantesB.Create(participante);
-        if(newParticipante.code == 200){
-            newParticipante.message = "Participante Creado"
-            return res.status(newParticipante.code).json({
-                ... newParticipante
-            })
-        }else{
-            throw newParticipante;
-        }
+        apiR.message = "Participante Creado"
+        apiR.code = 200;
+        apiR.data = newParticipante;
+        return res.status(apiR.code).json({
+            ... apiR
+        })
     }
     catch (error){
         console.log(error);
@@ -87,13 +77,12 @@ exports.GetById = async (req, res) => {
     try {
         let id:number = req.query.id;
         let exist = await ParticipantesB.GetById(id);
-        if(exist.code == 200){
-            return res.status(exist.code).json({
-                ... exist
-            })
-        }else{
-            throw exist;
-        }
+        apiR.code = 200;
+        apiR.message = "Participante encontrado"
+        apiR.data = exist
+        return res.status(apiR.code).json({
+            ... apiR
+        })
     } catch (error) {
         console.log(error);
         if(error?.code === 400){
@@ -116,13 +105,12 @@ exports.GetByEmail = async (req, res) => {
     try {
         let email:string = req.body.email;
         let exist = await ParticipantesB.GetByEmail(email);
-        if(exist.code == 200){
-            return res.status(exist.code).json({
-                ... exist
-            })
-        }else{
-            throw exist;
-        }
+        apiR.code = 200;
+        apiR.message = "Participante encontrado"
+        apiR.data = exist
+        return res.status(apiR.code).json({
+            ... apiR
+        })
     } catch (error) {
         console.log(error);
         if(error?.code === 400){
@@ -145,13 +133,12 @@ exports.GetByDocumento = async (req, res) => {
     try {
         let documento:string = req.body.documento;
         let exist = await ParticipantesB.GetByDocumento(documento);
-        if(exist.code == 200){
-            return res.status(exist.code).json({
-                ... exist
-            })
-        }else{
-            throw exist;
-        }
+        apiR.code = 200;
+        apiR.message = "Participante encontrado"
+        apiR.data = exist    
+        return res.status(apiR.code).json({
+            ... apiR
+        })
     } catch (error) {
         console.log(error);
         if(error?.code === 400){

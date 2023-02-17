@@ -12,7 +12,7 @@ let secretOrKey =  process.env.AUTH_KEY;
 
 export class UsuariosBusiness{  
 
-    async Create(user:Usuarios):Promise<apiResponse>{
+    async Create(user:Usuarios):Promise<Usuarios>{
         let apiR = new apiResponse();
         apiR.data = {}
         try {
@@ -41,7 +41,7 @@ export class UsuariosBusiness{
         }
     }
 
-    async UpdatePassword(email:string, password:string, newPassword:string):Promise<apiResponse>{
+    async UpdatePassword(email:string, password:string, newPassword:string):Promise<Usuarios>{
         let apiR = new apiResponse();
         apiR.data = {}
         try {
@@ -67,7 +67,7 @@ export class UsuariosBusiness{
         }
     }
 
-    async Login(email:string, password:string):Promise<apiResponse>{
+    async Login(email:string, password:string):Promise<Object>{
         let apiR = new apiResponse();
         apiR.data = {}
         try {
@@ -80,12 +80,9 @@ export class UsuariosBusiness{
                 }
             }else{
                 const token = jwt.sign({email, password, lastSession: new Date().getTime()}, secretOrKey);
-                apiR.code = 200;
-                apiR.message = "Usuario Logueado";
-                apiR.data = {
+                return {
                     email, token
                 };
-                return apiR;
             }
         } catch (error) {
             if(error?.code === 400){
@@ -98,7 +95,7 @@ export class UsuariosBusiness{
         }
     }
     
-    async ValidateExistence(user:Usuarios):Promise<apiResponse>{
+    async ValidateExistence(user:Usuarios):Promise<boolean>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
@@ -117,9 +114,7 @@ export class UsuariosBusiness{
                     data: {}
                 }
             }else{
-                apiR.code = 200;
-                apiR.message = "No se registra existencia"
-                return apiR;
+                return false;
             }
         } catch (error) {
             if(error?.code === 400){
@@ -132,51 +127,12 @@ export class UsuariosBusiness{
         }
     }
     
-    async GetById(id:number):Promise<apiResponse>{
-        let apiR = new apiResponse();
-        apiR.data = {};
-        try {
-            let User = await getManager().getRepository(Usuarios).findOne({where:{id: id}, relations:['nivel']})
-            if(User != null){
-                apiR.code = 200;
-                apiR.message = "Usuario encontrado"
-                apiR.data = User
-                return apiR;
-            }else{
-                throw apiR ={
-                    code: 400,
-                    message: `Usuario No Encontrado`,
-                    data: User
-                }
-            }
-        } catch (error) {
-            if(error?.code === 400){
-                throw apiR;          
-            } else{
-                apiR.code = 500;
-                apiR.message = error
-                throw apiR;          
-            }         
-        }
-    }
-    
-    async GetAll():Promise<apiResponse>{
+    async GetAll():Promise<Usuarios[]>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
             let Users = await getManager().getRepository(Usuarios).find({relations:['nivel']})
-            if(Users != null){
-                apiR.code = 200;
-                apiR.message = "Usuarios encontrados"
-                apiR.data = Users
-                return apiR;
-            }else{
-                throw apiR ={
-                    code: 400,
-                    message: `Usuario No Encontrado`,
-                    data: Users
-                }
-            }
+            return Users;
         } catch (error) {
             if(error?.code === 400){
                 throw apiR;          
@@ -185,6 +141,23 @@ export class UsuariosBusiness{
                 apiR.message = error
                 throw apiR;          
             }            
+        }
+    }
+    
+    async GetById(id:number):Promise<Usuarios>{
+        let apiR = new apiResponse();
+        apiR.data = {};
+        try {
+            let User = await getManager().getRepository(Usuarios).findOne({where:{id: id}, relations:['nivel']})
+            return User;
+        } catch (error) {
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }         
         }
     }
 }

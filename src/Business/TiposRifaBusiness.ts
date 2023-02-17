@@ -4,24 +4,13 @@ import { TiposRifa } from "../entities/TiposRifa";
 
 export class TiposRifaBusiness{  
 
-    async Create(item:TiposRifa):Promise<apiResponse>{
+    async Create(item:TiposRifa):Promise<TiposRifa>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
-            let tipoRifa = await getManager().getRepository(TiposRifa).findOne({where:{name: item.name}})
+            let tipoRifa = await getManager().getRepository(TiposRifa).save(item)
             if(tipoRifa != null){
-                apiR.code = 400;
-                apiR.message = "Tipo Existente"
-                apiR.data = tipoRifa
-                return apiR;
-            }
-            await getManager().getRepository(TiposRifa).save(item)
-            tipoRifa = await getManager().getRepository(TiposRifa).findOne({where:{name: item.name}})
-            if(tipoRifa != null){
-                apiR.code = 200;
-                apiR.message = "Tipo Creado"
-                apiR.data = tipoRifa
-                return apiR;
+                return tipoRifa;
             }else{
                 throw apiR = {
                     message: "Tipo No Creado",
@@ -40,7 +29,7 @@ export class TiposRifaBusiness{
         }
     }
 
-    async Update(item:TiposRifa):Promise<apiResponse>{
+    async Update(item:TiposRifa):Promise<TiposRifa>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
@@ -49,7 +38,7 @@ export class TiposRifaBusiness{
                 apiR.code = 400;
                 apiR.message = "Tipo Inexistente"
                 apiR.data = tipoRifa
-                return apiR;
+                throw apiR;
             }
             tipoRifa.name = item.name
             tipoRifa.recompenza = item.recompenza
@@ -57,10 +46,7 @@ export class TiposRifaBusiness{
             await getManager().getRepository(TiposRifa).save(item)
             tipoRifa = await getManager().getRepository(TiposRifa).findOne({where:{name: item.name}})
             if(tipoRifa != null){
-                apiR.code = 200;
-                apiR.message = "Tipo Creado"
-                apiR.data = tipoRifa
-                return apiR;
+                return tipoRifa;
             }else{
                 throw apiR = {
                     message: "Tipo No Creado",
@@ -79,16 +65,13 @@ export class TiposRifaBusiness{
         }
     }
 
-    async GetAll():Promise<apiResponse>{
+    async GetAll():Promise<TiposRifa[]>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
             let tipoRifa = await getManager().getRepository(TiposRifa).find()
             if(tipoRifa != null){
-                apiR.code = 200;
-                apiR.message = "Tipos encontrados"
-                apiR.data = tipoRifa
-                return apiR;
+                return tipoRifa;
             }else{
                 throw apiR = {
                     message: "Tipos No Encontrados",
@@ -107,16 +90,13 @@ export class TiposRifaBusiness{
         }
     }
 
-    async GetById(id:number):Promise<apiResponse>{
+    async GetById(id:number):Promise<TiposRifa>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
             let tipoRifa = await getManager().getRepository(TiposRifa).findOne({where:{id: id}})
             if(tipoRifa != null){
-                apiR.code = 200;
-                apiR.message = "Tipo encontrado"
-                apiR.data = tipoRifa
-                return apiR;
+                return tipoRifa;
             }else{
                 throw apiR = {
                     message: "Tipos No Encontrados",
@@ -135,16 +115,13 @@ export class TiposRifaBusiness{
         }
     }
 
-    async GetByName(name:string):Promise<apiResponse>{
+    async GetByName(name:string):Promise<TiposRifa>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
             let tipoRifa = await getManager().getRepository(TiposRifa).findOne({where:{name: name}})
             if(tipoRifa != null){
-                apiR.code = 200;
-                apiR.message = "Tipo encontrado"
-                apiR.data = tipoRifa
-                return apiR;
+                return tipoRifa;
             }else{
                 throw apiR = {
                     message: "Tipos No Encontrados",

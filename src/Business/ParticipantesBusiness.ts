@@ -4,14 +4,12 @@ import { apiResponse } from "../Models/apiResponse";
 
 export class ParticipantesBusiness{  
 
-    async Create(participante:Participantes):Promise<apiResponse>{
+    async Create(participante:Participantes):Promise<Participantes>{
         let apiR = new apiResponse();
         apiR.data = {}
         try {
             let Participante = await getManager().getRepository(Participantes).save(participante)
-            apiR.code = 200;
-            apiR.data = {participante: await this.GetById(Participante.id)};
-            return apiR;
+            return await this.GetById(Participante.id);
         } catch (error) {
             apiR.code = 400;
             apiR.message = error
@@ -19,7 +17,7 @@ export class ParticipantesBusiness{
         }
     }
     
-    async ValidateExistence(participante:Participantes):Promise<apiResponse>{
+    async ValidateExistence(participante:Participantes):Promise<string>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
@@ -38,9 +36,7 @@ export class ParticipantesBusiness{
                     data: {}
                 }
             }else{
-                apiR.code = 200;
-                apiR.message = "No se registra existencia"
-                return apiR;
+                return "No se registra el participante";
             }
         } catch (error) {
             if(error?.code === 400){
@@ -53,16 +49,13 @@ export class ParticipantesBusiness{
         }
     }
     
-    async GetById(id:number):Promise<apiResponse>{
+    async GetById(id:number):Promise<Participantes>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
             let Participante = await getManager().getRepository(Participantes).findOne({where:{id: id, status: true}, relations:['tipoDocumento']})
             if(Participante != null){
-                apiR.code = 200;
-                apiR.message = "Participante encontrado"
-                apiR.data = Participante
-                return apiR;
+                return Participante;
             }else{
                 throw apiR ={
                     code: 400,
@@ -81,16 +74,13 @@ export class ParticipantesBusiness{
         }
     }
     
-    async GetByEmail(email:string):Promise<apiResponse>{
+    async GetByEmail(email:string):Promise<Participantes>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
             let Participante = await getManager().getRepository(Participantes).findOne({where:{email}, relations:['tipoDocumento']})
             if(Participante != null){
-                apiR.code = 200;
-                apiR.message = "Participante encontrado"
-                apiR.data = Participante
-                return apiR;
+                return Participante;
             }else{
                 throw apiR ={
                     code: 400,
@@ -109,16 +99,13 @@ export class ParticipantesBusiness{
         }
     }
 
-    async GetByDocumento(documento:string):Promise<apiResponse>{
+    async GetByDocumento(documento:string):Promise<Participantes>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
             let Participante = await getManager().getRepository(Participantes).findOne({where:{documento}, relations:['tipoDocumento']})
             if(Participante != null){
-                apiR.code = 200;
-                apiR.message = "Participante encontrado"
-                apiR.data = Participante
-                return apiR;
+                return Participante;
             }else{
                 throw apiR ={
                     code: 400,

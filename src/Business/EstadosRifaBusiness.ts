@@ -6,7 +6,7 @@ const fs = require('fs');
 
 export class EstadosRifaBusiness{  
 
-    async Create(item:EstadosRifa):Promise<apiResponse>{
+    async Create(item:EstadosRifa):Promise<EstadosRifa>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
@@ -20,10 +20,7 @@ export class EstadosRifaBusiness{
             await getManager().getRepository(EstadosRifa).save(item)
             estadoRifa = await getManager().getRepository(EstadosRifa).findOne({where:{name: item.name}})
             if(estadoRifa != null){
-                apiR.code = 200;
-                apiR.message = "Estado Creado"
-                apiR.data = estadoRifa
-                return apiR;
+                return estadoRifa;
             }else{
                 throw apiR = {
                     message: "Estados No Creado",
@@ -42,7 +39,7 @@ export class EstadosRifaBusiness{
         }
     }
 
-    async Update(item:EstadosRifa):Promise<apiResponse>{
+    async Update(item:EstadosRifa):Promise<EstadosRifa>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
@@ -59,10 +56,7 @@ export class EstadosRifaBusiness{
             await getManager().getRepository(EstadosRifa).save(estadoRifa)
             estadoRifa = await getManager().getRepository(EstadosRifa).findOne({where:{name: estadoRifa.name}})
             if(estadoRifa != null){
-                apiR.code = 200;
-                apiR.message = "Estado Actualizado"
-                apiR.data = estadoRifa
-                return apiR;
+                return estadoRifa;
             }else{
                 throw apiR = {
                     message: "Estados No Actualizado",
@@ -81,16 +75,13 @@ export class EstadosRifaBusiness{
         }
     }
 
-    async GetAll():Promise<apiResponse>{
+    async GetAll():Promise<EstadosRifa[]>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
             let estadosRifa = await getManager().getRepository(EstadosRifa).find()
             if(estadosRifa != null){
-                apiR.code = 200;
-                apiR.message = "Estados encontrados"
-                apiR.data = estadosRifa
-                return apiR;
+                return estadosRifa;
             }else{
                 throw apiR = {
                     message: "Estados No Encontrado",
@@ -109,16 +100,13 @@ export class EstadosRifaBusiness{
         }
     }
 
-    async GetById(id:number):Promise<apiResponse>{
+    async GetById(id:number):Promise<EstadosRifa>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
             let estadoRifa = await getManager().getRepository(EstadosRifa).findOne({where:{id: id}})
             if(estadoRifa != null){
-                apiR.code = 200;
-                apiR.message = "Estado encontrado"
-                apiR.data = estadoRifa
-                return apiR;
+                return estadoRifa;
             }else{
                 throw apiR = {
                     message: "Estado No Encontrado",
@@ -137,16 +125,13 @@ export class EstadosRifaBusiness{
         }
     }
 
-    async GetByName(name:string):Promise<apiResponse>{
+    async GetByName(name:string):Promise<EstadosRifa>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
             let estadoRifa = await getManager().getRepository(EstadosRifa).findOne({where:{name: name}})
             if(estadoRifa != null){
-                apiR.code = 200;
-                apiR.message = "Estado encontrado"
-                apiR.data = estadoRifa
-                return apiR;
+                return estadoRifa;
             }else{
                 throw apiR = {
                     message: "Estado No Encontrado",
