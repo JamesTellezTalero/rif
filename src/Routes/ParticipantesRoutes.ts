@@ -10,6 +10,7 @@ router.get('/', (req, res) => {
 
 router.post('/Create', authMiddle.auth, participantes_controller.Create);
 
+router.get('/GetAll', authMiddle.auth,  participantes_controller.GetAll);
 router.get('/GetById', authMiddle.auth,  participantes_controller.GetById);
 router.get('/GetByEmail', authMiddle.auth,  participantes_controller.GetByEmail);
 router.get('/GetByDocumento', authMiddle.auth,  participantes_controller.GetByDocumento);

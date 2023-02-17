@@ -49,11 +49,28 @@ export class ParticipantesBusiness{
         }
     }
     
+    async GetAll():Promise<Participantes[]>{
+        let apiR = new apiResponse();
+        apiR.data = {};
+        try {
+            let Participante = await getManager().getRepository(Participantes).find({relations:['tipoDocumento']})
+            return Participante;
+        } catch (error) {
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }            
+        }
+    }
+    
     async GetById(id:number):Promise<Participantes>{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
-            let Participante = await getManager().getRepository(Participantes).findOne({where:{id: id, status: true}, relations:['tipoDocumento']})
+            let Participante = await getManager().getRepository(Participantes).findOne({where:{id: id}, relations:['tipoDocumento']})
             return Participante;
         } catch (error) {
             if(error?.code === 400){

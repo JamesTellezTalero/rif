@@ -71,6 +71,41 @@ exports.Create = async (req, res) => {
     }
 }
 
+exports.GetAll = async (req, res) => {
+    let apiR = new apiResponse();
+    apiR.data = {}
+    try {
+        let exist = await ParticipantesB.GetAll();
+        if(exist.length > 0){
+            apiR.code = 200;
+            apiR.message = "Participantes encontrados"
+            apiR.data = exist
+            return res.status(apiR.code).json({
+                ... apiR
+            })
+        }else{
+            throw apiR ={
+                code: 400,
+                message: `Participante no encontrado`,
+                data: exist
+            };
+        }
+    } catch (error) {
+        console.log(error);
+        if(error?.code === 400){
+            return res.status(error.code).json({
+                ... error
+            });
+        }else{
+            apiR.code = 500;
+            apiR.message = "Se presentó una excepcion no controlada.";
+            return res.status(apiR.code).json({
+                ... apiR
+            });
+        }   
+    }
+}
+
 exports.GetById = async (req, res) => {
     let apiR = new apiResponse();
     apiR.data = {}
