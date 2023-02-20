@@ -1,13 +1,7 @@
 import { getManager } from "typeorm";
-import { Usuarios } from "../entities/Usuarios";
 import { apiResponse } from "../Models/apiResponse";
-import { Niveles } from "../entities/Niveles";
 import { Rifas } from "../entities/Rifas";
 import { EstadosRifa } from "../entities/EstadosRifa";
-import { EstadosRifaBusiness } from "./EstadosRifaBusiness";
-
-const EstadosRifaB = new EstadosRifaBusiness();
-
 const fs = require('fs');
 
 export class RifasBusiness{  
@@ -126,7 +120,8 @@ export class RifasBusiness{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
-            let Rifa = await getManager().getRepository(Rifas).findOne({where:{id: id}, relations:["estadoRifa", "tipoRifa", "usuario"]})
+            let Rifa = await getManager().getRepository(Rifas).findOne({where:{id: id}, relations:["estadoRifa", "tipoRifa", "usuario", "participantesRifas", "participantesRifas.participante"]})
+            Rifa.participantesRifas = Rifa.participantesRifas.filter(e => e.status == true)
             return Rifa;
         } catch (error) {
             if(error?.code === 400){

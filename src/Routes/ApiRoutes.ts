@@ -6,6 +6,11 @@ router.get('/', (req, res) => {
     res.status(200).send('Bienvenido al BackEnd de Rif ||| <br> Este sitio se encuentra en desarrollo. ');
 });
 
+//#region ParticipantesRifaRoutes
+var ParticipantesRifaRoutes = require('./ParticipantesRifaRoutes');
+router.use('/participantesrifa', ParticipantesRifaRoutes);
+//#endregion
+
 //#region ParticipantesRoutes
 var ParticipantesRoutes = require('./ParticipantesRoutes');
 router.use('/participantes', ParticipantesRoutes);
