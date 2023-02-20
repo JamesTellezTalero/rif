@@ -75,42 +75,42 @@ app.listen(3000, () => {
         });
         await connect.createForeignKey("Rifas", Rifas_Usuario_ForeignKey);
         console.log("Rifas usuario Foreign key agregada");
-        const UsuariosGanadores_Rifa_ForeignKey = new TableForeignKey({
+        const GanadoresRifa_Rifa_ForeignKey = new TableForeignKey({
             columnNames: ['rifa'],
             referencedColumnNames: ['id'],
             referencedTableName: 'Rifas',
             name: 'rifa_id',
             onDelete: 'SET NULL'
         });
-        await connect.createForeignKey("UsuariosGanadores", UsuariosGanadores_Rifa_ForeignKey);
-        console.log("UsuariosGanadores rifa Foreign key agregada");
-        const UsuariosGanadores_Participante_ForeignKey = new TableForeignKey({
+        await connect.createForeignKey("GanadoresRifa", GanadoresRifa_Rifa_ForeignKey);
+        console.log("GanadoresRifa rifa Foreign key agregada");
+        const GanadoresRifa_Participante_ForeignKey = new TableForeignKey({
             columnNames: ['participante'],
             referencedColumnNames: ['id'],
             referencedTableName: 'Participantes',
             name: 'participante_id',
             onDelete: 'SET NULL'
         });
-        await connect.createForeignKey("UsuariosGanadores", UsuariosGanadores_Participante_ForeignKey);
-        console.log("Rifas usuario Foreign key agregada");
-        const UsuariosParticipantes_Rifa_ForeignKey = new TableForeignKey({
+        await connect.createForeignKey("GanadoresRifa", GanadoresRifa_Participante_ForeignKey);
+        console.log("GanadoresRifa Foreign key agregada");
+        const ParticipantesRifa_Rifa_ForeignKey = new TableForeignKey({
             columnNames: ['rifa'],
             referencedColumnNames: ['id'],
             referencedTableName: 'Rifas',
             name: 'rifa_id',
             onDelete: 'SET NULL'
         });
-        await connect.createForeignKey("UsuariosParticipantes", UsuariosParticipantes_Rifa_ForeignKey);
-        console.log("UsuariosParticipantes rifa Foreign key agregada");
-        const UsuariosParticipantes_Participante_ForeignKey = new TableForeignKey({
+        await connect.createForeignKey("ParticipantesRifa", ParticipantesRifa_Rifa_ForeignKey);
+        console.log("ParticipantesRifa rifa Foreign key agregada");
+        const ParticipantesRifa_Participante_ForeignKey = new TableForeignKey({
             columnNames: ['participante'],
             referencedColumnNames: ['id'],
             referencedTableName: 'Participantes',
             name: 'participante_id',
             onDelete: 'SET NULL'
         });
-        await connect.createForeignKey("UsuariosParticipantes", UsuariosParticipantes_Participante_ForeignKey);
-        console.log("UsuariosParticipantes participantes Foreign key agregada");
+        await connect.createForeignKey("ParticipantesRifa", ParticipantesRifa_Participante_ForeignKey);
+        console.log("ParticipantesRifa participantes Foreign key agregada");
         const Participantes_DocumentType_ForeignKey = new TableForeignKey({
             columnNames: ['tipoDocumento'],
             referencedColumnNames: ['id'],

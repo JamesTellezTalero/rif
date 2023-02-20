@@ -6,9 +6,9 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { GanadoresRifa } from "./GanadoresRifa";
 import { TipoDocumento } from "./TipoDocumento";
-import { UsuariosGanadores } from "./UsuariosGanadores";
-import { UsuariosParticipantes } from "./UsuariosParticipantes";
+import { ParticipantesRifa } from "./ParticipantesRifa";
 
 @Entity("Participantes", { schema: "public" })
 export class Participantes {
@@ -39,6 +39,9 @@ export class Participantes {
   @Column("timestamp without time zone", { name: "deleteAt", nullable: true })
   deleteAt: Date | null;
 
+  @OneToMany(() => GanadoresRifa, (ganadoresRifa) => ganadoresRifa.participante)
+  ganadoresRifas: GanadoresRifa[];
+
   @ManyToOne(
     () => TipoDocumento,
     (tipoDocumento) => tipoDocumento.participantes,
@@ -48,14 +51,8 @@ export class Participantes {
   tipoDocumento: TipoDocumento;
 
   @OneToMany(
-    () => UsuariosGanadores,
-    (usuariosGanadores) => usuariosGanadores.participante
+    () => ParticipantesRifa,
+    (participantesRifa) => participantesRifa.participante
   )
-  usuariosGanadores: UsuariosGanadores[];
-
-  @OneToMany(
-    () => UsuariosParticipantes,
-    (usuariosParticipantes) => usuariosParticipantes.participante
-  )
-  usuariosParticipantes: UsuariosParticipantes[];
+  participantesRifas: ParticipantesRifa[];
 }

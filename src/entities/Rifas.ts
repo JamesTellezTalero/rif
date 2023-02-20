@@ -6,12 +6,12 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { GanadoresRifa } from "./GanadoresRifa";
+import { ParticipantesRifa } from "./ParticipantesRifa";
 import { EstadosRifa } from "./EstadosRifa";
 import { TiposRifa } from "./TiposRifa";
 import { Usuarios } from "./Usuarios";
 import { Transacciones } from "./Transacciones";
-import { UsuariosGanadores } from "./UsuariosGanadores";
-import { UsuariosParticipantes } from "./UsuariosParticipantes";
 
 @Entity("Rifas", { schema: "public" })
 export class Rifas {
@@ -57,6 +57,15 @@ export class Rifas {
   @Column("timestamp without time zone", { name: "deleteAt", nullable: true })
   deleteAt: Date | null;
 
+  @OneToMany(() => GanadoresRifa, (ganadoresRifa) => ganadoresRifa.rifa)
+  ganadoresRifas: GanadoresRifa[];
+
+  @OneToMany(
+    () => ParticipantesRifa,
+    (participantesRifa) => participantesRifa.rifa
+  )
+  participantesRifas: ParticipantesRifa[];
+
   @ManyToOne(() => EstadosRifa, (estadosRifa) => estadosRifa.rifas, {
     onDelete: "SET NULL",
   })
@@ -77,16 +86,4 @@ export class Rifas {
 
   @OneToMany(() => Transacciones, (transacciones) => transacciones.rifa)
   transacciones: Transacciones[];
-
-  @OneToMany(
-    () => UsuariosGanadores,
-    (usuariosGanadores) => usuariosGanadores.rifa
-  )
-  usuariosGanadores: UsuariosGanadores[];
-
-  @OneToMany(
-    () => UsuariosParticipantes,
-    (usuariosParticipantes) => usuariosParticipantes.rifa
-  )
-  usuariosParticipantes: UsuariosParticipantes[];
 }

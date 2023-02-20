@@ -488,8 +488,8 @@ app.listen(3000, () => {
         });
         await queryRunner.createTable(Transacciones);
         console.log("Creacion de la tabla Transacciones");
-        const UsuariosGanadores = new Table({
-            name: 'UsuariosGanadores',
+        const GanadoresRifa = new Table({
+            name: 'GanadoresRifa',
             columns: [
                 {
                     name: 'id',
@@ -535,10 +535,10 @@ app.listen(3000, () => {
                 },
             ]
         });
-        await queryRunner.createTable(UsuariosGanadores);
-        console.log("Creacion de la tabla UsuariosGanadores");
-        const UsuariosParticipantes = new Table({
-            name: 'UsuariosParticipantes',
+        await queryRunner.createTable(GanadoresRifa);
+        console.log("Creacion de la tabla GanadoresRifa");
+        const ParticipantesRifa = new Table({
+            name: 'ParticipantesRifa',
             columns: [
                 {
                     name: 'id',
@@ -579,8 +579,8 @@ app.listen(3000, () => {
                 },
             ]
         });
-        await queryRunner.createTable(UsuariosParticipantes);
-        console.log("Creacion de la tabla UsuariosParticipantes");
+        await queryRunner.createTable(ParticipantesRifa);
+        console.log("Creacion de la tabla ParticipantesRifa");
         const TipoDocumento = new Table({
             name: 'TipoDocumento',
             columns: [
@@ -625,7 +625,7 @@ app.listen(3000, () => {
         });
         await queryRunner.createTable(TipoDocumento);
         console.log("Creacion de la tabla TipoDocumento");
-        console.log('Server stopped after 5 minutes');
+        console.log('Server Stopped After Generate All Tables');
         process.exit(0);
     }).catch(err => console.error(err));
 }); 

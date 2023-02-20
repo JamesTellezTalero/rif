@@ -10,8 +10,8 @@ import { TipoDocumentoSubscriber } from "./Subscribers/TipoDocumentoSubscriber"
 import { TiposRifaSubscriber } from "./Subscribers/TiposRifaSubscriber"
 import { TransaccionesSubscriber } from "./Subscribers/TransaccionesSubscriber"
 import { TransactionStatesSubscriber } from "./Subscribers/TransactionStatesSubscriber"
-import { UsuariosGanadoresSubscriber } from "./Subscribers/UsuariosGanadoresSubscriber"
-import { UsuariosParticipantesSubscriber } from "./Subscribers/UsuariosParticipantesSubscriber"
+import { GanadoresRifaSubscriber } from "./Subscribers/GanadoresRifaSubscriber"
+import { ParticipantesRifaSubscriber } from "./Subscribers/ParticipantesRifa"
 import { EstadosRifa } from "./entities/EstadosRifa"
 import { Niveles } from "./entities/Niveles"
 import { Participantes } from "./entities/Participantes"
@@ -21,8 +21,8 @@ import { TiposRifa } from "./entities/TiposRifa"
 import { TransactionStates } from "./entities/TransactionStates"
 import { Transacciones } from "./entities/Transacciones"
 import { Usuarios } from "./entities/Usuarios"
-import { UsuariosGanadores } from "./entities/UsuariosGanadores"
-import { UsuariosParticipantes } from "./entities/UsuariosParticipantes"
+import { ParticipantesRifa } from "./entities/ParticipantesRifa"
+import { GanadoresRifa } from "./entities/GanadoresRifa"
 
 export const AppDataSource:ConnectionOptions ={
     type: "postgres",
@@ -35,20 +35,21 @@ export const AppDataSource:ConnectionOptions ={
     logging: false,
     entities: [
         EstadosRifa,
+        GanadoresRifa,
         Niveles,
         Participantes,
+        ParticipantesRifa,
         Rifas,
         TipoDocumento,
         TiposRifa,
         Transacciones,
         TransactionStates,
         Usuarios,
-        UsuariosGanadores,
-        UsuariosParticipantes
     ],
     migrations: [],
     subscribers: [
         EstadosRifaSubscriber,
+        GanadoresRifaSubscriber,
         NivelesSubscriber,
         ParticipantesSubscriber,
         RifasSubscriber,
@@ -57,7 +58,6 @@ export const AppDataSource:ConnectionOptions ={
         TransaccionesSubscriber,
         TransactionStatesSubscriber,
         UsuariosSubscriber,
-        UsuariosGanadoresSubscriber,
-        UsuariosParticipantesSubscriber
+        ParticipantesRifaSubscriber
     ],
 }

@@ -8,8 +8,8 @@ import {
 import { Participantes } from "./Participantes";
 import { Rifas } from "./Rifas";
 
-@Entity("UsuariosGanadores", { schema: "public" })
-export class UsuariosGanadores {
+@Entity("GanadoresRifa", { schema: "public" })
+export class GanadoresRifa {
   @PrimaryGeneratedColumn({ type: "integer", name: "id" })
   id: number;
 
@@ -30,13 +30,13 @@ export class UsuariosGanadores {
 
   @ManyToOne(
     () => Participantes,
-    (participantes) => participantes.usuariosGanadores,
+    (participantes) => participantes.ganadoresRifas,
     { onDelete: "SET NULL" }
   )
   @JoinColumn([{ name: "participante", referencedColumnName: "id" }])
   participante: Participantes;
 
-  @ManyToOne(() => Rifas, (rifas) => rifas.usuariosGanadores, {
+  @ManyToOne(() => Rifas, (rifas) => rifas.ganadoresRifas, {
     onDelete: "SET NULL",
   })
   @JoinColumn([{ name: "rifa", referencedColumnName: "id" }])
