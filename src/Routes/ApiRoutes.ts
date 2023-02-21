@@ -41,5 +41,10 @@ var TipoDocumentoRoutes = require('./TipoDocumentoRoutes');
 router.use('/tipodocumento', TipoDocumentoRoutes);
 //#endregion
 
+//#region tipodocumento
+var TransactionStatesRoutes = require('./TransactionStatesRoutes');
+router.use('/transactionstates', TransactionStatesRoutes);
+//#endregion
+
 module.exports = router;
 
