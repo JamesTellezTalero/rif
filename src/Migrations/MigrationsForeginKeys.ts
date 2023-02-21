@@ -22,10 +22,10 @@ app.listen(3000, () => {
         await connect.createForeignKey("Transacciones", Transacciones_TransactionState_ForeignKey);
         console.log("Transacciones transactionState Foreign key agregada");
         const Transacciones_Usuario_ForeignKey = new TableForeignKey({
-            columnNames: ['usuario'],
+            columnNames: ['participanterifa'],
             referencedColumnNames: ['id'],
-            referencedTableName: 'Usuarios',
-            name: 'usuario_id',
+            referencedTableName: 'ParticipantesRifa',
+            name: 'participanterifa_id',
             onDelete: 'SET NULL'
         });
         await connect.createForeignKey("Transacciones", Transacciones_Usuario_ForeignKey);

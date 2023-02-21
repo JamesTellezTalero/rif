@@ -3,10 +3,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Participantes } from "./Participantes";
 import { Rifas } from "./Rifas";
+import { Transacciones } from "./Transacciones";
 
 @Entity("ParticipantesRifa", { schema: "public" })
 export class ParticipantesRifa {
@@ -38,4 +40,10 @@ export class ParticipantesRifa {
   })
   @JoinColumn([{ name: "rifa", referencedColumnName: "id" }])
   rifa: Rifas;
+
+  @OneToMany(
+    () => Transacciones,
+    (transacciones) => transacciones.participanterifa
+  )
+  transacciones: Transacciones[];
 }

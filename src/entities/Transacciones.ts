@@ -5,9 +5,9 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { ParticipantesRifa } from "./ParticipantesRifa";
 import { Rifas } from "./Rifas";
 import { TransactionStates } from "./TransactionStates";
-import { Usuarios } from "./Usuarios";
 
 @Entity("Transacciones", { schema: "public" })
 export class Transacciones {
@@ -32,6 +32,14 @@ export class Transacciones {
   @Column("timestamp without time zone", { name: "deleteAt", nullable: true })
   deleteAt: Date | null;
 
+  @ManyToOne(
+    () => ParticipantesRifa,
+    (participantesRifa) => participantesRifa.transacciones,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn([{ name: "participanterifa", referencedColumnName: "id" }])
+  participanterifa: ParticipantesRifa;
+
   @ManyToOne(() => Rifas, (rifas) => rifas.transacciones, {
     onDelete: "SET NULL",
   })
@@ -45,10 +53,4 @@ export class Transacciones {
   )
   @JoinColumn([{ name: "transactionState", referencedColumnName: "id" }])
   transactionState: TransactionStates;
-
-  @ManyToOne(() => Usuarios, (usuarios) => usuarios.transacciones, {
-    onDelete: "SET NULL",
-  })
-  @JoinColumn([{ name: "usuario", referencedColumnName: "id" }])
-  usuario: Usuarios;
 }
