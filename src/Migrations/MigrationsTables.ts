@@ -56,7 +56,7 @@ app.listen(3000, () => {
                 {
                     name: 'createAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true,
                 },
                 {
                     name: 'updateAt',
@@ -95,7 +95,7 @@ app.listen(3000, () => {
                 {
                     name: 'createAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true,
                 },
                 {
                     name: 'updateAt',
@@ -139,7 +139,7 @@ app.listen(3000, () => {
                 {
                     name: 'createAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true,
                 },
                 {
                     name: 'updateAt',
@@ -178,7 +178,7 @@ app.listen(3000, () => {
                 {
                     name: 'createAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true,
                 },
                 {
                     name: 'updateAt',
@@ -242,7 +242,7 @@ app.listen(3000, () => {
                 {
                     name: 'createAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true,
                 },
                 {
                     name: 'updateAt',
@@ -314,7 +314,7 @@ app.listen(3000, () => {
                 {
                     name: 'createAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true,
                 },
                 {
                     name: 'updateAt',
@@ -413,7 +413,7 @@ app.listen(3000, () => {
                 {
                     name: 'createAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true,
                 },
                 {
                     name: 'updateAt',
@@ -441,7 +441,7 @@ app.listen(3000, () => {
                 {
                     name: 'orden',
                     type: 'varchar',
-                    isNullable: false
+                    isNullable: true
                 },
                 {
                     name: 'rifa',
@@ -472,7 +472,7 @@ app.listen(3000, () => {
                 {
                     name: 'createAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true,
                 },
                 {
                     name: 'updateAt',
@@ -521,7 +521,7 @@ app.listen(3000, () => {
                 {
                     name: 'createAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true,
                 },
                 {
                     name: 'updateAt',
@@ -565,7 +565,7 @@ app.listen(3000, () => {
                 {
                     name: 'createAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true,
                 },
                 {
                     name: 'updateAt',
@@ -609,7 +609,7 @@ app.listen(3000, () => {
                 {
                     name: 'createAt',
                     type: 'timestamp',
-                    isNullable: false,
+                    isNullable: true,
                 },
                 {
                     name: 'updateAt',

@@ -46,5 +46,11 @@ var TransactionStatesRoutes = require('./TransactionStatesRoutes');
 router.use('/transactionstates', TransactionStatesRoutes);
 //#endregion
 
+//#region transacciones
+var TransaccionesRoutes = require('./TransactionsRoutes')
+router.use('/transacciones', TransaccionesRoutes)
+//#endregion
+
+
 module.exports = router;
 

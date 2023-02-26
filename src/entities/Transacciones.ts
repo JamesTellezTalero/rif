@@ -14,8 +14,8 @@ export class Transacciones {
   @PrimaryGeneratedColumn({ type: "integer", name: "id" })
   id: number;
 
-  @Column("character varying", { name: "orden" })
-  orden: string;
+  @Column("character varying", { name: "orden", nullable: true })
+  orden: string | null;
 
   @Column("integer", { name: "amount" })
   amount: number;
@@ -23,8 +23,8 @@ export class Transacciones {
   @Column("boolean", { name: "status", default: () => "true" })
   status: boolean;
 
-  @Column("timestamp without time zone", { name: "createAt" })
-  createAt: Date;
+  @Column("timestamp without time zone", { name: "createAt", nullable: true })
+  createAt: Date | null;
 
   @Column("timestamp without time zone", { name: "updateAt", nullable: true })
   updateAt: Date | null;
