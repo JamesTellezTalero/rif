@@ -509,7 +509,7 @@ app.listen(3000, () => {
                     isNullable: false
                 },
                 {
-                    name: 'participante',
+                    name: 'participanteRifa',
                     type: 'int',
                     isNullable: false
                 },

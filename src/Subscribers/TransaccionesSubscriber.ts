@@ -23,10 +23,10 @@ export class TransaccionesSubscriber {
         let actual = await TransaccionesB.GetById(event.entity.id)
         let participante = await ParticipantesRifaB.GetById(event.entity.participanterifa.id)
         if(event.entity.transactionState.name == 'Exitosa' && actual.transactionState.name != 'Exitosa'){
-            await RifasB.SumarTransaccion(actual)
+            await RifasB.ProcesarTransaccion(actual, true)
             await ParticipantesRifaB.Update(participante, true)
         }else if(event.entity.transactionState.name != 'Exitosa' && actual.transactionState.name == 'Exitosa'){
-            await RifasB.RestarTransaccion(actual)
+            await RifasB.ProcesarTransaccion(actual, false)
             await ParticipantesRifaB.Update(participante, false)
         }
     }

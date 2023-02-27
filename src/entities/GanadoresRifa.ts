@@ -5,7 +5,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Participantes } from "./Participantes";
+import { ParticipantesRifa } from "./ParticipantesRifa";
 import { Rifas } from "./Rifas";
 
 @Entity("GanadoresRifa", { schema: "public" })
@@ -19,8 +19,8 @@ export class GanadoresRifa {
   @Column("boolean", { name: "status", default: () => "true" })
   status: boolean;
 
-  @Column("timestamp without time zone", { name: "createAt" })
-  createAt: Date;
+  @Column("timestamp without time zone", { name: "createAt", nullable: true })
+  createAt: Date | null;
 
   @Column("timestamp without time zone", { name: "updateAt", nullable: true })
   updateAt: Date | null;
@@ -29,12 +29,12 @@ export class GanadoresRifa {
   deleteAt: Date | null;
 
   @ManyToOne(
-    () => Participantes,
-    (participantes) => participantes.ganadoresRifas,
+    () => ParticipantesRifa,
+    (participantesRifa) => participantesRifa.ganadoresRifas,
     { onDelete: "SET NULL" }
   )
-  @JoinColumn([{ name: "participante", referencedColumnName: "id" }])
-  participante: Participantes;
+  @JoinColumn([{ name: "participanteRifa", referencedColumnName: "id" }])
+  participanteRifa: ParticipantesRifa;
 
   @ManyToOne(() => Rifas, (rifas) => rifas.ganadoresRifas, {
     onDelete: "SET NULL",

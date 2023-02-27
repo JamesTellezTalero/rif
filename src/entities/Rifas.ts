@@ -36,6 +36,9 @@ export class Rifas {
   @Column("integer", { name: "montoRecaudado", default: () => "0" })
   montoRecaudado: number;
 
+  @Column("integer", { name: "participantesActuales", default: () => "0" })
+  participantesActuales: number;
+
   @Column("character varying", { name: "image" })
   image: string;
 
@@ -48,17 +51,14 @@ export class Rifas {
   @Column("timestamp without time zone", { name: "endsAt", nullable: true })
   endsAt: Date | null;
 
-  @Column("timestamp without time zone", { name: "createAt" })
-  createAt: Date;
+  @Column("timestamp without time zone", { name: "createAt", nullable: true })
+  createAt: Date | null;
 
   @Column("timestamp without time zone", { name: "updateAt", nullable: true })
   updateAt: Date | null;
 
   @Column("timestamp without time zone", { name: "deleteAt", nullable: true })
   deleteAt: Date | null;
-
-  @Column("integer", { name: "participantesActuales", default: () => "0" })
-  participantesActuales: number;
 
   @OneToMany(() => GanadoresRifa, (ganadoresRifa) => ganadoresRifa.rifa)
   ganadoresRifas: GanadoresRifa[];

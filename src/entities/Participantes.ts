@@ -6,7 +6,6 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { GanadoresRifa } from "./GanadoresRifa";
 import { TipoDocumento } from "./TipoDocumento";
 import { ParticipantesRifa } from "./ParticipantesRifa";
 
@@ -30,17 +29,14 @@ export class Participantes {
   @Column("boolean", { name: "status", default: () => "true" })
   status: boolean;
 
-  @Column("timestamp without time zone", { name: "createAt" })
-  createAt: Date;
+  @Column("timestamp without time zone", { name: "createAt", nullable: true })
+  createAt: Date | null;
 
   @Column("timestamp without time zone", { name: "updateAt", nullable: true })
   updateAt: Date | null;
 
   @Column("timestamp without time zone", { name: "deleteAt", nullable: true })
   deleteAt: Date | null;
-
-  @OneToMany(() => GanadoresRifa, (ganadoresRifa) => ganadoresRifa.participante)
-  ganadoresRifas: GanadoresRifa[];
 
   @ManyToOne(
     () => TipoDocumento,

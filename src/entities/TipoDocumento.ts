@@ -15,8 +15,8 @@ export class TipoDocumento {
   @Column("boolean", { name: "status", default: () => "true" })
   status: boolean;
 
-  @Column("timestamp without time zone", { name: "createAt" })
-  createAt: Date;
+  @Column("timestamp without time zone", { name: "createAt", nullable: true })
+  createAt: Date | null;
 
   @Column("timestamp without time zone", { name: "updateAt", nullable: true })
   updateAt: Date | null;

@@ -1,15 +1,21 @@
+import { ParticipantesBusiness } from "../Business/ParticipantesBusiness";
 import { ParticipantesRifaBusiness } from "../Business/ParticipantesRifaBusiness";
 import { RifasBusiness } from "../Business/RifasBusiness";
 import { TransaccionesBusiness } from "../Business/TransaccionesBusiness";
 import { TransactionStatesBusiness } from "../Business/TransactionStatesBusiness";
 import { apiResponse } from "../Models/apiResponse";
+import { StringUtils } from "../Utils/StringUtils";
+import { ParticipantesRifa } from "../entities/ParticipantesRifa";
 import { Rifas } from "../entities/Rifas";
 import { Transacciones } from "../entities/Transacciones";
 
 const RifasB = new RifasBusiness();
+const ParticipantesB = new ParticipantesBusiness();
 const ParticipantesRifaB = new ParticipantesRifaBusiness();
 const TransactionStatesB = new TransactionStatesBusiness();
 const TransaccionesB = new TransaccionesBusiness();
+
+const StringU = new StringUtils();
 
 exports.Create = async (req, res) => {
     let apiR = new apiResponse();
@@ -17,6 +23,7 @@ exports.Create = async (req, res) => {
     try {
         let item = req.body.transaccion
         let transaccion = new Transacciones();
+        let participante = new ParticipantesRifa();
         if(item == null){
             throw apiR = {
                 code: 400,
@@ -24,43 +31,15 @@ exports.Create = async (req, res) => {
                 data:{}
             }
         }
-        transaccion.participanterifa = (item?.participanterifa != null ) ? item.participanterifa: null; 
-        if(transaccion.participanterifa == null){
+        item.rifa = (item.rifa != null && item.rifa.id != null ) ? item.rifa: null; 
+        if(item.rifa == null){
             throw apiR = {
                 code: 400,
-                message: "No se registra la propiedad <participanterifa>",
+                message: "No se registra la propiedad <rifa> o <rifa.id>",
                 data:{}
             }
-        }else if(transaccion.participanterifa.id == null){
-            throw apiR = {
-                message: "No registra la propiedad <participanterifa.id>",
-                code: 400,
-                data: {}
-            }
         }
-        transaccion.participanterifa = await ParticipantesRifaB.GetById(transaccion.participanterifa.id)
-        if(transaccion.participanterifa == null){
-            throw apiR = {
-                message: "No Existe el <participanterifa> Enviado",
-                code: 400,
-                data: {}
-            }
-        }
-        transaccion.rifa = (item.rifa != null ) ? item.rifa: null; 
-        if(transaccion.rifa == null){
-            throw apiR = {
-                code: 400,
-                message: "No se registra la propiedad <rifa>",
-                data:{}
-            }
-        }else if(transaccion.rifa.id == null){
-            throw apiR = {
-                message: "No registra la propiedad <rifa.id>",
-                code: 400,
-                data: {}
-            }
-        }
-        transaccion.rifa = await RifasB.GetById(transaccion.rifa.id);
+        transaccion.rifa = await RifasB.GetById(item.rifa.id);
         if(transaccion.rifa == null){
             throw apiR = {
                 message: "No Existe la <rifa> Enviada",
@@ -68,11 +47,29 @@ exports.Create = async (req, res) => {
                 data: {}
             }
         }
+        item.participante = (item?.participante != null && item?.participante.id != null ) ? item.participante: null; 
+        if(item.participante == null){
+            throw apiR = {
+                code: 400,
+                message: "No se registra la propiedad <participante> o <participante.id>",
+                data:{}
+            }
+        }
+        participante.participante = await ParticipantesB.GetById(item.participante.id)
+        if(participante.participante == null){
+            throw apiR = {
+                message: "No Existe el <participante> Enviado",
+                code: 400,
+                data: {}
+            }
+        }
+        participante.rifa = transaccion.rifa;
+        transaccion.participanterifa = await ParticipantesRifaB.Create(participante);
         transaccion.amount = transaccion.rifa.costoOportunidad;
         let date = new Date();
-        transaccion.orden = `${transaccion.rifa.id}-${transaccion.participanterifa.id}-${date.getTime()}`
+        transaccion.orden = `${await StringU.agregarCaracteresIzquierda(`${transaccion.rifa.id}`, 5, '0')}-${await StringU.agregarCaracteresIzquierda(`${transaccion.participanterifa.id}`, 5, '0')}-${date.getTime()}`
         transaccion.transactionState = await TransactionStatesB.GetByName("Creada");
-        apiR.data = await TransaccionesB.Create(transaccion)
+        apiR.data = await TransaccionesB.Create(transaccion);
         res.status(200).json(apiR)
     } catch (error) {
         console.log(error);

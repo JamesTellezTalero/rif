@@ -100,15 +100,14 @@ export class RifasBusiness{
         }
     }
 
-    async SumarTransaccion(item:Transacciones):Promise<Rifas>{
-        item.rifa.montoRecaudado += item.amount;
-        item.rifa.participantesActuales += 1;
-        return await getManager().getRepository(Rifas).save(item.rifa);
-    }
-    
-    async RestarTransaccion(item:Transacciones):Promise<Rifas>{
-        item.rifa.montoRecaudado -= item.amount;
-        item.rifa.participantesActuales -= 1;
+    async ProcesarTransaccion(item:Transacciones, add: boolean):Promise<Rifas>{
+        if(add == true){
+            item.rifa.montoRecaudado += item.amount;
+            item.rifa.participantesActuales += 1;
+        }else{
+            item.rifa.montoRecaudado -= item.amount;
+            item.rifa.participantesActuales -= 1;
+        }
         return await getManager().getRepository(Rifas).save(item.rifa);
     }
 
