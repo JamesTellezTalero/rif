@@ -2,6 +2,7 @@ import { getManager } from "typeorm";
 import { apiResponse } from "../Models/apiResponse";
 import { Rifas } from "../entities/Rifas";
 import { EstadosRifa } from "../entities/EstadosRifa";
+import { Transacciones } from "../entities/Transacciones";
 const fs = require('fs');
 
 export class RifasBusiness{  
@@ -97,6 +98,18 @@ export class RifasBusiness{
                 throw apiR;          
             } 
         }
+    }
+
+    async SumarTransaccion(item:Transacciones):Promise<Rifas>{
+        item.rifa.montoRecaudado += item.amount;
+        item.rifa.participantesActuales += 1;
+        return await getManager().getRepository(Rifas).save(item.rifa);
+    }
+    
+    async RestarTransaccion(item:Transacciones):Promise<Rifas>{
+        item.rifa.montoRecaudado -= item.amount;
+        item.rifa.participantesActuales -= 1;
+        return await getManager().getRepository(Rifas).save(item.rifa);
     }
 
     async GetAll():Promise<Rifas[]>{

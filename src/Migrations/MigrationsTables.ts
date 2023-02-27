@@ -390,6 +390,12 @@ app.listen(3000, () => {
                     default: 0,
                 },
                 {
+                    name: 'participantesActuales',
+                    type: 'int',
+                    isNullable: false,
+                    default: 0,
+                },
+                {
                     name: 'image',
                     type: 'varchar',
                     isNullable: false,
@@ -560,7 +566,7 @@ app.listen(3000, () => {
                     name: 'status',
                     type: 'boolean',
                     isNullable: false,
-                    default: true
+                    default: false
                 },
                 {
                     name: 'createAt',

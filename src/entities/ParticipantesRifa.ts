@@ -27,6 +27,9 @@ export class ParticipantesRifa {
   @Column("timestamp without time zone", { name: "deleteAt", nullable: true })
   deleteAt: Date | null;
 
+  @Column("boolean", { name: "aproved", default: () => "false" })
+  aproved: boolean;
+
   @ManyToOne(
     () => Participantes,
     (participantes) => participantes.participantesRifas,

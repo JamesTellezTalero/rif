@@ -69,6 +69,8 @@ exports.Create = async (req, res) => {
             }
         }
         transaccion.amount = transaccion.rifa.costoOportunidad;
+        let date = new Date();
+        transaccion.orden = `${transaccion.rifa.id}-${transaccion.participanterifa.id}-${date.getTime()}`
         transaccion.transactionState = await TransactionStatesB.GetByName("Creada");
         apiR.data = await TransaccionesB.Create(transaccion)
         res.status(200).json(apiR)
@@ -115,18 +117,12 @@ exports.Update = async (req, res) => {
                 data: {}
             }
         }
-        transaccion.participanterifa = (item?.participanterifa != null ) ? item.participanterifa: null; 
+        transaccion.participanterifa = (item?.participanterifa != null && item?.participanterifa.id != null) ? item.participanterifa: null; 
         if(transaccion.participanterifa == null){
             throw apiR = {
                 code: 400,
-                message: "No se registra la propiedad <participanterifa>",
+                message: "No se registra la propiedad <participanterifa> o <participanterifa.id>",
                 data:{}
-            }
-        }else if(transaccion.participanterifa.id == null){
-            throw apiR = {
-                message: "No registra la propiedad <participanterifa.id>",
-                code: 400,
-                data: {}
             }
         }
         transaccion.participanterifa = await ParticipantesRifaB.GetById(transaccion.participanterifa.id)
@@ -137,44 +133,38 @@ exports.Update = async (req, res) => {
                 data: {}
             }
         }
-        transaccion.rifa = (item.rifa != null ) ? item.rifa: null; 
-        if(transaccion.rifa == null){
+        item.rifa = (item.rifa != null && item.rifa.id != null ) ? item.rifa: null; 
+        if(item.rifa == null){
             throw apiR = {
                 code: 400,
-                message: "No se registra la propiedad <rifa>",
+                message: "No se registra la propiedad <rifa> o <rifa.id>",
                 data:{}
             }
-        }else if(transaccion.rifa.id == null){
-            throw apiR = {
-                message: "No registra la propiedad <rifa.id>",
-                code: 400,
-                data: {}
-            }
         }
-        transaccion.rifa = await RifasB.GetById(transaccion.rifa.id);
-        if(transaccion.rifa == null){
+        if(transaccion.rifa.id != item.rifa.id ){
             throw apiR = {
-                message: "No Existe la <rifa> Enviada",
+                message: "La Transaccion no Puede cambiar de <rifa>",
                 code: 400,
                 data: {}
             }
         }
         transaccion.amount = transaccion.rifa.costoOportunidad;
-        transaccion.transactionState = (item.transactionState != null ) ? item.transactionState: null; 
+        transaccion.transactionState = (item.transactionState != null && item.transactionState.name != null ) ? item.transactionState: null; 
         if(transaccion.transactionState == null){
             throw apiR = {
                 code: 400,
-                message: "No se registra la propiedad <transactionState>",
+                message: "No se registra la propiedad <transactionState> o <transactionState.name>",
                 data:{}
             }
-        }else if(transaccion.transactionState.name == null){
+        }
+        transaccion.transactionState = await TransactionStatesB.GetByName(transaccion.transactionState.name);
+        if(transaccion.transactionState == null){
             throw apiR = {
-                message: "No registra la propiedad <transactionState.name>",
+                message: "No existe la propiedad <transactionState>",
                 code: 400,
                 data: {}
             }
         }
-        transaccion.transactionState = await TransactionStatesB.GetByName(transaccion.transactionState.name);
         apiR.data = await TransaccionesB.Update(transaccion)
         res.status(200).json(apiR)
     } catch (error) {

@@ -57,6 +57,9 @@ export class Rifas {
   @Column("timestamp without time zone", { name: "deleteAt", nullable: true })
   deleteAt: Date | null;
 
+  @Column("integer", { name: "participantesActuales", default: () => "0" })
+  participantesActuales: number;
+
   @OneToMany(() => GanadoresRifa, (ganadoresRifa) => ganadoresRifa.rifa)
   ganadoresRifas: GanadoresRifa[];
 
