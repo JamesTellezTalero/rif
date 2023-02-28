@@ -6,6 +6,16 @@ router.get('/', (req, res) => {
     res.status(200).send('Bienvenido al BackEnd de Rif ||| <br> Este sitio se encuentra en desarrollo. ');
 });
 
+//#region EstadosRifas
+var EstadosRifaRoutes = require('./EstadosRifaRoutes');
+router.use('/estadosrifas', EstadosRifaRoutes);
+//#endregion
+
+//#region GanadoresRifas
+var GanadoresRifas = require('./GanadoresRifaRoutes');
+router.use('/ganadoresrifas', GanadoresRifas);
+//#endregion
+
 //#region ParticipantesRifaRoutes
 var ParticipantesRifaRoutes = require('./ParticipantesRifaRoutes');
 router.use('/participantesrifa', ParticipantesRifaRoutes);
@@ -14,16 +24,6 @@ router.use('/participantesrifa', ParticipantesRifaRoutes);
 //#region ParticipantesRoutes
 var ParticipantesRoutes = require('./ParticipantesRoutes');
 router.use('/participantes', ParticipantesRoutes);
-//#endregion
-
-//#region Usuarios
-var UsuariosRoutes = require('./UsuariosRoutes');
-router.use('/usuarios', UsuariosRoutes);
-//#endregion
-
-//#region EstadosRifas
-var EstadosRifaRoutes = require('./EstadosRifaRoutes');
-router.use('/estadosrifas', EstadosRifaRoutes);
 //#endregion
 
 //#region Rifas
@@ -51,6 +51,10 @@ var TransaccionesRoutes = require('./TransactionsRoutes')
 router.use('/transacciones', TransaccionesRoutes)
 //#endregion
 
+//#region Usuarios
+var UsuariosRoutes = require('./UsuariosRoutes');
+router.use('/usuarios', UsuariosRoutes);
+//#endregion
 
 module.exports = router;
 

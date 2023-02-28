@@ -132,7 +132,7 @@ export class RifasBusiness{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
-            let Rifa = await getManager().getRepository(Rifas).findOne({where:{id: id}, relations:["estadoRifa", "tipoRifa", "usuario", "participantesRifas", "participantesRifas.participante"]})
+            let Rifa = await getManager().getRepository(Rifas).findOne({where:{id: id}, relations:["estadoRifa", "tipoRifa", "usuario", "ganadoresRifas", "ganadoresRifas.participanteRifa", "participantesRifas", "participantesRifas.participante"]})
             if(Rifa != null){
                 Rifa.participantesRifas = Rifa.participantesRifas.filter(e => e.status == true)
             }

@@ -13,8 +13,12 @@ export class GanadoresRifa {
   @PrimaryGeneratedColumn({ type: "integer", name: "id" })
   id: number;
 
-  @Column("boolean", { name: "entregado" })
-  entregado: boolean;
+  @Column("boolean", {
+    name: "entregado",
+    nullable: true,
+    default: () => "false",
+  })
+  entregado: boolean | null;
 
   @Column("boolean", { name: "status", default: () => "true" })
   status: boolean;

@@ -516,7 +516,8 @@ app.listen(3000, () => {
                 {
                     name: 'entregado',
                     type: 'boolean',
-                    isNullable: false
+                    isNullable: true,
+                    default: false
                 },
                 {
                     name: 'status',
