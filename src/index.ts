@@ -3,11 +3,14 @@ import { AppDataSource } from "./data-source"
 import * as dotenv from 'dotenv';
 import { UsuariosBusiness } from "./Business/UsuariosBusiness";
 import passport = require("passport");
+import { GanadoresRifaBusiness } from "./Business/GanadoresRifaBusiness";
 
 var cors = require("cors");
 var express = require('express');
 const path = require('path');
+const axios = require('axios');
 const bodyParser = require("body-parser");
+const CronJob = require('cron').CronJob;
 
 // Variables de entorno
 dotenv.config({
@@ -15,6 +18,7 @@ dotenv.config({
 });
 
 const app = express();
+const host = process.env.HOST;
 const port = process.env.PORT;
 
 app.use(express.static(__dirname));
@@ -38,3 +42,17 @@ createConnection(AppDataSource).then(async (connection) => {
         return console.log(`listen ${port}`);
     });
 }).catch(err => console.error(err));
+
+
+// const job = new CronJob('* * */1 * * *', function() {
+// const GanadoresB = new GanadoresRifaBusiness();
+// const job = new CronJob('*/1 * * * * *', async function() {
+//     try {
+//         const d = new Date();
+//         console.log('Generando ganadores:', d);
+//         await GanadoresB.DefinirGanadoresPendientes();
+//     } catch (error) {
+//         console.log(error);
+//     }
+// });
+// job.start();

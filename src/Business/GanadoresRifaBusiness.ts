@@ -1,4 +1,4 @@
-import { getManager } from "typeorm";
+import { Between, LessThan, getManager } from "typeorm";
 import { apiResponse } from "../Models/apiResponse";
 import { GanadoresRifa } from "../entities/GanadoresRifa";
 import { Rifas } from "../entities/Rifas";
@@ -28,6 +28,34 @@ export class GanadoresRifaBusiness{
                 
             }
             return await this.GetByRifa(rifa.id);
+        } catch (error) {
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }   
+        }
+    }
+    
+    async DefinirGanadoresPendientes():Promise<void>{
+        let apiR = new apiResponse();
+        apiR.data = {};
+        try {
+            let di = new Date();
+            di.setHours(0, 0, 0, 0)
+            let da = new Date();
+            da.setHours(23, 59, 59, 59)
+            console.log(di);
+            console.log(da);
+            let rifas = await getManager().getRepository(Rifas).find({
+                where:{endsAt: Between( di, da)},
+                relations:["estadoRifa", "tipoRifa", "usuario", "ganadoresRifas", "ganadoresRifas.participanteRifa", "participantesRifas", "participantesRifas.participante"]
+            })
+            rifas = rifas.filter(e => e.ganadoresRifas.length < e.posiblesGanadores)
+            console.log(rifas);
+            rifas.map(async e => await this.DefinirGanadores(e))
         } catch (error) {
             if(error?.code === 400){
                 throw apiR;          
