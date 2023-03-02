@@ -2,6 +2,7 @@ import { getManager } from "typeorm";
 import { Transacciones } from "../entities/Transacciones";
 import { Rifas } from "../entities/Rifas";
 import { TransactionStates } from "../entities/TransactionStates";
+import { ParticipantesRifa } from "../entities/ParticipantesRifa";
 
 export class TransaccionesBusiness{
     async Create(item:Transacciones):Promise<Transacciones>{
@@ -37,6 +38,16 @@ export class TransaccionesBusiness{
     async GetByRifa(rifa:Rifas):Promise<Transacciones[]>{
         return getManager().getRepository(Transacciones).find({
             where:{ rifa },
+            relations:['rifa', 'participanterifa', 'transactionState'],
+            order: {
+                id: 'DESC'
+            }
+        });
+    }
+
+    async GetByParticipanteRifa(participanterifa:ParticipantesRifa):Promise<Transacciones[]>{
+        return getManager().getRepository(Transacciones).find({
+            where:{ participanterifa },
             relations:['rifa', 'participanterifa', 'transactionState'],
             order: {
                 id: 'DESC'

@@ -2,12 +2,14 @@ import { EstadosRifaBusiness } from "../Business/EstadosRifaBusiness";
 import { ParticipantesBusiness } from "../Business/ParticipantesBusiness";
 import { ParticipantesRifaBusiness } from "../Business/ParticipantesRifaBusiness";
 import { RifasBusiness } from "../Business/RifasBusiness";
+import { TransaccionesBusiness } from "../Business/TransaccionesBusiness";
 import { apiResponse } from "../Models/apiResponse";
 import { Rifas } from "../entities/Rifas";
 
 let RifasB = new RifasBusiness();
 let ParticipantesB = new ParticipantesBusiness();
 let ParticipantesRifaB = new ParticipantesRifaBusiness();
+let TransaccionesB = new TransaccionesBusiness();
 
 exports.Create = async (req, res) => {
     let apiR = new apiResponse();
@@ -103,15 +105,22 @@ exports.Update = async (req, res) => {
             apiR.code = 400;
             apiR.message = "La Rifa Ya ha terminado"
             throw apiR;
-        }else if(Rifa.participantesRifas.length == Rifa.participantesTotales && status == true){
+        } else if(Rifa.participantesRifas.length == Rifa.participantesTotales && status == true){
             apiR.code = 400;
             apiR.message = "La Rifa Ya no tiene más plazas"
             throw apiR;
         } 
+        let trans = await TransaccionesB.GetByParticipanteRifa(participanteRifa);
+        trans = trans.filter(e => e.transactionState.name == "Exitosa")
+        if(trans.length < 0 && status == false){
+            apiR.code = 400;
+            apiR.message = "El participante Tiene una transaccion Exitosa"
+            throw apiR;
+        }
         let resp = await ParticipantesRifaB.Update(participanteRifa, status);
         apiR.code = 200;
-        apiR.message = "Estado Actualizado"
         apiR.data = resp
+        apiR.message = "Estado Actualizado"
         return res.status(apiR.code).json({... apiR})
     }
     catch (error){
