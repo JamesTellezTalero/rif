@@ -12,6 +12,7 @@ import { ParticipantesRifa } from "../entities/ParticipantesRifa";
 import { GanadoresRifa } from "../entities/GanadoresRifa";
 import { Transacciones } from "../entities/Transacciones";
 import { StringUtils } from "../Utils/StringUtils";
+import { TransaccionesBusiness } from "../Business/TransaccionesBusiness";
 
 var express = require('express');
 const crypto = require("crypto");
@@ -19,6 +20,7 @@ const crypto = require("crypto");
 const app = express();
 
 const StringU = new StringUtils();
+const TransaccionesB = new TransaccionesBusiness();
 
 // Tu código para configurar tu aplicación Express
 
@@ -238,13 +240,13 @@ app.listen(3000, () => {
                 TransaccionInicial.participanterifa = await getManager().getRepository(ParticipantesRifa).save(ParticipanteRifaInicial)
                 console.log("Seeder ParticipanteRifaInicial");
             }
-            TransaccionInicial.transactionState = await getManager().getRepository(TransactionStates).findOne({where:{name: 'Exitosa'}})
+            TransaccionInicial.transactionState = await getManager().getRepository(TransactionStates).findOne({where:{name: 'Creada'}})
             console.log(TransaccionInicial);
             TransaccionInicial.orden = `${await StringU.agregarCaracteresIzquierda(`${TransaccionInicial.rifa.id}`, 5, '0')}-${await StringU.agregarCaracteresIzquierda(`${TransaccionInicial.participanterifa.id}`, 5, '0')}-${date.getTime()}`
             TransaccionInicial.amount = TransaccionInicial.rifa.costoOportunidad;
-            await getManager().getRepository(Transacciones).save(TransaccionInicial)
-            TransaccionInicial.participanterifa.status = true;
-            await getManager().getRepository(ParticipantesRifa).save(TransaccionInicial.participanterifa)
+            let tran = await getManager().getRepository(Transacciones).save(TransaccionInicial)
+            tran.transactionState = await getManager().getRepository(TransactionStates).findOne({where:{name: 'Exitosa'}})
+            await TransaccionesB.Update(tran);
             console.log("Seeder TransaccionInicial");
         }
 

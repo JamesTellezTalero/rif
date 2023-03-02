@@ -46,6 +46,12 @@ exports.Create = async (req, res) => {
                 code: 400,
                 data: {}
             }
+        } else if(transaccion.rifa.participantesActuales == transaccion.rifa.participantesTotales){
+            throw apiR = {
+                message: "La Rifa Ya tiene las plazas completadas",
+                code: 400,
+                data: {}
+            }
         }
         item.participante = (item?.participante != null && item?.participante.id != null ) ? item.participante: null; 
         if(item.participante == null){
