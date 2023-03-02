@@ -6,11 +6,19 @@ import { EstadosRifa } from "../entities/EstadosRifa";
 import { TransactionStates } from "../entities/TransactionStates";
 import { TiposRifa } from "../entities/TiposRifa";
 import { TipoDocumento } from "../entities/TipoDocumento";
+import { Rifas } from "../entities/Rifas";
+import { Participantes } from "../entities/Participantes";
+import { ParticipantesRifa } from "../entities/ParticipantesRifa";
+import { GanadoresRifa } from "../entities/GanadoresRifa";
+import { Transacciones } from "../entities/Transacciones";
+import { StringUtils } from "../Utils/StringUtils";
 
 var express = require('express');
 const crypto = require("crypto");
 
 const app = express();
+
+const StringU = new StringUtils();
 
 // Tu código para configurar tu aplicación Express
 
@@ -18,6 +26,7 @@ app.listen(3000, () => {
     console.log('Server is running on port 3000');
     // Establecer un temporizador para detener el servidor después de 5 minutos
     createConnection(AppDataSource).then(async (connection) => {
+        let date = new Date();
 
         let nivelesExt = await getManager().getRepository(Niveles).find()
         if(nivelesExt.length == 0){
@@ -163,6 +172,80 @@ app.listen(3000, () => {
             TipoDocumentoCedula.createAt = new Date();
             await getManager().getRepository(TipoDocumento).save(TipoDocumentoCedula)
             console.log("Seeder TipoDocumentoCedula");
+        }
+        
+        let RifasExt = await getManager().getRepository(Rifas).find()
+        if(RifasExt.length == 0){
+            const RifaInicial = new Rifas();
+            RifaInicial.usuario = await getManager().getRepository(Usuarios).findOne({where:{email: "jtalero91@gmail.com"}});
+            RifaInicial.estadoRifa = await getManager().getRepository(EstadosRifa).findOne({where:{name: "EnCurso"}});
+            RifaInicial.tipoRifa = await getManager().getRepository(TiposRifa).findOne({where:{name: "Efectivo"}});
+            RifaInicial.name = "Rifa Uno";
+            RifaInicial.description = "Soy la descripcion de la rifa Uno";
+            RifaInicial.posiblesGanadores = 1;
+            RifaInicial.costoOportunidad = 1000;
+            RifaInicial.participantesTotales = 1;
+            RifaInicial.image = "./";
+            RifaInicial.createAt = new Date();
+            RifaInicial.startsAt = new Date();
+            RifaInicial.endsAt = new Date();
+            RifaInicial.endsAt.setMonth(RifaInicial.endsAt.getMonth() +1 )
+            await getManager().getRepository(Rifas).save(RifaInicial)
+            console.log("Seeder RifaInical");
+        }
+
+        let participantesExt = await getManager().getRepository(Participantes).find()
+        if(participantesExt.length == 0){
+            const ParticipanteInicial = new Participantes();
+            ParticipanteInicial.nombre = "James de pruebas";
+            ParticipanteInicial.email = "james22@gmail.com";
+            ParticipanteInicial.tipoDocumento = await getManager().getRepository(TipoDocumento).findOne({where:{code: 'CC'}})
+            ParticipanteInicial.documento = "1000856992";
+            ParticipanteInicial.telefono = "3205663079";
+            await getManager().getRepository(Participantes).save(ParticipanteInicial)
+            console.log("Seeder ParticipanteInicial");
+        }
+
+        let participantesRifaExt = await getManager().getRepository(ParticipantesRifa).find()
+        if(participantesRifaExt.length == 0){
+            const ParticipanteRifaInicial = new ParticipantesRifa();
+            ParticipanteRifaInicial.rifa = await getManager().getRepository(Rifas).findOne({where:{name: 'Rifa Uno'}})
+            ParticipanteRifaInicial.participante = await getManager().getRepository(Participantes).findOne({where:{email: 'james22@gmail.com'}})
+            await getManager().getRepository(ParticipantesRifa).save(ParticipanteRifaInicial)
+            console.log("Seeder ParticipanteRifaInicial");
+        }
+
+        let ganadoresRifaExt = await getManager().getRepository(GanadoresRifa).find()
+        if(ganadoresRifaExt.length == 0){
+            const GanadoresRifaInicial = new GanadoresRifa();
+            GanadoresRifaInicial.rifa = await getManager().getRepository(Rifas).findOne({where:{name: 'Rifa Uno'}})
+            GanadoresRifaInicial.participanteRifa = await getManager().getRepository(ParticipantesRifa).findOne({where:{id: 1}})
+            await getManager().getRepository(GanadoresRifa).save(GanadoresRifaInicial)
+            console.log("Seeder GanadoresRifaInicial");
+        }
+
+        let transaccionesExt = await getManager().getRepository(Transacciones).find()
+        if(transaccionesExt.length == 0){
+            const TransaccionInicial = new Transacciones();
+            TransaccionInicial.rifa = await getManager().getRepository(Rifas).findOne({where:{name: 'Rifa Uno'}})
+            TransaccionInicial.participanterifa = await getManager().getRepository(ParticipantesRifa).findOne({where:{
+                status: false
+            }})
+            if(TransaccionInicial.participanterifa == null){
+                const ParticipanteRifaInicial = new ParticipantesRifa();
+                ParticipanteRifaInicial.rifa = await getManager().getRepository(Rifas).findOne({where:{name: 'Rifa Uno'}})
+                ParticipanteRifaInicial.participante = await getManager().getRepository(Participantes).findOne({where:{email: 'james22@gmail.com'}})
+                TransaccionInicial.participanterifa = await getManager().getRepository(ParticipantesRifa).save(ParticipanteRifaInicial)
+                console.log("Seeder ParticipanteRifaInicial");
+            }
+            TransaccionInicial.transactionState = await getManager().getRepository(TransactionStates).findOne({where:{name: 'Exitosa'}})
+            console.log(TransaccionInicial);
+            TransaccionInicial.orden = `${await StringU.agregarCaracteresIzquierda(`${TransaccionInicial.rifa.id}`, 5, '0')}-${await StringU.agregarCaracteresIzquierda(`${TransaccionInicial.participanterifa.id}`, 5, '0')}-${date.getTime()}`
+            TransaccionInicial.amount = TransaccionInicial.rifa.costoOportunidad;
+            await getManager().getRepository(Transacciones).save(TransaccionInicial)
+            TransaccionInicial.participanterifa.status = true;
+            await getManager().getRepository(ParticipantesRifa).save(TransaccionInicial.participanterifa)
+            console.log("Seeder TransaccionInicial");
         }
 
         console.log('Server stopped after create seeders');
