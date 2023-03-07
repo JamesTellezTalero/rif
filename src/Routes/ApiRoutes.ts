@@ -26,6 +26,11 @@ var ParticipantesRoutes = require('./ParticipantesRoutes');
 router.use('/participantes', ParticipantesRoutes);
 //#endregion
 
+//#region PayPalRoutes
+var PayPalRoutes = require('./PayPalRoutes');
+router.use('/paypal', PayPalRoutes);
+//#endregion
+
 //#region Rifas
 var RifasRoutes = require('./RifasRoutes');
 router.use('/rifas', RifasRoutes);
