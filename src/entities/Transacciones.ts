@@ -17,6 +17,12 @@ export class Transacciones {
   @Column("character varying", { name: "orden", nullable: true })
   orden: string | null;
 
+  @Column("character varying", { name: "dinamicorden", nullable: true })
+  dinamicorden: string | null;
+
+  @Column("character varying", { name: "jsonresp", nullable: true })
+  jsonresp: string | null;
+
   @Column("integer", { name: "amount" })
   amount: number;
 

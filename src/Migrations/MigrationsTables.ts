@@ -450,6 +450,16 @@ app.listen(3000, () => {
                     isNullable: true
                 },
                 {
+                    name: 'dinamicorden',
+                    type: 'varchar',
+                    isNullable: true
+                },
+                {
+                    name: 'jsonresp',
+                    type: 'varchar',
+                    isNullable: true
+                },
+                {
                     name: 'rifa',
                     type: 'int',
                     isNullable: false
