@@ -38,6 +38,9 @@ export class Transacciones {
   @Column("timestamp without time zone", { name: "deleteAt", nullable: true })
   deleteAt: Date | null;
 
+  @Column("text", { name: "paymentlink", nullable: true })
+  paymentlink: string | null;
+
   @ManyToOne(
     () => ParticipantesRifa,
     (participantesRifa) => participantesRifa.transacciones,

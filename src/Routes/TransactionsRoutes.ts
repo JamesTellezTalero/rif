@@ -9,6 +9,7 @@ router.post('/Create', authMiddle.auth, transacciones_controller.Create)
 
 router.put('/Update', authMiddle.auth, transacciones_controller.Update)
 router.put('/UpdateState', authMiddle.auth, transacciones_controller.UpdateState)
+router.put('/UpdateTranPaymentsState', authMiddle.auth, transacciones_controller.UpdateTranPaymentsState)
 
 router.get('/GetAll', authMiddle.auth, transacciones_controller.GetAll)
 router.get('/GetById', authMiddle.auth, transacciones_controller.GetById)

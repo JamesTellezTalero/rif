@@ -75,7 +75,8 @@ exports.Create = async (req, res) => {
         let date = new Date();
         transaccion.orden = `${await StringU.agregarCaracteresIzquierda(`${transaccion.rifa.id}`, 5, '0')}-${await StringU.agregarCaracteresIzquierda(`${transaccion.participanterifa.id}`, 5, '0')}-${date.getTime()}`
         transaccion.transactionState = await TransactionStatesB.GetByName("Creada");
-        apiR.data = await TransaccionesB.Create(transaccion);
+        transaccion = await TransaccionesB.Create(transaccion);
+        apiR.data = await TransaccionesB.LinkOrder(transaccion);
         res.status(200).json(apiR)
     } catch (error) {
         console.log(error);
@@ -223,6 +224,31 @@ exports.UpdateState = async (req, res) => {
             }
         }
         apiR.data = await TransaccionesB.Update(transaccion)
+        res.status(200).json(apiR)
+    } catch (error) {
+        console.log(error);
+        if(error?.code === 400){
+            return res.status(error.code).json({
+                ... error
+            });
+        }else{
+            apiR.code = 500;
+            apiR.message = "Se presentó una excepcion no controlada.";
+            return res.status(apiR.code).json({
+                ... apiR
+            });
+        }
+    }
+}
+
+exports.UpdateTranPaymentsState = async (req, res) => {
+    let apiR = new apiResponse();
+    apiR.data = {}
+    try {
+        let transactions = await TransaccionesB.GetByStatesNames(["Creada", "Pendiente"])
+        Promise.all(transactions.map(async e => await TransaccionesB.UpdateTranPaymentState(e.id)))
+        apiR.message = "Transaccion actualizada";
+        apiR.code = 200;
         res.status(200).json(apiR)
     } catch (error) {
         console.log(error);

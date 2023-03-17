@@ -185,7 +185,7 @@ app.listen(3000, () => {
             RifaInicial.name = "Rifa Uno";
             RifaInicial.description = "Soy la descripcion de la rifa Uno";
             RifaInicial.posiblesGanadores = 1;
-            RifaInicial.costoOportunidad = 1000;
+            RifaInicial.costoOportunidad = 1;
             RifaInicial.participantesTotales = 1;
             RifaInicial.image = "./";
             RifaInicial.createAt = new Date();
@@ -241,7 +241,6 @@ app.listen(3000, () => {
                 console.log("Seeder ParticipanteRifaInicial");
             }
             TransaccionInicial.transactionState = await getManager().getRepository(TransactionStates).findOne({where:{name: 'Creada'}})
-            console.log(TransaccionInicial);
             TransaccionInicial.orden = `${await StringU.agregarCaracteresIzquierda(`${TransaccionInicial.rifa.id}`, 5, '0')}-${await StringU.agregarCaracteresIzquierda(`${TransaccionInicial.participanterifa.id}`, 5, '0')}-${date.getTime()}`
             TransaccionInicial.amount = TransaccionInicial.rifa.costoOportunidad;
             let tran = await getManager().getRepository(Transacciones).save(TransaccionInicial)

@@ -455,6 +455,11 @@ app.listen(3000, () => {
                     isNullable: true
                 },
                 {
+                    name: 'paymentlink',
+                    type: 'varchar',
+                    isNullable: true
+                },
+                {
                     name: 'jsonresp',
                     type: 'varchar',
                     isNullable: true

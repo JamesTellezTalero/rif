@@ -11,6 +11,4 @@ router.get('/', (req, res)=>{
 router.get('/Authentication', auth_middleware.auth, paypal_controller.Authentication)
 router.get('/ShowOrder', auth_middleware.auth, paypal_controller.ShowOrder)
 
-router.post('/CreateOrder', auth_middleware.auth, paypal_controller.CreateOrder)
-
 module.exports = router;

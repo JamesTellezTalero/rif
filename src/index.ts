@@ -44,9 +44,8 @@ createConnection(AppDataSource).then(async (connection) => {
 }).catch(err => console.error(err));
 
 
-// const job = new CronJob('* * */1 * * *', function() {
 // const GanadoresB = new GanadoresRifaBusiness();
-// const job = new CronJob('*/1 * * * * *', async function() {
+// const GanadoresRifaCron = new CronJob('*/1 * * * *', async function() {
 //     try {
 //         const d = new Date();
 //         console.log('Generando ganadores:', d);
@@ -55,4 +54,17 @@ createConnection(AppDataSource).then(async (connection) => {
 //         console.log(error);
 //     }
 // });
-// job.start();
+// GanadoresRifaCron.start();
+// const UpdateTransactionsCron = new CronJob('*/10 * * * * *', async function() {
+//     try {
+//         await axios.put(`http://${host}:${port}/api/transacciones/UpdateTranPaymentsState`, {}, {
+//             headers: {
+//                 Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp0YWxlcm85MUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjEyMzQ1NiIsImxhc3RTZXNzaW9uIjoxNjc2MjQzMjQ0Mjg3LCJpYXQiOjE2NzYyNDMyNDR9.Hwc-PQcMUAv1e-2D5jRgKY7LYrkI5Z-LXwO7xNaUJhg",
+//                 'Content-Type': 'application/json'
+//             }    
+//         });
+//     } catch (error) {
+//         console.log(error);
+//     }
+// });
+// UpdateTransactionsCron.start();
