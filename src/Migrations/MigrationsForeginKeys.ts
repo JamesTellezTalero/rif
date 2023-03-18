@@ -167,6 +167,17 @@ app.listen(3000, () => {
         await connect.createForeignKey("UserKeys", UserKeys_PaymentMethod_ForeignKey);
         console.log("UserKeys key Foreign key agregada");
 
+        
+        const UserKeys_Usuarios_ForeignKey = new TableForeignKey({
+            columnNames: ['usuario'],
+            referencedColumnNames: ['id'],
+            referencedTableName: 'Usuarios',
+            name: 'Usuarios_id',
+            onDelete: 'SET NULL'
+        });
+        await connect.createForeignKey("UserKeys", UserKeys_Usuarios_ForeignKey);
+        console.log("UserKeys usuario Foreign key agregada");
+
 
         const Transacciones_PaymentMethod_ForeignKey = new TableForeignKey({
             columnNames: ['paymentmethod'],

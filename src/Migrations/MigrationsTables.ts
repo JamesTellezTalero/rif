@@ -711,6 +711,11 @@ app.listen(3000, () => {
                     isGenerated: true
                 },
                 {
+                    name: 'usuario',
+                    type: 'int',
+                    isNullable: false
+                },
+                {
                     name: 'key',
                     type: 'int',
                     isNullable: false

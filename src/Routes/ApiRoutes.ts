@@ -26,6 +26,11 @@ var ParticipantesRoutes = require('./ParticipantesRoutes');
 router.use('/participantes', ParticipantesRoutes);
 //#endregion
 
+//#region PaymentMethodKeysRoutes
+var PaymentMethodKeysRoutes = require('./PaymentMethodKeysRoutes');
+router.use('/paymentmethodkeys', PaymentMethodKeysRoutes);
+//#endregion
+
 //#region PaymentMethodsRoutes
 var PaymentMethodsRoutes = require('./PaymentMethodsRoutes');
 router.use('/paymentmethods', PaymentMethodsRoutes);
