@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { PaymentMethodKeys } from "./PaymentMethodKeys";
+import { Usuarios } from "./Usuarios";
 
 @Entity("UserKeys", { schema: "public" })
 export class UserKeys {
@@ -34,4 +35,10 @@ export class UserKeys {
   )
   @JoinColumn([{ name: "key", referencedColumnName: "id" }])
   key: PaymentMethodKeys;
+
+  @ManyToOne(() => Usuarios, (usuarios) => usuarios.userKeys, {
+    onDelete: "SET NULL",
+  })
+  @JoinColumn([{ name: "usuario", referencedColumnName: "id" }])
+  usuario: Usuarios;
 }

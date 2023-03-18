@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Rifas } from "./Rifas";
+import { UserKeys } from "./UserKeys";
 import { Niveles } from "./Niveles";
 
 @Entity("Usuarios", { schema: "public" })
@@ -46,6 +47,9 @@ export class Usuarios {
 
   @OneToMany(() => Rifas, (rifas) => rifas.usuario)
   rifas: Rifas[];
+
+  @OneToMany(() => UserKeys, (userKeys) => userKeys.usuario)
+  userKeys: UserKeys[];
 
   @ManyToOne(() => Niveles, (niveles) => niveles.usuarios, {
     onDelete: "SET NULL",

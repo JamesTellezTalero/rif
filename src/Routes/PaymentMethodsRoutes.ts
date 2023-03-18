@@ -5,7 +5,7 @@ let paymentMethods_controller = require('./../Controllers/PaymentMethodsControll
 var authMiddle = require('./../Middlewares/authMiddleware');
 
 router.get('/', (req, res) => {
-    res.send('Bienvenido al BackEnd de Rif ||| <br>Sección de estados rifa');
+    res.send('Bienvenido al BackEnd de Rif ||| <br>Sección de metodos de pago');
 });
 
 router.get('/GetAll', authMiddle.auth,  paymentMethods_controller.GetAll);

@@ -71,5 +71,10 @@ var UsuariosRoutes = require('./UsuariosRoutes');
 router.use('/usuarios', UsuariosRoutes);
 //#endregion
 
+//#region userkeys
+var UserKeysRoutes = require('./UserKeysRoutes');
+router.use('/userkeys', UserKeysRoutes);
+//#endregion
+
 module.exports = router;
 
