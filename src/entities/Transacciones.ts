@@ -5,7 +5,9 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { Currencies } from "./Currencies";
 import { ParticipantesRifa } from "./ParticipantesRifa";
+import { PaymentMethods } from "./PaymentMethods";
 import { Rifas } from "./Rifas";
 import { TransactionStates } from "./TransactionStates";
 
@@ -19,6 +21,9 @@ export class Transacciones {
 
   @Column("character varying", { name: "dinamicorden", nullable: true })
   dinamicorden: string | null;
+
+  @Column("character varying", { name: "paymentlink", nullable: true })
+  paymentlink: string | null;
 
   @Column("character varying", { name: "jsonresp", nullable: true })
   jsonresp: string | null;
@@ -38,8 +43,11 @@ export class Transacciones {
   @Column("timestamp without time zone", { name: "deleteAt", nullable: true })
   deleteAt: Date | null;
 
-  @Column("text", { name: "paymentlink", nullable: true })
-  paymentlink: string | null;
+  @ManyToOne(() => Currencies, (currencies) => currencies.transacciones, {
+    onDelete: "SET NULL",
+  })
+  @JoinColumn([{ name: "currency", referencedColumnName: "id" }])
+  currency: Currencies;
 
   @ManyToOne(
     () => ParticipantesRifa,
@@ -48,6 +56,14 @@ export class Transacciones {
   )
   @JoinColumn([{ name: "participanterifa", referencedColumnName: "id" }])
   participanterifa: ParticipantesRifa;
+
+  @ManyToOne(
+    () => PaymentMethods,
+    (paymentMethods) => paymentMethods.transacciones,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn([{ name: "paymentmethod", referencedColumnName: "id" }])
+  paymentmethod: PaymentMethods;
 
   @ManyToOne(() => Rifas, (rifas) => rifas.transacciones, {
     onDelete: "SET NULL",

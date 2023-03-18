@@ -13,6 +13,9 @@ import { GanadoresRifa } from "../entities/GanadoresRifa";
 import { Transacciones } from "../entities/Transacciones";
 import { StringUtils } from "../Utils/StringUtils";
 import { TransaccionesBusiness } from "../Business/TransaccionesBusiness";
+import { PaymentMethods } from "../entities/PaymentMethods";
+import { PaymentMethodKeys } from "../entities/PaymentMethodKeys";
+import { Currencies } from "../entities/Currencies";
 
 var express = require('express');
 const crypto = require("crypto");
@@ -240,6 +243,38 @@ app.listen(3000, () => {
                 TransaccionInicial.participanterifa = await getManager().getRepository(ParticipantesRifa).save(ParticipanteRifaInicial)
                 console.log("Seeder ParticipanteRifaInicial");
             }
+            let CurrenciesExt = await getManager().getRepository(Currencies).find()
+            if(CurrenciesExt.length == 0){
+                const CurrencyUSD = new Currencies();
+                CurrencyUSD.name = "DOLLAR"
+                CurrencyUSD.code = "USD"
+                CurrencyUSD.symbol = "$"
+                TransaccionInicial.currency = await getManager().getRepository(Currencies).save(CurrencyUSD)
+                console.log("Seeder CurrencyUSD");
+            }
+
+            let paymentMethodsExt = await getManager().getRepository(PaymentMethods).find()
+            if(paymentMethodsExt.length == 0){
+                const PaymentMethodInicial = new PaymentMethods();
+                PaymentMethodInicial.name = "PAYPAL"
+                PaymentMethodInicial.url = "https://api-m.sandbox.paypal.com/";
+                TransaccionInicial.paymentmethod = await getManager().getRepository(PaymentMethods).save(PaymentMethodInicial)
+                console.log("Seeder PaymentMethodInicial");
+            }
+    
+            let paymentMethodsKeysExt = await getManager().getRepository(PaymentMethodKeys).find()
+            if(paymentMethodsKeysExt.length == 0){
+                const PaymentMethodKeyInicial = new PaymentMethodKeys();
+                PaymentMethodKeyInicial.name = "CLIENT_ID"
+                PaymentMethodKeyInicial.paymentMethod = await getManager().getRepository(PaymentMethods).findOne({where:{name: "PAYPAL"}});
+                await getManager().getRepository(PaymentMethodKeys).save(PaymentMethodKeyInicial)
+                console.log("Seeder PaymentMethodInicial");
+                const PaymentMethodKeySegundario = new PaymentMethodKeys();
+                PaymentMethodKeySegundario.name = "CLIENT_SECRET"
+                PaymentMethodKeySegundario.paymentMethod = await getManager().getRepository(PaymentMethods).findOne({where:{name: "PAYPAL"}});
+                await getManager().getRepository(PaymentMethodKeys).save(PaymentMethodKeySegundario)
+                console.log("Seeder PaymentMethodSegundario");
+            }    
             TransaccionInicial.transactionState = await getManager().getRepository(TransactionStates).findOne({where:{name: 'Creada'}})
             TransaccionInicial.orden = `${await StringU.agregarCaracteresIzquierda(`${TransaccionInicial.rifa.id}`, 5, '0')}-${await StringU.agregarCaracteresIzquierda(`${TransaccionInicial.participanterifa.id}`, 5, '0')}-${date.getTime()}`
             TransaccionInicial.amount = TransaccionInicial.rifa.costoOportunidad;
@@ -248,7 +283,6 @@ app.listen(3000, () => {
             await TransaccionesB.Update(tran);
             console.log("Seeder TransaccionInicial");
         }
-
         console.log('Server stopped after create seeders');
         process.exit(0);
     }).catch(err => console.error(err));

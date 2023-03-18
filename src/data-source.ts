@@ -23,6 +23,14 @@ import { Transacciones } from "./entities/Transacciones"
 import { Usuarios } from "./entities/Usuarios"
 import { ParticipantesRifa } from "./entities/ParticipantesRifa"
 import { GanadoresRifa } from "./entities/GanadoresRifa"
+import { UserKeys } from "./entities/UserKeys"
+import { PaymentMethods } from "./entities/PaymentMethods"
+import { PaymentMethodKeys } from "./entities/PaymentMethodKeys"
+import { UserKeysSubscriber } from "./Subscribers/UserKeysSubscriber"
+import { PaymentMethodsSubscriber } from "./Subscribers/PaymentMethodsSubscriber"
+import { PaymentMethodKeysSubscriber } from "./Subscribers/PaymentMethodKeysSubscriber"
+import { Currencies } from "./entities/Currencies"
+import { CurrenciesSubscriber } from "./Subscribers/CurrenciesSubscriber"
 
 export const AppDataSource:ConnectionOptions ={
     type: "postgres",
@@ -34,20 +42,25 @@ export const AppDataSource:ConnectionOptions ={
     synchronize: true,
     logging: false,
     entities: [
+        Currencies,
         EstadosRifa,
         GanadoresRifa,
         Niveles,
         Participantes,
         ParticipantesRifa,
+        PaymentMethodKeys,
+        PaymentMethods,
         Rifas,
         TipoDocumento,
         TiposRifa,
         Transacciones,
         TransactionStates,
+        UserKeys,
         Usuarios,
     ],
     migrations: [],
     subscribers: [
+        CurrenciesSubscriber,
         EstadosRifaSubscriber,
         GanadoresRifaSubscriber,
         NivelesSubscriber,
@@ -57,7 +70,10 @@ export const AppDataSource:ConnectionOptions ={
         TiposRifaSubscriber,
         TransaccionesSubscriber,
         TransactionStatesSubscriber,
+        ParticipantesRifaSubscriber,
+        PaymentMethodKeysSubscriber,
+        PaymentMethodsSubscriber,
         UsuariosSubscriber,
-        ParticipantesRifaSubscriber
+        UserKeysSubscriber,
     ],
 }

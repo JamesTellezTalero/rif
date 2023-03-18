@@ -465,6 +465,16 @@ app.listen(3000, () => {
                     isNullable: true
                 },
                 {
+                    name: 'currency',
+                    type: 'int',
+                    isNullable: false
+                },
+                {
+                    name: 'paymentmethod',
+                    type: 'int',
+                    isNullable: false
+                },
+                {
                     name: 'rifa',
                     type: 'int',
                     isNullable: false
@@ -647,6 +657,187 @@ app.listen(3000, () => {
         });
         await queryRunner.createTable(TipoDocumento);
         console.log("Creacion de la tabla TipoDocumento");
+        const PaymentMethodKeys = new Table({
+            name: 'PaymentMethodKeys',
+            columns: [
+                {
+                    name: 'id',
+                    type: 'int',
+                    isPrimary: true,
+                    isGenerated: true
+                },
+                {
+                    name: 'name',
+                    type: 'varchar',
+                    isNullable: false
+                },
+                {
+                    name: 'paymentMethod',
+                    type: 'int',
+                    isNullable: false
+                },
+                {
+                    name: 'status',
+                    type: 'boolean',
+                    isNullable: false,
+                    default: true
+                },
+                {
+                    name: 'createAt',
+                    type: 'timestamp',
+                    isNullable: true,
+                },
+                {
+                    name: 'updateAt',
+                    type: 'timestamp',
+                    isNullable: true ,
+                },
+                {
+                    name: 'deleteAt',
+                    type: 'timestamp',
+                    isNullable: true,
+                },
+            ]
+        });
+        await queryRunner.createTable(PaymentMethodKeys);
+        console.log("Creacion de la tabla PaymentMethodKeys");
+        const UserKeys = new Table({
+            name: 'UserKeys',
+            columns: [
+                {
+                    name: 'id',
+                    type: 'int',
+                    isPrimary: true,
+                    isGenerated: true
+                },
+                {
+                    name: 'key',
+                    type: 'int',
+                    isNullable: false
+                },
+                {
+                    name: 'value',
+                    type: 'varchar',
+                    isNullable: false
+                },
+                {
+                    name: 'status',
+                    type: 'boolean',
+                    isNullable: false,
+                    default: true
+                },
+                {
+                    name: 'createAt',
+                    type: 'timestamp',
+                    isNullable: true,
+                },
+                {
+                    name: 'updateAt',
+                    type: 'timestamp',
+                    isNullable: true ,
+                },
+                {
+                    name: 'deleteAt',
+                    type: 'timestamp',
+                    isNullable: true,
+                },
+            ]
+        });
+        await queryRunner.createTable(UserKeys);
+        console.log("Creacion de la tabla UserKeys");
+        const PaymentMethods = new Table({
+            name: 'PaymentMethods',
+            columns: [
+                {
+                    name: 'id',
+                    type: 'int',
+                    isPrimary: true,
+                    isGenerated: true
+                },
+                {
+                    name: 'name',
+                    type: 'varchar',
+                    isNullable: false
+                },
+                {
+                    name: 'url',
+                    type: 'varchar',
+                    isNullable: false
+                },
+                {
+                    name: 'status',
+                    type: 'boolean',
+                    isNullable: false,
+                    default: true
+                },
+                {
+                    name: 'createAt',
+                    type: 'timestamp',
+                    isNullable: true,
+                },
+                {
+                    name: 'updateAt',
+                    type: 'timestamp',
+                    isNullable: true ,
+                },
+                {
+                    name: 'deleteAt',
+                    type: 'timestamp',
+                    isNullable: true,
+                },
+            ]
+        });
+        await queryRunner.createTable(PaymentMethods);
+        console.log("Creacion de la tabla PaymentMethods");
+        const Currencies = new Table({
+            name: 'Currencies',
+            columns: [
+                {
+                    name: 'id',
+                    type: 'int',
+                    isPrimary: true,
+                    isGenerated: true
+                },
+                {
+                    name: 'name',
+                    type: 'varchar',
+                    isNullable: false
+                },
+                {
+                    name: 'code',
+                    type: 'varchar',
+                    isNullable: false
+                },
+                {
+                    name: 'symbol',
+                    type: 'varchar',
+                    isNullable: false
+                },
+                {
+                    name: 'status',
+                    type: 'boolean',
+                    isNullable: false,
+                    default: true
+                },
+                {
+                    name: 'createAt',
+                    type: 'timestamp',
+                    isNullable: true,
+                },
+                {
+                    name: 'updateAt',
+                    type: 'timestamp',
+                    isNullable: true ,
+                },
+                {
+                    name: 'deleteAt',
+                    type: 'timestamp',
+                    isNullable: true,
+                },
+            ]
+        });
+        await queryRunner.createTable(Currencies);
+        console.log("Creacion de la tabla Currencies");
         console.log('Server Stopped After Generate All Tables');
         process.exit(0);
     }).catch(err => console.error(err));
