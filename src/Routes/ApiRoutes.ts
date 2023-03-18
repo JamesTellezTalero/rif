@@ -6,6 +6,11 @@ router.get('/', (req, res) => {
     res.status(200).send('Bienvenido al BackEnd de Rif ||| <br> Este sitio se encuentra en desarrollo. ');
 });
 
+//#region Currencies
+var CurrenciesRoutes = require('./CurrenciesRoutes');
+router.use('/currencies', CurrenciesRoutes);
+//#endregion
+
 //#region EstadosRifas
 var EstadosRifaRoutes = require('./EstadosRifaRoutes');
 router.use('/estadosrifas', EstadosRifaRoutes);
