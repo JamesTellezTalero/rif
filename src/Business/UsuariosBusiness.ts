@@ -2,15 +2,20 @@ import { getManager } from "typeorm";
 import { Usuarios } from "../entities/Usuarios";
 import { apiResponse } from "../Models/apiResponse";
 import { Niveles } from "../entities/Niveles";
-const jwt = require("jsonwebtoken");
+import { DatesUtils } from "../Utils/DatesUtils";
+var jwt = require("jsonwebtoken");
 const passport = require("passport");
 const crypto = require("crypto");
 
 const fs = require('fs');
 
-let secretOrKey =  process.env.AUTH_KEY;
+// let secretOrKey =  process.env.AUTH_KEY;
+
+const DatesU = new DatesUtils();
 
 export class UsuariosBusiness{  
+
+    private secretOrKey =  process.env.AUTH_KEY
 
     async Create(user:Usuarios):Promise<Usuarios>{
         let apiR = new apiResponse();
@@ -79,11 +84,64 @@ export class UsuariosBusiness{
                     data: usuario 
                 }
             }else{
-                const token = jwt.sign({email, password, lastSession: new Date().getTime()}, secretOrKey);
+                const token = jwt.sign({email, password, lastSession: new Date().getTime()}, this.secretOrKey);
                 return {
                     email, token
                 };
             }
+        } catch (error) {
+            if(error?.code === 400){
+                throw apiR;          
+            } else{
+                apiR.code = 500;
+                apiR.message = error
+                throw apiR;          
+            }    
+        }
+    }
+
+    async DecrypLogin(token):Promise<Usuarios>{
+        let apiR = new apiResponse();
+        apiR.data = {}
+        try {
+            console.log(this.secretOrKey);
+            return jwt.verify(token, this.secretOrKey, async (err, decoded) => {
+                console.log(decoded);
+                let currentDate = new Date().getTime()
+                if (err) {
+                    apiR = {
+                        code: 400,
+                        message: "Token is ,not valid" ,
+                        data: {}
+                    } 
+                    throw apiR;
+                }else if (decoded?.lastSession == null){
+                    apiR = {
+                        code: 400,
+                        message: "Corrupt Token", 
+                        data: {}
+                    } 
+                    throw apiR;
+                }else if ((await DatesU.moreThanTwoHoursDifference(currentDate, decoded?.lastSession)) == true){
+                    apiR = {
+                        code: 400,
+                        message: "Expired Token", 
+                        data: {}
+                    } 
+                    throw apiR;
+                }
+                else{
+                    let usuario = await getManager().getRepository(Usuarios).findOne({where:{email: decoded.email, password: decoded.password}});
+                    if(usuario == null){
+                        throw apiR = {
+                            message: "No Registra",
+                            code: 400,
+                            data: usuario 
+                        }
+                    }
+                    return usuario
+                }
+            });
         } catch (error) {
             if(error?.code === 400){
                 throw apiR;          

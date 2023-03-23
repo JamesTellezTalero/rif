@@ -74,14 +74,14 @@ export class PayPalBusiness{
             let keys = await UserKeysB.GetByUsuarioId(idUsuario)
             let Client = keys.find(e => e.key.name == "CLIENT_ID");
             let Sercret = keys.find(e => e.key.name == "CLIENT_SECRET");
-            if (Client == null || Sercret == null){
+            if (Client?.value == null || Sercret?.value == null){
                 apiR.code = 400;
                 apiR.message = "LLaves Inconsistentes"
                 apiR.data = []
                 throw apiR;
             }
             let url = this.PAYPAL_URL + "v1/oauth2/token?grant_type=client_credentials"
-            let auth = Buffer. from(`${Client}:${Sercret}`).toString('base64');
+            let auth = Buffer. from(`${Client.value}:${Sercret.value}`).toString('base64');
             let resp = await axios.post(url, null, {
                 headers: {
                     Authorization: `Basic ${auth}`,

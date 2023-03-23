@@ -1,6 +1,6 @@
 import { Strategy as JWTStrategy, ExtractJwt } from 'passport-jwt'
 import { DatesUtils } from '../Utils/DatesUtils';
-const jwt = require("jsonwebtoken");
+var jwt = require("jsonwebtoken");
 
 const secretOrKey = process.env.AUTH_KEY;
 const DatesU = new DatesUtils();
