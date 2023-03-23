@@ -10,7 +10,8 @@ exports.Authentication = async (req, res) => {
     let apiR = new apiResponse();
     apiR.data = {}
     try {
-        apiR.data = await PayPalB.Authentication()
+        ///// PENDING
+        apiR.data = await PayPalB.Authentication(1)
         apiR.code = 200;
         apiR.message = "create token"
         res.status(apiR.code).send(apiR)
@@ -31,7 +32,10 @@ exports.Authentication = async (req, res) => {
 } 
 
 exports.ShowOrder = async (req, res) => {
-    let id = req.query.id;
-    let resp = await PayPalB.ShowOrder(id)
-    res.status(200).send(resp)
+    // let id = req.query.id;
+    // // token del usuario
+    // let id = req.query.id;
+    // let resp = await PayPalB.ShowOrder(id)
+    // res.status(200).send(resp)
+    res.status(200).send("resp")
 } 

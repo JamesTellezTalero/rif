@@ -12,10 +12,11 @@ const TransactionStatesB = new TransactionStatesBusiness();
 
 export class TransaccionesBusiness{
     async Create(item:Transacciones):Promise<Transacciones>{
-        return await getManager().getRepository(Transacciones).save(item);
+        let tran = await getManager().getRepository(Transacciones).save(item);
+        return this.GetById(tran.id)
     }
 
-    async LinkOrder(item:Transacciones):Promise<Transacciones>{
+    LinkOrder = async (item:Transacciones):Promise<Transacciones> => {
         try {
             let paypalReq:PayPalOrderReq = {
                 intent: "CAPTURE",
@@ -49,7 +50,7 @@ export class TransaccionesBusiness{
                     cancel_url: "https://example.com/cancel"
                 }
             }
-            let data = await PayPalB.CreateOrder(paypalReq);
+            let data = await PayPalB.CreateOrder(paypalReq, item.rifa.usuario.id);
             item.dinamicorden = data.id;
             let paymentlink = data.links.find(e => e.rel == 'approve');
             item.paymentlink = paymentlink.href;
@@ -67,7 +68,7 @@ export class TransaccionesBusiness{
     async UpdateTranPaymentState(idtran:number):Promise<Transacciones>{
         try {
             let tran = await this.GetById(idtran)
-            let order = await PayPalB.ShowOrder(tran.dinamicorden)
+            let order = await PayPalB.ShowOrder(tran.dinamicorden, tran.rifa.usuario.id)
             console.log(order); 
             if(order.status == "CREATED"){
                 tran.transactionState = await TransactionStatesB.GetByName("Creada")
@@ -99,7 +100,7 @@ export class TransaccionesBusiness{
     async GetById(id:number):Promise<Transacciones>{
         return getManager().getRepository(Transacciones).findOne({
             where:{ id },
-            relations:['rifa', 'participanterifa', 'transactionState']
+            relations:['rifa', 'rifa.usuario', 'participanterifa', 'transactionState']
         });
     }
     

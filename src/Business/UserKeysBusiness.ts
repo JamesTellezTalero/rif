@@ -72,7 +72,7 @@ export class UserKeysBusiness{
         apiR.data = {};
         try {
             let usuario = await UsuariosB.GetById(id);
-            let key = await getManager().getRepository(UserKeys).find({where:{usuario}, relations:['key']})
+            let key = await getManager().getRepository(UserKeys).find({where:{usuario, status: true}, relations:['key']})
             return key;
         } catch (error) {
             if(error?.code === 400){
