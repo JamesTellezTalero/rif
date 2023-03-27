@@ -9,6 +9,6 @@ export class DatesUtils{
         let year = date.getFullYear();
         let month = ((date.getMonth() + 1 ) < 10)? `0${date.getMonth() + 1}`: date.getMonth() + 1 ;
         let day = ((date.getDate() + 1 ) < 10)? `0${date.getDate() + 1}`: date.getDate() + 1 ;
-        return `${year}-${month}-${day}`;
+        return `${year}-${month}-${day}-${date.getTime()}`;
     }
 }
