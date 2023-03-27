@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv';
 import { UsuariosBusiness } from "./Business/UsuariosBusiness";
 import passport = require("passport");
 import { GanadoresRifaBusiness } from "./Business/GanadoresRifaBusiness";
+import { EnvConfig } from "./Config/EnvConfig";
 
 var cors = require("cors");
 var express = require('express');
@@ -12,20 +13,18 @@ const axios = require('axios');
 const bodyParser = require("body-parser");
 const CronJob = require('cron').CronJob;
 
-// Variables de entorno
-dotenv.config({
-    path: path.resolve(__dirname, "process.env"),
-});
-
 const app = express();
-const host = process.env.HOST;
-const port = process.env.PORT;
 
 app.use(express.static(__dirname));
 app.use("/assets", express.static("assets"));
 
 let webRoutes = require("./Routes/WebRoutes");
 let apiRoutes = require("./Routes/ApiRoutes");
+
+// Variables de entorno
+dotenv.config({
+    path: path.resolve(__dirname, "process.env"),
+});
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
@@ -38,8 +37,11 @@ app.use("/api", apiRoutes);
 createConnection(AppDataSource).then(async (connection) => {
     // await queryRunner.createDatabase("rif", true);
     console.log("Database Conected")
+    const config = await EnvConfig.getInstance();
+    const host = await config.get('HOST');
+    const port = await config.get('PORT');
     app.listen(port, ()=>{
-        return console.log(`listen ${port}`);
+        return console.log(`listen ${host}:${port}`);
     });
 }).catch(err => console.error(err));
 

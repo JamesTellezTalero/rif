@@ -1,4 +1,5 @@
 import axios from "axios";
+import { EnvConfig } from '../Config/EnvConfig';
 import { PayPalAuthResponse, PayPalOrderReq, PayPalOrderRes } from "../Models/PayPalModel";
 import { RifasBusiness } from "./RifasBusiness";
 import { UserKeysBusiness } from "./UserKeysBusiness";
@@ -9,18 +10,7 @@ const RifasB = new RifasBusiness();
 const UserKeysB = new UserKeysBusiness();
 const UsuariosB = new UsuariosBusiness();
 
-// let PAYPAL_URL = "https://api-m.sandbox.paypal.com/";
-// let CLIENT_ID = "ATwaz0qlu8XdbcOp37O7VWNDVr0cWCiwM4O-ZJ2-L-vTY5vUx7Tp2Bye9Y5fVE_cesGPKDakvA5xO5HN";
-// let CLIENT_SECRET = "EIKyRiYRocpdSoOYs_A7Xd_-QKIQ6uPJLKlq6CcX4wrh67tMrj9uvNgWbd965BVojxUJNDWeo5XPb-Tf";
-// PAYPAL_URL=https://api-m.sandbox.paypal.com/
-// CLIENT_ID=ATwaz0qlu8XdbcOp37O7VWNDVr0cWCiwM4O-ZJ2-L-vTY5vUx7Tp2Bye9Y5fVE_cesGPKDakvA5xO5HN
-// CLIENT_SECRET=EIKyRiYRocpdSoOYs_A7Xd_-QKIQ6uPJLKlq6CcX4wrh67tMrj9uvNgWbd965BVojxUJNDWeo5XPb-Tf
-// let PAYPAL_URL = process.env.PAYPAL_URL
-// let CLIENT_ID = process.env.CLIENT_ID
-// let CLIENT_SECRET = process.env.CLIENT_SECRET
-
 export class PayPalBusiness{
-    private PAYPAL_URL = process.env.PAYPAL_URL
 
     async GenerarEstructuraOrder(idRifa:number):Promise<PayPalOrderReq>{
         let rifa = await RifasB.GetById(idRifa);
@@ -80,7 +70,9 @@ export class PayPalBusiness{
                 apiR.data = []
                 throw apiR;
             }
-            let url = this.PAYPAL_URL + "v1/oauth2/token?grant_type=client_credentials"
+            const config = await EnvConfig.getInstance();
+            const pUrl = await config.get('PAYPAL_URL');
+            let url = pUrl + "v1/oauth2/token?grant_type=client_credentials"
             let auth = Buffer. from(`${Client.value}:${Sercret.value}`).toString('base64');
             let resp = await axios.post(url, null, {
                 headers: {
@@ -88,7 +80,6 @@ export class PayPalBusiness{
                     'Content-Type': 'application/x-www-form-urlencoded',
                 }
             })
-            console.log(resp.data);
             return resp.data
         } catch (error) {
             throw error;
@@ -97,7 +88,11 @@ export class PayPalBusiness{
     
     async CreateOrder(paypalReq: PayPalOrderReq, idUsuario:number):Promise<PayPalOrderRes>{
         try {
-            let url = this.PAYPAL_URL + "v2/checkout/orders"
+            const config = await EnvConfig.getInstance();
+            const pUrl = await config.get('PAYPAL_URL');
+            let url = pUrl + "v2/checkout/orders"
+            // console.log("url");
+            // console.log(url);
             let auth = await this.Authentication(idUsuario);
             let resp = await axios.post(url, paypalReq, {
                 headers: {
@@ -113,7 +108,9 @@ export class PayPalBusiness{
     
     async ShowOrder(idOrder: string, idUsuario):Promise<PayPalOrderRes>{
         try {
-            let url = this.PAYPAL_URL + "v2/checkout/orders/" + idOrder
+            const config = await EnvConfig.getInstance();
+            const pUrl = await config.get('PAYPAL_URL');
+            let url = pUrl + "v2/checkout/orders/" + idOrder
             let auth = await this.Authentication(idUsuario);
             let resp = await axios.get(url, {
                 headers: {

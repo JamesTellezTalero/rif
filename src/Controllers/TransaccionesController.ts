@@ -4,6 +4,7 @@ import { RifasBusiness } from "../Business/RifasBusiness";
 import { TransaccionesBusiness } from "../Business/TransaccionesBusiness";
 import { TransactionStatesBusiness } from "../Business/TransactionStatesBusiness";
 import { apiResponse } from "../Models/apiResponse";
+import { DatesUtils } from "../Utils/DatesUtils";
 import { StringUtils } from "../Utils/StringUtils";
 import { ParticipantesRifa } from "../entities/ParticipantesRifa";
 import { Rifas } from "../entities/Rifas";
@@ -16,6 +17,7 @@ const TransactionStatesB = new TransactionStatesBusiness();
 const TransaccionesB = new TransaccionesBusiness();
 
 const StringU = new StringUtils();
+const DatesU = new DatesUtils();
 
 exports.Create = async (req, res) => {
     let apiR = new apiResponse();
@@ -73,7 +75,7 @@ exports.Create = async (req, res) => {
         transaccion.participanterifa = await ParticipantesRifaB.Create(participante);
         transaccion.amount = transaccion.rifa.costoOportunidad;
         let date = new Date();
-        transaccion.orden = `${await StringU.agregarCaracteresIzquierda(`${transaccion.rifa.id}`, 5, '0')}-${await StringU.agregarCaracteresIzquierda(`${transaccion.participanterifa.id}`, 5, '0')}-${date.getTime()}`
+        transaccion.orden = `${await StringU.agregarCaracteresIzquierda(`${transaccion.rifa.id}`, 5, '0')}-${await StringU.agregarCaracteresIzquierda(`${transaccion.participanterifa.id}`, 5, '0')}-${await DatesU.CreateFormat_AAAAMMDD(date)}`
         transaccion.transactionState = await TransactionStatesB.GetByName("Creada");
         transaccion = await TransaccionesB.Create(transaccion);
         apiR.data = await TransaccionesB.LinkOrder(transaccion);
