@@ -72,8 +72,14 @@ export class UserKeysBusiness{
         apiR.data = {};
         try {
             let usuario = await UsuariosB.GetById(id);
-            let key = await getManager().getRepository(UserKeys).find({where:{usuario, status: true}, relations:['key']})
-            return key;
+            if(usuario == null){
+                apiR.code = 400;
+                apiR.message = "No existe el usuario"
+                throw apiR;
+            }else {
+                let key = await getManager().getRepository(UserKeys).find({where:{usuario, status: true}, relations:['key']})
+                return key;
+            }
         } catch (error) {
             if(error?.code === 400){
                 throw apiR;          

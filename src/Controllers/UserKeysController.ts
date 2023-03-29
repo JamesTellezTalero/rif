@@ -18,13 +18,11 @@ exports.Create = async (req, res) => {
             apiR.code = 400;
             apiR.message = "No se registra el <UserKey>"
             throw apiR;
-        }
-        if(item.value == null){
+        }else if(item.value == null){
             apiR.code = 400;
             apiR.message = "No se registra el <value>"
             throw apiR;
-        }
-        if(item.key == null){
+        }else if(item.key == null){
             apiR.code = 400;
             apiR.message = "No se registra el <key>"
             throw apiR;
@@ -34,8 +32,7 @@ exports.Create = async (req, res) => {
             apiR.code = 400;
             apiR.message = "No se registra o no existe el <key>"
             throw apiR;
-        }
-        if(item.usuario == null){
+        }else if(item.usuario == null){
             apiR.code = 400;
             apiR.message = "No se registra el <usuario>"
             throw apiR;
@@ -45,12 +42,13 @@ exports.Create = async (req, res) => {
             apiR.code = 400;
             apiR.message = "No se registra o no existe el <usuario>"
             throw apiR;
+        }else {
+            let resp = await UserKeysB.Create(item);
+            apiR.code = 200;
+            apiR.message = "Key Creado"
+            apiR.data = resp
+            return res.status(apiR.code).json({... apiR})
         }
-        let resp = await UserKeysB.Create(item);
-        apiR.code = 200;
-        apiR.message = "Key Creado"
-        apiR.data = resp
-        return res.status(apiR.code).json({... apiR})
     }
     catch (error){
         console.log(error);
@@ -77,8 +75,7 @@ exports.Update = async (req, res) => {
             apiR.code = 400;
             apiR.message = "No se registra el <UserKey>"
             throw apiR;
-        }
-        if(userKeySend.id == null){
+        }else if(userKeySend.id == null){
             apiR.code = 400;
             apiR.message = "No se registra el <id>"
             throw apiR;
@@ -100,8 +97,7 @@ exports.Update = async (req, res) => {
             apiR.code = 400;
             apiR.message = "No se registra el <status>"
             throw apiR;
-        }
-        if(userKeySend.key == null){
+        }else if(userKeySend.key == null){
             apiR.code = 400;
             apiR.message = "No se registra el <key>"
             throw apiR;
@@ -111,12 +107,13 @@ exports.Update = async (req, res) => {
             apiR.code = 400;
             apiR.message = "No se registra o no existe el <key>"
             throw apiR;
+        }else {
+            let resp = await UserKeysB.Update(item);
+            apiR.code = 200;
+            apiR.message = "Key Creado"
+            apiR.data = resp
+            return res.status(apiR.code).json({... apiR})
         }
-        let resp = await UserKeysB.Update(item);
-        apiR.code = 200;
-        apiR.message = "Key Creado"
-        apiR.data = resp
-        return res.status(apiR.code).json({... apiR})
     }
     catch (error){
         console.log(error);
