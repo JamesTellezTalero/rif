@@ -13,27 +13,25 @@ exports.Create = async (req, res) => {
             apiR.code = 400;
             apiR.message = "No se registra el <currency>"
             throw apiR;
-        }
-        if(item.name == null){
+        }else if(item.name == null){
             apiR.code = 400;
             apiR.message = "No se registra el <name>"
             throw apiR;
-        }
-        if(item.symbol == null){
+        }else if(item.symbol == null){
             apiR.code = 400;
             apiR.message = "No se registra el <symbol>"
             throw apiR;
-        }
-        if(item.code == null){
+        }else if(item.code == null){
             apiR.code = 400;
             apiR.message = "No se registra el <code>"
             throw apiR;
+        }else {
+            let resp = await CurrenciesB.Create(item);
+            apiR.code = 200;
+            apiR.message = "Currency Creado"
+            apiR.data = resp
+            return res.status(apiR.code).json({... apiR})
         }
-        let resp = await CurrenciesB.Create(item);
-        apiR.code = 200;
-        apiR.message = "Estado Creado"
-        apiR.data = resp
-        return res.status(apiR.code).json({... apiR})
     }
     catch (error){
         console.log(error);
@@ -60,37 +58,33 @@ exports.Update = async (req, res) => {
             apiR.code = 400;
             apiR.message = "No se registra el <currency>"
             throw apiR;
-        }
-        if(item.id == null){
+        }else if(item.id == null){
             apiR.code = 400;
             apiR.message = "No se registra el <id>"
             throw apiR;
-        }
-        if(item.name == null){
+        }else if(item.name == null){
             apiR.code = 400;
             apiR.message = "No se registra el <name>"
             throw apiR;
-        }
-        if(item.code == null){
+        }else if(item.code == null){
             apiR.code = 400;
             apiR.message = "No se registra el <code>"
             throw apiR;
-        }
-        if(item.symbol == null){
+        }else if(item.symbol == null){
             apiR.code = 400;
             apiR.message = "No se registra el <symbol>"
             throw apiR;
-        }
-        if(item.status == null){
+        }else if(item.status == null){
             apiR.code = 400;
             apiR.message = "No se registra el <status>"
             throw apiR;
+        }else {
+            let resp = await CurrenciesB.Update(item);
+            apiR.code = 200;
+            apiR.message = "Currency Actualizado"
+            apiR.data = resp
+            return res.status(apiR.code).json({... apiR})
         }
-        let resp = await CurrenciesB.Update(item);
-        apiR.code = 200;
-        apiR.message = "Estado Actualizado"
-        apiR.data = resp
-        return res.status(apiR.code).json({... apiR})
     }
     catch (error){
         console.log(error);
@@ -115,12 +109,12 @@ exports.GetAll = async (req, res) => {
         let resp = await CurrenciesB.GetAll();
         if(resp.length > 0){
             apiR.code = 200;
-            apiR.message = "Estados encontrados"
+            apiR.message = "Currencies encontrados"
             apiR.data = resp
             return res.status(apiR.code).json({... apiR})
         }else{
             throw apiR = {
-                message: "Estados No Encontrado",
+                message: "Currencies No Encontrados",
                 code: 400,
                 data: resp 
             }
@@ -155,12 +149,12 @@ exports.GetById = async (req, res) => {
         let resp = await CurrenciesB.GetById(id);
         if(resp != null){
             apiR.code = 200;
-            apiR.message = "Estado encontrado"
+            apiR.message = "Currency encontrado"
             apiR.data = resp
             return res.status(apiR.code).json({... apiR})
         }else{
             throw apiR = {
-                message: "Estado No Encontrado",
+                message: "Currency No Encontrado",
                 code: 400,
                 data: resp 
             }
@@ -195,12 +189,12 @@ exports.GetByCode = async (req, res) => {
         let resp = await CurrenciesB.GetByCode(code);
         if(resp != null){
             apiR.code = 200;
-            apiR.message = "Estado encontrado"
+            apiR.message = "Currency encontrado"
             apiR.data = resp
             return res.status(apiR.code).json({... apiR});
         }else{
             throw apiR = {
-                message: "Estado No Encontrado",
+                message: "Currency No Encontrado",
                 code: 400,
                 data: resp 
             }

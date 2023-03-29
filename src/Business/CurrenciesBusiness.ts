@@ -13,7 +13,7 @@ export class CurrenciesBusiness{
             let currency = await getManager().getRepository(Currencies).findOne({where:{name: item.name}})
             if(currency != null){
                 apiR.code = 400;
-                apiR.message = "Estado Existente"
+                apiR.message = "Currency Existente"
                 apiR.data = currency
                 throw apiR;
             }
@@ -23,7 +23,7 @@ export class CurrenciesBusiness{
                 return currency;
             }else{
                 throw apiR = {
-                    message: "Estados No Creado",
+                    message: "Currency No Creado",
                     code: 400,
                     data: currency 
                 }
@@ -46,7 +46,7 @@ export class CurrenciesBusiness{
             let currency = await getManager().getRepository(Currencies).findOne({where:{id: item.id}})
             if(currency == null){
                 apiR.code = 400;
-                apiR.message = "Estado Inexistente"
+                apiR.message = "Currency Inexistente"
                 apiR.data = currency
                 throw apiR;
             }
@@ -61,7 +61,7 @@ export class CurrenciesBusiness{
                 return currency;
             }else{
                 throw apiR = {
-                    message: "Estados No Actualizado",
+                    message: "Currency No Actualizado",
                     code: 400,
                     data: currency 
                 }
