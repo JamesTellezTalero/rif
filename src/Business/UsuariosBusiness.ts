@@ -3,6 +3,8 @@ import { Usuarios } from "../entities/Usuarios";
 import { apiResponse } from "../Models/apiResponse";
 import { Niveles } from "../entities/Niveles";
 import { DatesUtils } from "../Utils/DatesUtils";
+import { EnvConfig } from '../Config/EnvConfig';
+
 var jwt = require("jsonwebtoken");
 const passport = require("passport");
 const crypto = require("crypto");
@@ -14,8 +16,6 @@ const fs = require('fs');
 const DatesU = new DatesUtils();
 
 export class UsuariosBusiness{  
-
-    private secretOrKey =  process.env.AUTH_KEY
 
     async Create(user:Usuarios):Promise<Usuarios>{
         let apiR = new apiResponse();
@@ -76,6 +76,8 @@ export class UsuariosBusiness{
         let apiR = new apiResponse();
         apiR.data = {}
         try {
+            const config = await EnvConfig.getInstance();
+            const secretOrKey = await config.get('AUTH_KEY');
             let usuario = await getManager().getRepository(Usuarios).findOne({where:{email, password}});
             if(usuario == null){
                 throw apiR = {
@@ -84,7 +86,7 @@ export class UsuariosBusiness{
                     data: usuario 
                 }
             }else{
-                const token = jwt.sign({email, password, lastSession: new Date().getTime()}, this.secretOrKey);
+                const token = jwt.sign({email, password, lastSession: new Date().getTime()}, secretOrKey);
                 return {
                     email, token
                 };
@@ -104,8 +106,9 @@ export class UsuariosBusiness{
         let apiR = new apiResponse();
         apiR.data = {}
         try {
-            console.log(this.secretOrKey);
-            return jwt.verify(token, this.secretOrKey, async (err, decoded) => {
+            const config = await EnvConfig.getInstance();
+            const secretOrKey = await config.get('AUTH_KEY');
+            return jwt.verify(token, secretOrKey, async (err, decoded) => {
                 console.log(decoded);
                 let currentDate = new Date().getTime()
                 if (err) {

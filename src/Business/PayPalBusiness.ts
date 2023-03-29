@@ -91,8 +91,6 @@ export class PayPalBusiness{
             const config = await EnvConfig.getInstance();
             const pUrl = await config.get('PAYPAL_URL');
             let url = pUrl + "v2/checkout/orders"
-            // console.log("url");
-            // console.log(url);
             let auth = await this.Authentication(idUsuario);
             let resp = await axios.post(url, paypalReq, {
                 headers: {

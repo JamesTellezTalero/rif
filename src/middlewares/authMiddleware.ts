@@ -1,11 +1,13 @@
 import { Strategy as JWTStrategy, ExtractJwt } from 'passport-jwt'
 import { DatesUtils } from '../Utils/DatesUtils';
+import { EnvConfig } from '../Config/EnvConfig';
 var jwt = require("jsonwebtoken");
 
-const secretOrKey = process.env.AUTH_KEY;
 const DatesU = new DatesUtils();
 
-exports.auth = (req, res, next) => {
+exports.auth = async (req, res, next) => {
+    const config = await EnvConfig.getInstance();
+    const secretOrKey = await config.get('AUTH_KEY');
     let token:string = req.headers.authorization;
     if (token == null) {
         return res.status(401).json({ message: "No token provided" });
@@ -18,6 +20,7 @@ exports.auth = (req, res, next) => {
         next();
     }else{
         jwt.verify(token, secretOrKey, async (err, decoded) => {
+            console.log(token);
             let currentDate = new Date().getTime()
             if (err) {
                 return res.status(401).json({ message: "Token is not valid" });
