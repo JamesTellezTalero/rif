@@ -23,7 +23,7 @@ export class EstadosRifaBusiness{
                 return estadoRifa;
             }else{
                 throw apiR = {
-                    message: "Estados No Creado",
+                    message: "Estado No Creado",
                     code: 400,
                     data: estadoRifa 
                 }
@@ -59,7 +59,7 @@ export class EstadosRifaBusiness{
                 return estadoRifa;
             }else{
                 throw apiR = {
-                    message: "Estados No Actualizado",
+                    message: "Estado No Actualizado",
                     code: 400,
                     data: estadoRifa 
                 }
