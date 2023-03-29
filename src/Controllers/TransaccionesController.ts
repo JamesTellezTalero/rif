@@ -303,11 +303,12 @@ exports.GetById = async (req, res) => {
                 code: 400,
                 data: {}
             }
+        }else {
+            apiR.code = 200;
+            apiR.message = "Transacciones encontradas";
+            apiR.data = await TransaccionesB.GetById(id);
+            res.status(200).json(apiR)
         }
-        apiR.code = 200;
-        apiR.message = "Transacciones encontradas";
-        apiR.data = await TransaccionesB.GetById(id);
-        res.status(200).json(apiR)
     } catch (error) {
         console.log(error);
         if(error?.code === 400){
@@ -335,11 +336,12 @@ exports.GetByOrden = async (req, res) => {
                 code: 400,
                 data: {}
             }
+        } else {
+            apiR.code = 200;
+            apiR.message = "Transacciones encontradas";
+            apiR.data = await TransaccionesB.GetByOrden(orden);
+            res.status(200).json(apiR)
         }
-        apiR.code = 200;
-        apiR.message = "Transacciones encontradas";
-        apiR.data = await TransaccionesB.GetByOrden(orden);
-        res.status(200).json(apiR)
     } catch (error) {
         console.log(error);
         if(error?.code === 400){
@@ -375,11 +377,12 @@ exports.GetByRifa = async (req, res) => {
                 code: 400,
                 data: {}
             }
+        }else {
+            apiR.code = 200;
+            apiR.message = "Transacciones encontradas";
+            apiR.data = await TransaccionesB.GetByRifa(rifa);
+            res.status(200).json(apiR)
         }
-        apiR.code = 200;
-        apiR.message = "Transacciones encontradas";
-        apiR.data = await TransaccionesB.GetByRifa(rifa);
-        res.status(200).json(apiR)
     } catch (error) {
         console.log(error);
         if(error?.code === 400){
@@ -415,11 +418,12 @@ exports.GetByState = async (req, res) => {
                 code: 400,
                 data: {}
             }
+        }else {
+            apiR.code = 200;
+            apiR.message = "Transacciones encontradas";
+            apiR.data = await TransaccionesB.GetByState(state);
+            res.status(200).json(apiR)
         }
-        apiR.code = 200;
-        apiR.message = "Transacciones encontradas";
-        apiR.data = await TransaccionesB.GetByState(state);
-        res.status(200).json(apiR)
     } catch (error) {
         console.log(error);
         if(error?.code === 400){

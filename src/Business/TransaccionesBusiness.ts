@@ -12,8 +12,12 @@ const TransactionStatesB = new TransactionStatesBusiness();
 
 export class TransaccionesBusiness{
     async Create(item:Transacciones):Promise<Transacciones>{
-        let tran = await getManager().getRepository(Transacciones).save(item);
-        return this.GetById(tran.id)
+        try {
+            let tran = await getManager().getRepository(Transacciones).save(item);
+            return this.GetById(tran.id)
+        } catch (error) {
+            throw error;
+        }
     }
 
     LinkOrder = async (item:Transacciones):Promise<Transacciones> => {
@@ -62,7 +66,11 @@ export class TransaccionesBusiness{
     }
     
     async Update(item:Transacciones):Promise<Transacciones>{
-        return getManager().getRepository(Transacciones).save(item);
+        try {
+            return getManager().getRepository(Transacciones).save(item);
+        } catch (error) {
+            throw error;
+        }
     }
     
     async UpdateTranPaymentState(idtran:number):Promise<Transacciones>{
@@ -90,62 +98,90 @@ export class TransaccionesBusiness{
     }
 
     async GetAll():Promise<Transacciones[]>{
-        return getManager().getRepository(Transacciones).find({
-            order: {
-                id: 'DESC'
-            }
-        });
+        try {
+            return getManager().getRepository(Transacciones).find({
+                order: {
+                    id: 'DESC'
+                }
+            });
+        } catch (error) {
+            throw error
+        }
     }
     
     async GetById(id:number):Promise<Transacciones>{
-        return getManager().getRepository(Transacciones).findOne({
-            where:{ id },
-            relations:['rifa', 'rifa.usuario', 'participanterifa', 'transactionState']
-        });
+        try {
+            return getManager().getRepository(Transacciones).findOne({
+                where:{ id },
+                relations:['rifa', 'rifa.usuario', 'participanterifa', 'transactionState']
+            });
+        } catch (error) {
+            throw error
+        }
     }
     
     async GetByOrden(orden:string):Promise<Transacciones>{
-        return getManager().getRepository(Transacciones).findOne({
-            where:{ orden },
-            relations:['rifa', 'participanterifa', 'transactionState']
-        });
+        try {    
+            return getManager().getRepository(Transacciones).findOne({
+                where:{ orden },
+                relations:['rifa', 'participanterifa', 'transactionState']
+            });
+        } catch (error) {
+            throw error
+        }
     }
 
     async GetByRifa(rifa:Rifas):Promise<Transacciones[]>{
-        return getManager().getRepository(Transacciones).find({
-            where:{ rifa },
-            relations:['rifa', 'participanterifa', 'transactionState'],
-            order: {
-                id: 'DESC'
-            }
-        });
+        try {
+            return getManager().getRepository(Transacciones).find({
+                where:{ rifa },
+                relations:['rifa', 'participanterifa', 'transactionState'],
+                order: {
+                    id: 'DESC'
+                }
+            });
+        } catch (error) {
+            throw error
+        }
     }
 
     async GetByParticipanteRifa(participanterifa:ParticipantesRifa):Promise<Transacciones[]>{
-        return getManager().getRepository(Transacciones).find({
-            where:{ participanterifa },
-            relations:['rifa', 'participanterifa', 'transactionState'],
-            order: {
-                id: 'DESC'
-            }
-        });
+        try {
+            return getManager().getRepository(Transacciones).find({
+                where:{ participanterifa },
+                relations:['rifa', 'participanterifa', 'transactionState'],
+                order: {
+                    id: 'DESC'
+                }
+            });
+        } catch (error) {
+            throw error
+        }
     }
 
     async GetByState(transactionState:TransactionStates):Promise<Transacciones[]>{
-        return getManager().getRepository(Transacciones).find({
-            where:{ transactionState },
-            relations:['rifa', 'participanterifa', 'transactionState'],
-            order: {
-                id: 'DESC'
-            }
-        });
+        try {
+            return getManager().getRepository(Transacciones).find({
+                where:{ transactionState },
+                relations:['rifa', 'participanterifa', 'transactionState'],
+                order: {
+                    id: 'DESC'
+                }
+            });
+        } catch (error) {
+            throw error
+        }
     }
     
     async GetByStatesNames(names:Array<string>):Promise<Transacciones[]>{
-        let trans = await getManager().getRepository(Transacciones).createQueryBuilder("T")
-            .leftJoinAndSelect("T.transactionState", "TS")
-            .where("TS.name IN (:...names)", {names})
-            .getMany();
-        return trans.filter(e => e.dinamicorden != null)
+        try {
+            let trans = await getManager().getRepository(Transacciones).createQueryBuilder("T")
+                .leftJoinAndSelect("T.transactionState", "TS")
+                .where("TS.name IN (:...names)", {names})
+                .getMany();
+            return trans.filter(e => e.dinamicorden != null)
+        } catch (error) {
+            throw error
+        }
     }
 }

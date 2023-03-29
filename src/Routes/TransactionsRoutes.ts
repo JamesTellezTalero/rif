@@ -5,6 +5,10 @@ var authMiddle = require('../middlewares/authMiddleware');
 
 let transacciones_controller = require('../Controllers/TransaccionesController')
 
+router.get('/', (req, res) => {
+    res.send('Bienvenido al BackEnd de Rif ||| <br>Sección de transactions');
+});
+
 router.post('/Create', authMiddle.auth, transacciones_controller.Create)
 
 router.put('/Update', authMiddle.auth, transacciones_controller.Update)
