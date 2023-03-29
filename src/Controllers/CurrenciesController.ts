@@ -13,27 +13,25 @@ exports.Create = async (req, res) => {
             apiR.code = 400;
             apiR.message = "No se registra el <currency>"
             throw apiR;
-        }
-        if(item.name == null){
+        }else if(item.name == null){
             apiR.code = 400;
             apiR.message = "No se registra el <name>"
             throw apiR;
-        }
-        if(item.symbol == null){
+        }else if(item.symbol == null){
             apiR.code = 400;
             apiR.message = "No se registra el <symbol>"
             throw apiR;
-        }
-        if(item.code == null){
+        }else if(item.code == null){
             apiR.code = 400;
             apiR.message = "No se registra el <code>"
             throw apiR;
+        }else {
+            let resp = await CurrenciesB.Create(item);
+            apiR.code = 200;
+            apiR.message = "Estado Creado"
+            apiR.data = resp
+            return res.status(apiR.code).json({... apiR})
         }
-        let resp = await CurrenciesB.Create(item);
-        apiR.code = 200;
-        apiR.message = "Estado Creado"
-        apiR.data = resp
-        return res.status(apiR.code).json({... apiR})
     }
     catch (error){
         console.log(error);
@@ -60,37 +58,33 @@ exports.Update = async (req, res) => {
             apiR.code = 400;
             apiR.message = "No se registra el <currency>"
             throw apiR;
-        }
-        if(item.id == null){
+        }else if(item.id == null){
             apiR.code = 400;
             apiR.message = "No se registra el <id>"
             throw apiR;
-        }
-        if(item.name == null){
+        }else if(item.name == null){
             apiR.code = 400;
             apiR.message = "No se registra el <name>"
             throw apiR;
-        }
-        if(item.code == null){
+        }else if(item.code == null){
             apiR.code = 400;
             apiR.message = "No se registra el <code>"
             throw apiR;
-        }
-        if(item.symbol == null){
+        }else if(item.symbol == null){
             apiR.code = 400;
             apiR.message = "No se registra el <symbol>"
             throw apiR;
-        }
-        if(item.status == null){
+        }else if(item.status == null){
             apiR.code = 400;
             apiR.message = "No se registra el <status>"
             throw apiR;
+        }else {
+            let resp = await CurrenciesB.Update(item);
+            apiR.code = 200;
+            apiR.message = "Estado Actualizado"
+            apiR.data = resp
+            return res.status(apiR.code).json({... apiR})
         }
-        let resp = await CurrenciesB.Update(item);
-        apiR.code = 200;
-        apiR.message = "Estado Actualizado"
-        apiR.data = resp
-        return res.status(apiR.code).json({... apiR})
     }
     catch (error){
         console.log(error);
