@@ -44,16 +44,17 @@ exports.Create = async (req, res) => {
             apiR.code = 400;
             apiR.message = "tipoDocumento invalido";
             throw apiR;
+        }else {
+            await ParticipantesB.ValidateExistence(participante)
+            participante.createAt = new Date();
+            let newParticipante = await ParticipantesB.Create(participante);
+            apiR.message = "Participante Creado"
+            apiR.code = 200;
+            apiR.data = newParticipante;
+            return res.status(apiR.code).json({
+                ... apiR
+            })
         }
-        await ParticipantesB.ValidateExistence(participante)
-        participante.createAt = new Date();
-        let newParticipante = await ParticipantesB.Create(participante);
-        apiR.message = "Participante Creado"
-        apiR.code = 200;
-        apiR.data = newParticipante;
-        return res.status(apiR.code).json({
-            ... apiR
-        })
     }
     catch (error){
         console.log(error);
@@ -86,7 +87,7 @@ exports.GetAll = async (req, res) => {
         }else{
             throw apiR ={
                 code: 400,
-                message: `Participante no encontrado`,
+                message: `Participantes no encontrado`,
                 data: exist
             };
         }
