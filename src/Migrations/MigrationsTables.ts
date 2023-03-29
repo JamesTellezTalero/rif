@@ -194,70 +194,6 @@ app.listen(3000, () => {
         });
         await queryRunner.createTable(TransactionStates);
         console.log("Creacion de la tabla TransactionStates");
-        const Niveles = new Table({
-            name: 'Niveles',
-            columns: [
-                {
-                    name: 'id',
-                    type: 'int',
-                    isPrimary: true,
-                    isGenerated: true
-                },
-                {
-                    name: 'nombre',
-                    type: 'varchar',
-                    isNullable: false
-                },
-                {
-                    name: 'ganancias',
-                    type: 'int',
-                    isNullable: false
-                },
-                {
-                    name: 'totalExp',
-                    type: 'int',
-                    isNullable: false
-                },
-                {
-                    name: 'color',
-                    type: 'varchar',
-                    isNullable: false
-                },
-                {
-                    name: 'borde',
-                    type: 'varchar',
-                    isNullable: false
-                },
-                {
-                    name: 'multiplicadorEXP',
-                    type: 'int',
-                    isNullable: false
-                },
-                {
-                    name: 'status',
-                    type: 'boolean',
-                    isNullable: false,
-                    default: true
-                },
-                {
-                    name: 'createAt',
-                    type: 'timestamp',
-                    isNullable: true,
-                },
-                {
-                    name: 'updateAt',
-                    type: 'timestamp',
-                    isNullable: true ,
-                },
-                {
-                    name: 'deleteAt',
-                    type: 'timestamp',
-                    isNullable: true,
-                },
-            ]
-        });
-        await queryRunner.createTable(Niveles);
-        console.log("Creacion de la tabla Niveles");
         const Usuarios = new Table({
             name: 'Usuarios',
             columns: [
@@ -292,12 +228,6 @@ app.listen(3000, () => {
                     type: 'int',
                     isNullable: false,
                     default: 0,
-                },
-                {
-                    name: 'nivel',
-                    type: 'int',
-                    isNullable: false,
-                    default: 1,
                 },
                 {
                     name: 'isAdmin',

@@ -1,14 +1,6 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Rifas } from "./Rifas";
 import { UserKeys } from "./UserKeys";
-import { Niveles } from "./Niveles";
 
 @Entity("Usuarios", { schema: "public" })
 export class Usuarios {
@@ -30,6 +22,9 @@ export class Usuarios {
   @Column("integer", { name: "exp", default: () => "0" })
   exp: number;
 
+  @Column("integer", { name: "nivel", nullable: true })
+  nivel: number | null;
+
   @Column("boolean", { name: "isAdmin", default: () => "false" })
   isAdmin: boolean;
 
@@ -50,10 +45,4 @@ export class Usuarios {
 
   @OneToMany(() => UserKeys, (userKeys) => userKeys.usuario)
   userKeys: UserKeys[];
-
-  @ManyToOne(() => Niveles, (niveles) => niveles.usuarios, {
-    onDelete: "SET NULL",
-  })
-  @JoinColumn([{ name: "nivel", referencedColumnName: "id" }])
-  nivel: Niveles;
 }

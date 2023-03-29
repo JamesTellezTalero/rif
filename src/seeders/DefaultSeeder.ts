@@ -1,7 +1,6 @@
 import { Table, TableForeignKey, createConnection, getManager } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { Usuarios } from "../entities/Usuarios";
-import { Niveles } from "../entities/Niveles";
 import { EstadosRifa } from "../entities/EstadosRifa";
 import { TransactionStates } from "../entities/TransactionStates";
 import { TiposRifa } from "../entities/TiposRifa";
@@ -32,42 +31,6 @@ app.listen(3000, () => {
     // Establecer un temporizador para detener el servidor después de 5 minutos
     createConnection(AppDataSource).then(async (connection) => {
         let date = new Date();
-
-        let nivelesExt = await getManager().getRepository(Niveles).find()
-        if(nivelesExt.length == 0){
-            const NivelBajo = new Niveles();
-            NivelBajo.nombre = "NivelBajo";
-            NivelBajo.ganancias = 70;
-            NivelBajo.totalExp = 50;
-            NivelBajo.color = "#FFFFFF";
-            NivelBajo.borde = "Polvo";
-            NivelBajo.multiplicadorExp = 10;
-            NivelBajo.createAt = new Date();
-            await getManager().getRepository(Niveles).save(NivelBajo)
-            console.log("Seeder NivelBajo");
-    
-            const NivelMedio = new Niveles();
-            NivelMedio.nombre = "NivelMedio";
-            NivelMedio.ganancias = 80;
-            NivelMedio.totalExp = 150;
-            NivelMedio.color = "#AAAAAA";
-            NivelMedio.borde = "Viento";
-            NivelMedio.multiplicadorExp = 20;
-            NivelMedio.createAt = new Date();
-            await getManager().getRepository(Niveles).save(NivelMedio)
-            console.log("Seeder NivelMedio");
-    
-            const NivelAlto = new Niveles();
-            NivelAlto.nombre = "NivelAlto";
-            NivelAlto.ganancias = 90;
-            NivelAlto.totalExp = 300;
-            NivelAlto.color = "#000000";
-            NivelAlto.borde = "Vacio";
-            NivelAlto.multiplicadorExp = 30;
-            NivelAlto.createAt = new Date();
-            await getManager().getRepository(Niveles).save(NivelAlto)
-            console.log("Seeder NivelAlto");
-        }
 
         let estadosRifasExt = await getManager().getRepository(EstadosRifa).find()
         if(estadosRifasExt.length == 0){
@@ -152,7 +115,6 @@ app.listen(3000, () => {
             UsuariosAdmin.email = "jtalero91@gmail.com";
             UsuariosAdmin.password =  crypto.createHash("md5").update("123456").digest("hex").toUpperCase();
             UsuariosAdmin.avatar = "./init";
-            UsuariosAdmin.nivel = await getManager().getRepository(Niveles).findOne({where:{nombre: "NivelAlto"}});
             UsuariosAdmin.isAdmin = true;
             UsuariosAdmin.createAt = new Date();
             await getManager().getRepository(Usuarios).save(UsuariosAdmin)
@@ -163,7 +125,6 @@ app.listen(3000, () => {
             UsuariosNormal.email = "jtalero10@outlook.es";
             UsuariosNormal.password = crypto.createHash("md5").update("123456").digest("hex").toUpperCase();
             UsuariosNormal.avatar = "./init";
-            UsuariosNormal.nivel = await getManager().getRepository(Niveles).findOne({where:{nombre: "NivelBajo"}});
             UsuariosNormal.createAt = new Date();
             await getManager().getRepository(Usuarios).save(UsuariosNormal)
             console.log("Seeder UsuariosNormal");

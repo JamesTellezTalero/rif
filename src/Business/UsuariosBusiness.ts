@@ -1,7 +1,6 @@
 import { getManager } from "typeorm";
 import { Usuarios } from "../entities/Usuarios";
 import { apiResponse } from "../Models/apiResponse";
-import { Niveles } from "../entities/Niveles";
 import { DatesUtils } from "../Utils/DatesUtils";
 import { EnvConfig } from '../Config/EnvConfig';
 
@@ -30,9 +29,7 @@ export class UsuariosBusiness{
                     throw error;
                 }
             });
-            user.avatar = bufferPath;
-            user.nivel = await getManager().getRepository(Niveles).findOne({where:{nombre: "NivelBajo"}})
-            user.password = crypto.createHash("md5").update(user.password).digest("hex").toUpperCase();
+            user.avatar = bufferPath;user.password = crypto.createHash("md5").update(user.password).digest("hex").toUpperCase();
             let Usuario = await getManager().getRepository(Usuarios).save(user)
             return await this.GetById(Usuario.id);
         } catch (error) {
@@ -192,7 +189,7 @@ export class UsuariosBusiness{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
-            let Users = await getManager().getRepository(Usuarios).find({relations:['nivel']})
+            let Users = await getManager().getRepository(Usuarios).find()
             return Users;
         } catch (error) {
             if(error?.code === 400){
@@ -209,7 +206,7 @@ export class UsuariosBusiness{
         let apiR = new apiResponse();
         apiR.data = {};
         try {
-            let User = await getManager().getRepository(Usuarios).findOne({where:{id: id}, relations:['nivel']})
+            let User = await getManager().getRepository(Usuarios).findOne({where:{id: id}, })
             return User;
         } catch (error) {
             if(error?.code === 400){

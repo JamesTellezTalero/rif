@@ -3,7 +3,6 @@ import { ConnectionOptions, DataSource } from "typeorm"
 ////
 import { EstadosRifaSubscriber } from "./Subscribers/EstadosRifaSubscriber"
 import { UsuariosSubscriber } from "./Subscribers/UsuariosSubscriber"
-import { NivelesSubscriber } from "./Subscribers/NivelesSubscriber"
 import { ParticipantesSubscriber } from "./Subscribers/ParticipantesSubscriber"
 import { RifasSubscriber } from "./Subscribers/RifasSubscriber"
 import { TipoDocumentoSubscriber } from "./Subscribers/TipoDocumentoSubscriber"
@@ -13,7 +12,6 @@ import { TransactionStatesSubscriber } from "./Subscribers/TransactionStatesSubs
 import { GanadoresRifaSubscriber } from "./Subscribers/GanadoresRifaSubscriber"
 import { ParticipantesRifaSubscriber } from "./Subscribers/ParticipantesRifaSubscriber"
 import { EstadosRifa } from "./entities/EstadosRifa"
-import { Niveles } from "./entities/Niveles"
 import { Participantes } from "./entities/Participantes"
 import { Rifas } from "./entities/Rifas"
 import { TipoDocumento } from "./entities/TipoDocumento"
@@ -45,7 +43,6 @@ export const AppDataSource:ConnectionOptions ={
         Currencies,
         EstadosRifa,
         GanadoresRifa,
-        Niveles,
         Participantes,
         ParticipantesRifa,
         PaymentMethodKeys,
@@ -63,7 +60,6 @@ export const AppDataSource:ConnectionOptions ={
         CurrenciesSubscriber,
         EstadosRifaSubscriber,
         GanadoresRifaSubscriber,
-        NivelesSubscriber,
         ParticipantesSubscriber,
         RifasSubscriber,
         TipoDocumentoSubscriber,

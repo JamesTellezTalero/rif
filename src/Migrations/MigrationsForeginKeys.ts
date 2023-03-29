@@ -46,18 +46,7 @@ app.listen(3000, () => {
         await connect.createForeignKey("Transacciones", Transacciones_Rifa_ForeignKey);
         console.log("Transacciones rifa Foreign key agregada");
 
-
-        const Usuarios_Nivel_ForeignKey = new TableForeignKey({
-            columnNames: ['nivel'],
-            referencedColumnNames: ['id'],
-            referencedTableName: 'Niveles',
-            name: 'nivel_id',
-            onDelete: 'SET NULL'
-        });
-        await connect.createForeignKey("Usuarios", Usuarios_Nivel_ForeignKey);
-        console.log("Usuarios nivel Foreign key agregada");
-
-
+        
         const Rifas_Tipo_ForeignKey = new TableForeignKey({
             columnNames: ['tipoRifa'],
             referencedColumnNames: ['id'],
