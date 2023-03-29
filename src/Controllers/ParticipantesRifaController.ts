@@ -20,13 +20,11 @@ exports.Create = async (req, res) => {
             apiR.code = 400;
             apiR.message = "No se registra el <participanteRifa>"
             throw apiR;
-        }
-        if(item.rifa == null){
+        }else if(item.rifa == null){
             apiR.code = 400;
             apiR.message = "No se registra el <rifa>"
             throw apiR;
-        }
-        if(item.participante == null){
+        }else if(item.participante == null){
             apiR.code = 400;
             apiR.message = "No se registra el <participante>"
             throw apiR;
@@ -53,12 +51,13 @@ exports.Create = async (req, res) => {
             apiR.code = 400;
             apiR.message = "El Participante enviado no existe"
             throw apiR;
+        }else {
+            let resp = await ParticipantesRifaB.Create(item);
+            apiR.code = 200;
+            apiR.message = "Participante Rifa Creado"
+            apiR.data = resp
+            return res.status(apiR.code).json({... apiR})
         }
-        let resp = await ParticipantesRifaB.Create(item);
-        apiR.code = 200;
-        apiR.message = "Participante Rifa Creado"
-        apiR.data = resp
-        return res.status(apiR.code).json({... apiR})
     }
     catch (error){
         console.log(error);
@@ -116,12 +115,13 @@ exports.Update = async (req, res) => {
             apiR.code = 400;
             apiR.message = "El participante Tiene una transaccion Exitosa"
             throw apiR;
+        } else{
+            let resp = await ParticipantesRifaB.Update(participanteRifa, status);
+            apiR.code = 200;
+            apiR.data = resp
+            apiR.message = "Estado Actualizado"
+            return res.status(apiR.code).json({... apiR})
         }
-        let resp = await ParticipantesRifaB.Update(participanteRifa, status);
-        apiR.code = 200;
-        apiR.data = resp
-        apiR.message = "Estado Actualizado"
-        return res.status(apiR.code).json({... apiR})
     }
     catch (error){
         console.log(error);
