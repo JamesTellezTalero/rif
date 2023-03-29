@@ -1,4 +1,4 @@
-import { jsonMember, jsonObject } from "typedjson";
+import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
 
 @jsonObject
 export class PayPalAuthResponseMetadata {
@@ -8,7 +8,7 @@ export class PayPalAuthResponseMetadata {
     display_name: string
     @jsonMember
     logo_uri: string
-    @jsonMember
+    @jsonArrayMember(String)
     scopes: string[]
     @jsonMember
     ui_type: string
@@ -26,7 +26,7 @@ export class PayPalAuthResponse {
     app_id: string
     @jsonMember
     expires_in: string
-    @jsonMember
+    @jsonArrayMember(String)
     supported_authn_schemes: string[]
     @jsonMember
     nonce: string
@@ -84,7 +84,7 @@ export class PayPalOrderReqPurchaseAmount {
 
 @jsonObject
 export class PayPalOrderReqPurchaseUnits {
-    @jsonMember
+    @jsonArrayMember(PayPalOrderReqPurchaseUnitsItem)
     items: PayPalOrderReqPurchaseUnitsItem []
     @jsonMember
     amount: PayPalOrderReqPurchaseAmount
@@ -103,7 +103,7 @@ export class PayPalOrderReq {
     intent: string
     @jsonMember
     application_context: PayPalOrderReqApplicationContext
-    @jsonMember
+    @jsonArrayMember(PayPalOrderReqPurchaseUnits)
     purchase_units: PayPalOrderReqPurchaseUnits[]
 }
 
@@ -170,7 +170,7 @@ export class PayPalOrderResPurchaseUnits {
     amount: PayPalOrderResPurchaseUnitsAmount
     @jsonMember
     payee: PayPalOrderResPurchaseUnitsPayee
-    @jsonMember
+    @jsonArrayMember(PayPalOrderResPurchaseUnitsItems)
     items: PayPalOrderResPurchaseUnitsItems[]
 }
 
@@ -192,11 +192,11 @@ export class PayPalOrderRes {
     intent: string
     @jsonMember
     status: string
-    @jsonMember
+    @jsonArrayMember(PayPalOrderResPurchaseUnits)
     purchase_units: PayPalOrderResPurchaseUnits[]
     @jsonMember
     create_time: string
-    @jsonMember
+    @jsonArrayMember(PayPalOrderResLinks)
     links: PayPalOrderResLinks[]
 }
 
