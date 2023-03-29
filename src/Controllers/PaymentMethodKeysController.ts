@@ -15,13 +15,11 @@ exports.Create = async (req, res) => {
             apiR.code = 400;
             apiR.message = "No se registra el <PaymentMethodKey>"
             throw apiR;
-        }
-        if(item.name == null){
+        }else if(item.name == null){
             apiR.code = 400;
             apiR.message = "No se registra el <name>"
             throw apiR;
-        }
-        if(item.paymentMethod == null){
+        }else if(item.paymentMethod == null){
             apiR.code = 400;
             apiR.message = "No se registra el <paymentMethod>"
             throw apiR;
@@ -31,12 +29,13 @@ exports.Create = async (req, res) => {
             apiR.code = 400;
             apiR.message = "No se registra o no existe el <paymentMethod>"
             throw apiR;
+        }else {
+            let resp = await PaymentMethodKeysB.Create(item);
+            apiR.code = 200;
+            apiR.message = "Key Creado"
+            apiR.data = resp
+            return res.status(apiR.code).json({... apiR})
         }
-        let resp = await PaymentMethodKeysB.Create(item);
-        apiR.code = 200;
-        apiR.message = "Key Creado"
-        apiR.data = resp
-        return res.status(apiR.code).json({... apiR})
     }
     catch (error){
         console.log(error);
