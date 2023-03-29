@@ -15,9 +15,6 @@ exports.auth = async (req, res, next) => {
     token = token.split(" ")[1];
     if (!token) {
         return res.status(401).json({ message: "No token provided" });
-    }
-    if(token == "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp0YWxlcm85MUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IkUxMEFEQzM5NDlCQTU5QUJCRTU2RTA1N0YyMEY4ODNFIiwibGFzdFNlc3Npb24iOjE2Nzk1NDQ1MTgyMjksImlhdCI6MTY3OTU0NDUxOH0.Y5H8J9kXVKihraAvbnytPVZLhg1YFOcH9scQ2n9NP2s"){
-        next();
     }else{
         jwt.verify(token, secretOrKey, async (err, decoded) => {
             console.log(token);

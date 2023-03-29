@@ -16,64 +16,55 @@ exports.Create = async (req, res) => {
             apiR.code = 400;
             apiR.message = "No se registra <rifa>"
             throw apiR;
-        }
-        if(rifa?.tipoRifa == null){
+        }else if(rifa?.tipoRifa == null){
             apiR.code = 400;
             apiR.message = "No se registra <tipoRifa>"
             throw apiR;
-        }
-        if(rifa?.usuario == null){
+        }else if(rifa?.usuario == null){
             apiR.code = 400;
             apiR.message = "No se registra <usuario>"
             throw apiR;
-        }
-        if(rifa?.name == null){
+        }else if(rifa?.name == null){
             apiR.code = 400;
             apiR.message = "No se registra <name>"
             throw apiR;
-        }
-        if(rifa?.description == null){
+        }else if(rifa?.description == null){
             apiR.code = 400;
             apiR.message = "No se registra <description>"
             throw apiR;
-        }
-        if(rifa?.posiblesGanadores == null){
+        }else if(rifa?.posiblesGanadores == null){
             apiR.code = 400;
             apiR.message = "No se registra <posiblesGanadores>"
             throw apiR;
-        }
-        if(rifa?.costoOportunidad == null){
+        }else if(rifa?.costoOportunidad == null){
             apiR.code = 400;
             apiR.message = "No se registra <costoOportunidad>"
             throw apiR;
-        }
-        if(rifa?.participantesTotales == null){
+        }else if(rifa?.participantesTotales == null){
             apiR.code = 400;
             apiR.message = "No se registra <participantesTotales>"
             throw apiR;
-        }
-        if(rifa?.image == null){
+        }else if(rifa?.image == null){
             apiR.code = 400;
             apiR.message = "No se registra <image>"
             throw apiR;
-        }
-        if(rifa?.startsAt == null){
+        }else if(rifa?.startsAt == null){
             apiR.code = 400;
             apiR.message = "No se registra <startsAt>"
             throw apiR;
-        }
-        if(rifa?.endsAt == null){
+        }else if(rifa?.endsAt == null){
             apiR.code = 400;
             apiR.message = "No se registra <endsAt>"
             throw apiR;
+        }else {
+            let newRifa = await RifasB.Create(rifa);
+            apiR.code = 200;
+            apiR.message = "Rifa Creada"
+            apiR.data = newRifa
+            return res.status(200).json({
+                ... apiR
+            })
         }
-        let newRifa = await RifasB.Create(rifa);
-        apiR.code = 200;
-        apiR.message = "Rifa Creada"
-        apiR.data = newRifa
-        return res.status(200).json({
-            ... apiR
-        })
     }
     catch (error){
         console.log(error);
@@ -101,64 +92,55 @@ exports.UpdateById = async (req, res) => {
             apiR.code = 400;
             apiR.message = "No se registra <rifa>"
             throw apiR;
-        }
-        if(rifa?.id == null){
+        }else if(rifa?.id == null){
             apiR.code = 400;
             apiR.message = "No se registra <id>"
             throw apiR;
-        }
-        if(rifa?.image == null){
+        }else if(rifa?.image == null){
             apiR.code = 400;
             apiR.message = "No se registra <image>"
             throw apiR;
-        }
-        if(rifa?.name == null){
+        }else if(rifa?.name == null){
             apiR.code = 400;
             apiR.message = "No se registra <name>"
             throw apiR;
-        }
-        if(rifa?.description == null){
+        }else if(rifa?.description == null){
             apiR.code = 400;
             apiR.message = "No se registra <description>"
             throw apiR;
-        }
-        if(rifa?.posiblesGanadores == null){
+        }else if(rifa?.posiblesGanadores == null){
             apiR.code = 400;
             apiR.message = "No se registra <posiblesGanadores>"
             throw apiR;
-        }
-        if(rifa?.costoOportunidad == null){
+        }else if(rifa?.costoOportunidad == null){
             apiR.code = 400;
             apiR.message = "No se registra <costoOportunidad>"
             throw apiR;
-        }
-        if(rifa?.participantesTotales == null){
+        }else if(rifa?.participantesTotales == null){
             apiR.code = 400;
             apiR.message = "No se registra <participantesTotales>"
             throw apiR;
-        }
-        if(rifa?.startsAt == null){
+        }else if(rifa?.startsAt == null){
             apiR.code = 400;
             apiR.message = "No se registra <startsAt>"
             throw apiR;
-        }
-        if(rifa?.endsAt == null){
+        }else if(rifa?.endsAt == null){
             apiR.code = 400;
             apiR.message = "No se registra <endsAt>"
             throw apiR;
-        }
-        if(rifa?.status == null){
+        }else if(rifa?.status == null){
             apiR.code = 400;
             apiR.message = "No se registra <status>"
             throw apiR;
+        }else {
+            let updatedRifa = await RifasB.UpdateById(rifa) 
+            apiR.code = 200;
+            apiR.message = "Rifa Actualizada"
+            apiR.data = updatedRifa
+            return res.status(200).json({
+                ... apiR
+            })
         }
-        let updatedRifa = await RifasB.UpdateById(rifa) 
-        apiR.code = 200;
-        apiR.message = "Rifa Actualizada"
-        apiR.data = updatedRifa
-        return res.status(200).json({
-            ... apiR
-        })
     }
     catch (error){
         console.log(error);
