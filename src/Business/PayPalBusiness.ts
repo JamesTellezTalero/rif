@@ -118,7 +118,10 @@ export class PayPalBusiness{
             })
             return resp.data
         } catch (error) {
-            throw error;
+            console.log(error);
+            let resp = new PayPalOrderRes()
+            resp.status = "ERROR"; 
+            return resp;
         }
     }
 }

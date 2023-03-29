@@ -90,7 +90,8 @@ export class TransaccionesBusiness{
                 tran.transactionState = await TransactionStatesB.GetByName("Exitosa")
             } else if(order.status == "PAYER_ACTION_REQUIRED"){
                 tran.transactionState = await TransactionStatesB.GetByName("Pendiente")
-            } 
+            } else{
+            }
             return getManager().getRepository(Transacciones).save(tran);
         } catch (error) {
             throw error;

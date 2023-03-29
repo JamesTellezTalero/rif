@@ -255,7 +255,7 @@ exports.UpdateTranPaymentsState = async (req, res) => {
     } catch (error) {
         console.log(error);
         if(error?.code === 400){
-            return res.status(error.code).json({
+            return res.status(204).json({
                 ... error
             });
         }else{

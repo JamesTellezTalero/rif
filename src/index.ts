@@ -57,14 +57,15 @@ const GanadoresRifaCron = new CronJob('*/1 * * * *', async function() {
     }
 });
 GanadoresRifaCron.start();
-const UpdateTransactionsCron = new CronJob('*/10 * * * * *', async function() {
+const UpdateTransactionsCron = new CronJob('*/1 * * * *', async function() {
     try {
         const config = await EnvConfig.getInstance();
         const host = await config.get('HOST');
         const port = await config.get('PORT');
+        const secretOrKey = await config.get('AUTH_KEY');
         await axios.put(`http://${host}:${port}/api/transacciones/UpdateTranPaymentsState`, {}, {
             headers: {
-                Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp0YWxlcm85MUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjEyMzQ1NiIsImxhc3RTZXNzaW9uIjoxNjc2MjQzMjQ0Mjg3LCJpYXQiOjE2NzYyNDMyNDR9.Hwc-PQcMUAv1e-2D5jRgKY7LYrkI5Z-LXwO7xNaUJhg",
+                Authorization: "Bearer " + secretOrKey,
                 'Content-Type': 'application/json'
             }    
         });
