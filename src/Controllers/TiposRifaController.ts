@@ -13,13 +13,11 @@ exports.Create = async (req, res) => {
             apiR.code = 400;
             apiR.message = "No se registra el <tipoRifa>"
             throw apiR;
-        }
-        if(item.name == null){
+        }else if(item.name == null){
             apiR.code = 400;
             apiR.message = "No se registra el <name>"
             throw apiR;
-        }
-        if(item.recompenza == null){
+        }else if(item.recompenza == null){
             apiR.code = 400;
             apiR.message = "No se registra el <recompenza>"
             throw apiR;
@@ -67,29 +65,27 @@ exports.Update = async (req, res) => {
             apiR.code = 400;
             apiR.message = "No se registra el <tipoRifa>"
             throw apiR;
-        }
-        if(item.id == null){
+        }else if(item.id == null){
             apiR.code = 400;
             apiR.message = "No se registra el <id>"
             throw apiR;
-        }
-        if(item.name == null){
+        }else if(item.name == null){
             apiR.code = 400;
             apiR.message = "No se registra el <name>"
             throw apiR;
-        }
-        if(item.recompenza == null){
+        }else if(item.recompenza == null){
             apiR.code = 400;
             apiR.message = "No se registra el <recompenza>"
             throw apiR;
+        }else {
+            let resp = await TiposRifaB.Update(item);
+            apiR.code = 200;
+            apiR.message = "Tipo Creado"
+            apiR.data = resp
+            return res.status(apiR.code).json({
+                ... apiR
+            })
         }
-        let resp = await TiposRifaB.Update(item);
-        apiR.code = 200;
-        apiR.message = "Tipo Creado"
-        apiR.data = resp
-        return res.status(apiR.code).json({
-            ... apiR
-        })
     }
     catch (error){
         console.log(error);
