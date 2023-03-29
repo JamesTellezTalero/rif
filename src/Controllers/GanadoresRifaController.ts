@@ -16,8 +16,7 @@ exports.DefinirGanadores = async (req, res) =>{
             apiR.code = 400;
             apiR.message = "No se registra el <ganadorRifa>"
             throw apiR;
-        }
-        if(item.rifa == null || item.rifa.id == null){
+        }else if(item.rifa == null || item.rifa.id == null){
             apiR.code = 400;
             apiR.message = "No se registra la propiedad <rifa> o <rifa.id>"
             throw apiR;
@@ -33,8 +32,7 @@ exports.DefinirGanadores = async (req, res) =>{
             apiR.code = 400;
             apiR.message = "La <rifa> Enviada se encuentra vigente"
             throw apiR;
-        }
-        if(rifa.ganadoresRifas.length < rifa.posiblesGanadores){
+        }else if(rifa.ganadoresRifas.length < rifa.posiblesGanadores){
             apiR.data = await GanadoresRifaB.DefinirGanadores(rifa);
             apiR.message = "Ganadores Creados";
             apiR.code = 200;
@@ -76,11 +74,12 @@ exports.GetByRifa = async (req, res) =>{
             apiR.code = 400;
             apiR.message = "No se existe el <id> Enviado"
             throw apiR;
+        }else {
+            apiR.data = await GanadoresRifaB.GetByRifa(rifa.id);
+            apiR.code = 200;
+            apiR.message = "Ganadores Encontrados";
+            return res.status(apiR.code).json({... apiR})
         }
-        apiR.data = await GanadoresRifaB.GetByRifa(rifa.id);
-        apiR.code = 200;
-        apiR.message = "Ganadores Encontrados";
-        return res.status(apiR.code).json({... apiR})
     }
     catch (error){
         console.log(error);

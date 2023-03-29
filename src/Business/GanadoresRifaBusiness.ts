@@ -14,8 +14,8 @@ export class GanadoresRifaBusiness{
         try {
             const min = 0;
             const max = rifa.posiblesGanadores-1;
+            rifa = await RifasB.GetById(rifa.id)
             for (let i = 0; i < rifa.posiblesGanadores; i++) {
-                rifa = await RifasB.GetById(rifa.id)
                 let randomNumber = Math.floor(Math.random() * (max - min + 1) + min);
                 let participanteR = await ParticipantesRifaB.GetById(rifa.participantesRifas[randomNumber].id)
                 let rifasExt = rifa.ganadoresRifas.filter(e => e.participanteRifa.id == participanteR.id);
@@ -47,14 +47,11 @@ export class GanadoresRifaBusiness{
             di.setHours(0, 0, 0, 0)
             let da = new Date();
             da.setHours(23, 59, 59, 59)
-            console.log(di);
-            console.log(da);
             let rifas = await getManager().getRepository(Rifas).find({
                 where:{endsAt: Between( di, da)},
                 relations:["estadoRifa", "tipoRifa", "usuario", "ganadoresRifas", "ganadoresRifas.participanteRifa", "participantesRifas", "participantesRifas.participante"]
             })
             rifas = rifas.filter(e => e.ganadoresRifas.length < e.posiblesGanadores)
-            console.log(rifas);
             rifas.map(async e => await this.DefinirGanadores(e))
         } catch (error) {
             if(error?.code === 400){
