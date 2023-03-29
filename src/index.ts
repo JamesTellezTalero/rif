@@ -46,27 +46,30 @@ createConnection(AppDataSource).then(async (connection) => {
 }).catch(err => console.error(err));
 
 
-// const GanadoresB = new GanadoresRifaBusiness();
-// const GanadoresRifaCron = new CronJob('*/1 * * * *', async function() {
-//     try {
-//         const d = new Date();
-//         console.log('Generando ganadores:', d);
-//         await GanadoresB.DefinirGanadoresPendientes();
-//     } catch (error) {
-//         console.log(error);
-//     }
-// });
-// GanadoresRifaCron.start();
-// const UpdateTransactionsCron = new CronJob('*/10 * * * * *', async function() {
-//     try {
-//         await axios.put(`http://${host}:${port}/api/transacciones/UpdateTranPaymentsState`, {}, {
-//             headers: {
-//                 Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp0YWxlcm85MUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjEyMzQ1NiIsImxhc3RTZXNzaW9uIjoxNjc2MjQzMjQ0Mjg3LCJpYXQiOjE2NzYyNDMyNDR9.Hwc-PQcMUAv1e-2D5jRgKY7LYrkI5Z-LXwO7xNaUJhg",
-//                 'Content-Type': 'application/json'
-//             }    
-//         });
-//     } catch (error) {
-//         console.log(error);
-//     }
-// });
-// UpdateTransactionsCron.start();
+const GanadoresB = new GanadoresRifaBusiness();
+const GanadoresRifaCron = new CronJob('*/1 * * * *', async function() {
+    try {
+        const d = new Date();
+        console.log('Generando ganadores:', d);
+        await GanadoresB.DefinirGanadoresPendientes();
+    } catch (error) {
+        console.log(error);
+    }
+});
+GanadoresRifaCron.start();
+const UpdateTransactionsCron = new CronJob('*/10 * * * * *', async function() {
+    try {
+        const config = await EnvConfig.getInstance();
+        const host = await config.get('HOST');
+        const port = await config.get('PORT');
+        await axios.put(`http://${host}:${port}/api/transacciones/UpdateTranPaymentsState`, {}, {
+            headers: {
+                Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp0YWxlcm85MUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjEyMzQ1NiIsImxhc3RTZXNzaW9uIjoxNjc2MjQzMjQ0Mjg3LCJpYXQiOjE2NzYyNDMyNDR9.Hwc-PQcMUAv1e-2D5jRgKY7LYrkI5Z-LXwO7xNaUJhg",
+                'Content-Type': 'application/json'
+            }    
+        });
+    } catch (error) {
+        console.log(error);
+    }
+});
+UpdateTransactionsCron.start();
