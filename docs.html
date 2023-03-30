@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Mi Documentación</title>
+        <style>
+            /* Estilo del buscador */
+            .search {
+                float: right;
+                width: 200px;
+                margin: 10px;
+                padding: 5px;
+                border: 2px solid #8c66bb;
+                border-radius: 5px;
+                font-size: 16px;
+            }
+
+            /* Estilo de la barra lateral */
+            .sidebar {
+                float: left;
+                width: 20%;
+                height: 100%;
+                background-color: #e1d8e6;
+                border-right: 2px solid #8c66bb;
+                position: fixed;
+                overflow: auto;
+            }
+
+            /* Estilo de los enlaces de la barra lateral */
+            .sidebar a {
+                display: block;
+                padding: 10px;
+                color: #333;
+                text-decoration: none;
+                transition: all 0.3s ease-in-out;
+            }
+
+            /* Estilo de los enlaces activos de la barra lateral */
+            .sidebar a.active {
+                background-color: #8c66bb;
+                color: #fff;
+            }
+
+            /* Estilo del contenido principal */
+            .main {
+                float: right;
+                width: 75%;
+                margin: 10px;
+                padding: 20px;
+                border: 2px solid #8c66bb;
+                border-radius: 5px;
+                background-color: #f4e7f8;
+            }
+
+            /* Estilo de la línea gráfica */
+            .line {
+                height: 5px;
+                background-image: linear-gradient(to right, #8c66bb, #bf94e4);
+                border-radius: 5px;
+                margin-top: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Buscador -->
+        <input type="text" class="search" placeholder="Buscar..." />
+
+        <!-- Barra lateral -->
+        <div class="sidebar">
+            <a href="#seccion1" class="active">Sección 1</a>
+            <a href="#seccion2">Sección 2</a>
+            <a href="#seccion3">Sección 3</a>
+            <a href="#seccion4">Sección 4</a>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="main">
+            <!-- Sección 1 -->
+            <h1 id="seccion1">Sección 1</h1>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat augue in
+                magna interdum, a efficitur quam malesuada. Ut eget nisi vel ipsum ullamcorper
+                sollicitudin. Donec cursus felis quis mauris imperdiet blandit. Morbi bibendum nisl
+                id libero vulputate pharetra. Pellentesque vel eros nec magna viverra facilisis.
+                Nulla eget justo eu risus efficitur rhoncus. Vestibulum ante ipsum primis in
+                faucibus orci luctus et ultrices posuere cubilia Curae; Quisque posuere euismod
+            </p>
+            <!-- Sección 2 -->
+            <h1 id="seccion2">Sección 2</h1>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat augue in
+                magna interdum, a efficitur quam malesuada. Ut eget nisi vel ipsum ullamcorper
+                sollicitudin. Donec cursus felis quis mauris imperdiet blandit. Morbi bibendum nisl
+                id libero vulputate pharetra. Pellentesque vel eros nec magna viverra facilisis.
+                Nulla eget justo eu risus efficitur rhoncus. Vestibulum ante ipsum primis in
+                faucibus orci luctus et ultrices posuere cubilia Curae; Quisque posuere euismod
+            </p>
+            <!-- Sección 3 -->
+            <h1 id="seccion3">Sección 3</h1>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat augue in
+                magna interdum, a efficitur quam malesuada. Ut eget nisi vel ipsum ullamcorper
+                sollicitudin. Donec cursus felis quis mauris imperdiet blandit. Morbi bibendum nisl
+                id libero vulputate pharetra. Pellentesque vel eros nec magna viverra facilisis.
+                Nulla eget justo eu risus efficitur rhoncus. Vestibulum ante ipsum primis in
+                faucibus orci luctus et ultrices posuere cubilia Curae; Quisque posuere euismod
+            </p>
+            <!-- Sección 4 -->
+            <h1 id="seccion4">Sección 4</h1>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat augue in
+                magna interdum, a efficitur quam malesuada. Ut eget nisi vel ipsum ullamcorper
+                sollicitudin. Donec cursus felis quis mauris imperdiet blandit. Morbi bibendum nisl
+                id libero vulputate pharetra. Pellentesque vel eros nec magna viverra facilisis.
+                Nulla eget justo eu risus efficitur rhoncus. Vestibulum ante ipsum primis in
+                faucibus orci luctus et ultrices posuere cubilia Curae; Quisque posuere euismod
+            </p>
+        </div>
+    </body>
+</html>
