@@ -1,120 +1,179 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <meta charset="UTF-8" />
-        <title>Mi Documentación</title>
+        <title>Documentacion RIF</title>
         <style>
-            /* Estilo del buscador */
-            .search {
-                float: right;
-                width: 200px;
-                margin: 10px;
-                padding: 5px;
-                border: 2px solid #8c66bb;
-                border-radius: 5px;
-                font-size: 16px;
+            :root {
+                /* Colores para texto */
+                --color-link: #4b0082;
+                --color-link-hover: #222222;
+                --color-fuente: #333333; /* color de fuente principal */
+
+                /* Colores para fondo */
+                --color-fondo: #f2f2f2;
+                --color-navbar: #9370db;
+
+                /* Opacidad */
+                --opacidad-70: 0.7;
+                --opacidad-50: 0.5;
+
+                /* Bordes */
+                --borde: 2px solid #4b0082;
+
+                /* Otro color */
+                --color-complementario: #363636; /* un tono oscuro de gris */
             }
 
-            /* Estilo de la barra lateral */
-            .sidebar {
-                float: left;
-                width: 20%;
-                height: 100%;
-                background-color: #e1d8e6;
-                border-right: 2px solid #8c66bb;
-                position: fixed;
-                overflow: auto;
+            html {
+                width: 100%;
             }
 
-            /* Estilo de los enlaces de la barra lateral */
-            .sidebar a {
-                display: block;
+            body {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                background-color: var(--color-fondo);
+            }
+
+            nav {
+                grid-area: navbar;
+                background-color: var(--color-navbar);
+                box-shadow: 2px 2px 2px 1px rgb(0, 0, 0);
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
                 padding: 10px;
-                color: #333;
+                font-size: 18px;
+                font-weight: bold;
+            }
+
+            footer {
+                background-color: var(--color-navbar);
+                height: 100px;
+            }
+
+            nav h1 {
+                font-size: 20px;
+                margin-left: 20px;
+                margin: 0;
+                padding: 0;
+            }
+
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                align-items: center;
+            }
+            #sidebar ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            li {
+                margin: 0 10px;
+            }
+
+            a {
                 text-decoration: none;
-                transition: all 0.3s ease-in-out;
+                font-size: 16px;
+                font-weight: normal;
+                padding: 10px;
             }
 
-            /* Estilo de los enlaces activos de la barra lateral */
-            .sidebar a.active {
-                background-color: #8c66bb;
-                color: #fff;
+            a:hover {
+                color: var(--color-link);
             }
 
-            /* Estilo del contenido principal */
-            .main {
-                float: right;
-                width: 75%;
-                margin: 10px;
-                padding: 20px;
-                border: 2px solid #8c66bb;
-                border-radius: 5px;
-                background-color: #f4e7f8;
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                color: var(--color-titulo);
             }
 
-            /* Estilo de la línea gráfica */
-            .line {
-                height: 5px;
-                background-image: linear-gradient(to right, #8c66bb, #bf94e4);
-                border-radius: 5px;
-                margin-top: 20px;
+            p,
+            em,
+            li a {
+                color: var(--color-fuente);
+            }
+
+            .container {
+                display: grid;
+                grid-template-columns: 20% 80%;
+                width: 100%;
+            }
+
+            #sidebar {
+                background-color: var(--color-navbar);
+                height: 100%;
+            }
+
+            #sidebar h2 {
+                text-align: center;
+            }
+
+            .main-content {
+                background-color: #fff;
+                height: 100%;
+                width: 90%;
+                padding: 0 5%;
             }
         </style>
     </head>
     <body>
-        <!-- Buscador -->
-        <input type="text" class="search" placeholder="Buscar..." />
+        <nav>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Acerca</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+        <section class="container">
+            <div id="sidebar">
+                <h2>Menu</h2>
+                <ul>
+                    <li><a href="#section1">Sección 1</a></li>
+                    <li><a href="#section2">Sección 2</a></li>
+                    <li><a href="#section3">Sección 3</a></li>
+                </ul>
+            </div>
+            <div class="main-content">
+                <h2 id="section1">Sección 1</h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in nulla justo.
+                    Proin euismod elit sed dolor ultrices, vel efficitur sapien volutpat. Duis et
+                    bibendum nisi, ut rutrum elit. Nam nec felis ante. Praesent eu ex nec nisi
+                    pharetra elementum at at libero. Etiam eu ex ac est congue lobortis. Nulla
+                    facilisi.
+                </p>
 
-        <!-- Barra lateral -->
-        <div class="sidebar">
-            <a href="#seccion1" class="active">Sección 1</a>
-            <a href="#seccion2">Sección 2</a>
-            <a href="#seccion3">Sección 3</a>
-            <a href="#seccion4">Sección 4</a>
-        </div>
+                <h2 id="section2">Sección 2</h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in nulla justo.
+                    Proin euismod elit sed dolor ultrices, vel efficitur sapien volutpat. Duis et
+                    bibendum nisi, ut rutrum elit. Nam nec felis ante. Praesent eu ex nec nisi
+                    pharetra elementum at at libero. Etiam eu ex ac est congue lobortis. Nulla
+                    facilisi.
+                </p>
 
-        <!-- Contenido principal -->
-        <div class="main">
-            <!-- Sección 1 -->
-            <h1 id="seccion1">Sección 1</h1>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat augue in
-                magna interdum, a efficitur quam malesuada. Ut eget nisi vel ipsum ullamcorper
-                sollicitudin. Donec cursus felis quis mauris imperdiet blandit. Morbi bibendum nisl
-                id libero vulputate pharetra. Pellentesque vel eros nec magna viverra facilisis.
-                Nulla eget justo eu risus efficitur rhoncus. Vestibulum ante ipsum primis in
-                faucibus orci luctus et ultrices posuere cubilia Curae; Quisque posuere euismod
-            </p>
-            <!-- Sección 2 -->
-            <h1 id="seccion2">Sección 2</h1>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat augue in
-                magna interdum, a efficitur quam malesuada. Ut eget nisi vel ipsum ullamcorper
-                sollicitudin. Donec cursus felis quis mauris imperdiet blandit. Morbi bibendum nisl
-                id libero vulputate pharetra. Pellentesque vel eros nec magna viverra facilisis.
-                Nulla eget justo eu risus efficitur rhoncus. Vestibulum ante ipsum primis in
-                faucibus orci luctus et ultrices posuere cubilia Curae; Quisque posuere euismod
-            </p>
-            <!-- Sección 3 -->
-            <h1 id="seccion3">Sección 3</h1>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat augue in
-                magna interdum, a efficitur quam malesuada. Ut eget nisi vel ipsum ullamcorper
-                sollicitudin. Donec cursus felis quis mauris imperdiet blandit. Morbi bibendum nisl
-                id libero vulputate pharetra. Pellentesque vel eros nec magna viverra facilisis.
-                Nulla eget justo eu risus efficitur rhoncus. Vestibulum ante ipsum primis in
-                faucibus orci luctus et ultrices posuere cubilia Curae; Quisque posuere euismod
-            </p>
-            <!-- Sección 4 -->
-            <h1 id="seccion4">Sección 4</h1>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat augue in
-                magna interdum, a efficitur quam malesuada. Ut eget nisi vel ipsum ullamcorper
-                sollicitudin. Donec cursus felis quis mauris imperdiet blandit. Morbi bibendum nisl
-                id libero vulputate pharetra. Pellentesque vel eros nec magna viverra facilisis.
-                Nulla eget justo eu risus efficitur rhoncus. Vestibulum ante ipsum primis in
-                faucibus orci luctus et ultrices posuere cubilia Curae; Quisque posuere euismod
-            </p>
-        </div>
+                <h2 id="section3">Sección 3</h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in nulla justo.
+                    Proin euismod elit sed dolor ultrices, vel efficitur sapien volutpat. Duis et
+                    bibendum nisi, ut rutrum elit. Nam nec felis ante. Praesent eu ex nec nisi
+                    pharetra element
+                </p>
+            </div>
+        </section>
+        <footer></footer>
     </body>
 </html>
